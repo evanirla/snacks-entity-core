@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snacks.Entity.Core", "Snacks.Entity.Core\Snacks.Entity.Core.csproj", "{24B2CF1A-0177-4BAC-B408-0E3CC0564246}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24B2CF1A-0177-4BAC-B408-0E3CC0564246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B2CF1A-0177-4BAC-B408-0E3CC0564246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B2CF1A-0177-4BAC-B408-0E3CC0564246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B2CF1A-0177-4BAC-B408-0E3CC0564246}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74F9FFB6-631D-4D91-881E-EC65074C53E9}
+	EndGlobalSection
+EndGlobal
