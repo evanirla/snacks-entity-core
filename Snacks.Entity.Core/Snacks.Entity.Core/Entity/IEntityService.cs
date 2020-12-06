@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Snacks.Entity.Core.Database;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core
+namespace Snacks.Entity.Core.Entity
 {
     /// <summary>
     /// 
@@ -30,14 +31,14 @@ namespace Snacks.Entity.Core
         /// </summary>
         /// <param name="queryCollection"></param>
         /// <returns></returns>
-        Task<List<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
+        Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="queryCollection"></param>
         /// <returns></returns>
-        Task<List<TModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null);
+        Task<IList<TModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null);
 
         /// <summary>
         /// 
@@ -53,7 +54,7 @@ namespace Snacks.Entity.Core
         /// <param name="models"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        Task<List<TModel>> CreateManyAsync(List<TModel> models, IDbTransaction transaction = null);
+        Task<IList<TModel>> CreateManyAsync(IList<TModel> models, IDbTransaction transaction = null);
 
         /// <summary>
         /// 

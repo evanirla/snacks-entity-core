@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
+using Snacks.Entity.Core.Entity;
 using Snacks.Entity.Core.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +26,12 @@ namespace Snacks.Entity.Core.Caching
 
         public async Task RemoveOneAsync(TModel model)
         {
-            await _distributedCache.RemoveAsync(GetModelKey(model));
+            await _distributedCache.RemoveAsync(GetCacheKey(model));
+        }
+
+        public async Task RemoveOneAsync(TKey key)
+        {
+            await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
 
         public async Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection)
@@ -44,7 +50,7 @@ namespace Snacks.Entity.Core.Caching
         public async Task<TModel> GetOneAsync(TKey key)
         {
             byte[] modelData =
-                await _distributedCache.GetAsync($"{typeof(TModel).Name}({key})");
+                await _distributedCache.GetAsync(GetCacheKey(key));
 
             if (modelData != null)
             {
@@ -62,7 +68,7 @@ namespace Snacks.Entity.Core.Caching
 
         public async Task SetOneAsync(TModel model)
         {
-            await _distributedCache.SetAsync(GetModelKey(model), model.ToByteArray());
+            await _distributedCache.SetAsync(GetCacheKey(model), model.ToByteArray());
         }
 
         public async Task<TModel> GetCustomOneAsync(string cacheKey)
@@ -116,9 +122,14 @@ namespace Snacks.Entity.Core.Caching
             }
         }
 
-        private string GetModelKey(TModel model)
+        private string GetCacheKey(TModel model)
         {
             TKey key = (TKey)_primaryKey.GetValue(model);
+            return $"{typeof(TModel).Name}({key})";
+        }
+
+        private string GetCacheKey(TKey key)
+        {
             return $"{typeof(TModel).Name}({key})";
         }
 

@@ -5,11 +5,12 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using MySql.Data.MySqlClient;
+using Snacks.Entity.Core.Caching;
+using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
@@ -17,7 +18,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core
+namespace Snacks.Entity.Core.Entity
 {
     /// <summary>
     /// 
@@ -26,7 +27,7 @@ namespace Snacks.Entity.Core
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TDbService"></typeparam>
     /// <typeparam name="TDbConnection"></typeparam>
-    public class EntityService<TModel, TKey, TDbService, TDbConnection> : 
+    public abstract class BaseEntityService<TModel, TKey, TDbService, TDbConnection> : 
         IEntityService<TModel, TKey, TDbService, TDbConnection>
         where TModel : IEntityModel<TKey>
         where TDbConnection : IDbConnection
@@ -37,11 +38,9 @@ namespace Snacks.Entity.Core
         protected readonly IServiceProvider _serviceProvider;
         protected readonly ILogger _logger;
 
-        public string TableName { get; private set; }
-        public PropertyInfo PrimaryKey { get; private set; }
-        public ColumnAttribute PrimaryKeyColumn { get; private set; }
+        public TableMapping TableMapping { get; private set; }
 
-        public EntityService(
+        public BaseEntityService(
             IServiceProvider serviceProvider,
             ILogger logger)
         {
@@ -50,13 +49,10 @@ namespace Snacks.Entity.Core
             _serviceProvider = serviceProvider;
             _logger = logger;
 
-            TableName = typeof(TModel).GetCustomAttribute<TableAttribute>()?.Name;
-            PrimaryKey = typeof(TModel).GetProperties().FirstOrDefault(
-                x => x.IsDefined(typeof(KeyAttribute)));
-            PrimaryKeyColumn = PrimaryKey.GetCustomAttribute<ColumnAttribute>();
+            TableMapping = TableMapping.GetMapping<TModel>();
         }
 
-        public virtual async Task<List<TModel>> CreateManyAsync(List<TModel> models, IDbTransaction transaction = null)
+        public virtual async Task<IList<TModel>> CreateManyAsync(IList<TModel> models, IDbTransaction transaction = null)
         {
             _logger.LogInformation($"Inserting {models.Count} {typeof(TModel).Name}s");
 
@@ -69,13 +65,23 @@ namespace Snacks.Entity.Core
 
             _logger.LogInformation($"{newModels.Count} {typeof(TModel).Name}s inserted");
 
-            await _cacheService.RemoveManyAsync();
+            if (_cacheService != null)
+            {
+                await _cacheService.RemoveManyAsync();
+            }
 
             return newModels;
         }
 
         public virtual async Task<TModel> CreateOneAsync(TModel model, IDbTransaction transaction = null)
         {
+            if (!TableMapping.KeyColumn.IsDatabaseGenerated || 
+                TableMapping.KeyColumn.GetValue(model) == null ||
+                TableMapping.KeyColumn.GetValue(model).Equals(default(TKey)))
+            {
+                throw new KeyValueInvalidException();
+            }
+
             _logger.LogInformation($"Inserting one {typeof(TModel).Name}");
 
             if (model.IdempotencyKey != null)
@@ -85,7 +91,7 @@ namespace Snacks.Entity.Core
 
                 if (idempotentModel != null)
                 {
-                    throw new EntityIdempotencyKeyUsedException();
+                    throw new IdempotencyKeyUsedException();
                 }
             }
 
@@ -98,7 +104,7 @@ namespace Snacks.Entity.Core
 
             model = await GetLastInsertedAsync(transaction);
 
-            _logger.LogInformation($"{typeof(TModel).Name} ({PrimaryKey.GetValue(model)}) inserted");
+            _logger.LogInformation($"{typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)}) inserted");
 
             if (model.IdempotencyKey != null)
             {
@@ -114,35 +120,37 @@ namespace Snacks.Entity.Core
 
         public virtual async Task DeleteOneAsync(TModel model, IDbTransaction transaction = null)
         {
-            if (PrimaryKey.GetValue(model) == null)
-            {
-                throw new ArgumentException("Model must contain a value for Key.");
-            }
-
-            _logger.LogInformation($"Deleting {typeof(TModel).Name} ({PrimaryKey.GetValue(model)})");
-
             string statement = GetDeleteStatement();
 
-            await _databaseService.ExecuteSqlAsync(statement, new { Key = PrimaryKey.GetValue(model) });
+            await _databaseService.ExecuteSqlAsync(statement, new { Key = TableMapping.KeyColumn.GetValue(model) });
 
-            _logger.LogInformation($"{typeof(TModel).Name} ({PrimaryKey.GetValue(model)}) deleted");
+            _logger.LogInformation($"{typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)}) deleted");
             await _cacheService.RemoveOneAsync(model);
             await _cacheService.RemoveManyAsync();
         }
 
         public virtual async Task DeleteOneAsync(TKey key, IDbTransaction transaction = null)
         {
-            if (key.Equals(default(TKey)))
+            if (key == null || key.Equals(default(TKey)))
             {
-                
+                throw new KeyValueInvalidException();
             }
+
+            _logger.LogInformation($"Deleting {typeof(TModel).Name} ({key})");
+
+            string statement = GetDeleteStatement();
+            await _databaseService.ExecuteSqlAsync(statement, new { Key = key });
+
+            _logger.LogInformation($"{typeof(TModel).Name} ({key}) deleted");
+            await _cacheService.RemoveOneAsync(key);
+            await _cacheService.RemoveManyAsync();
         }
 
-        public virtual async Task<List<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null)
+        public virtual async Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null)
         {
             _logger.LogInformation($"Retrieving multiple {typeof(TModel).Name}s");
 
-            List<TModel> cachedModels = await _cacheService.GetManyAsync(queryCollection);
+            IList<TModel> cachedModels = await _cacheService.GetManyAsync(queryCollection);
 
             if (cachedModels != null)
             {
@@ -163,7 +171,7 @@ namespace Snacks.Entity.Core
             return models;
         }
 
-        public virtual async Task<List<TModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null)
+        public virtual async Task<IList<TModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null)
         {
             return await GetManyAsync(
                 new QueryCollection(queryCollection), transaction);
@@ -200,12 +208,12 @@ namespace Snacks.Entity.Core
 
         public virtual async Task UpdateOneAsync(TModel model, IDbTransaction transaction = null)
         {
-            if (PrimaryKey.GetValue(model) == null)
+            if (TableMapping.KeyColumn.GetValue(model) == null)
             {
                 throw new ArgumentException("Model must contain a value for Id.");
             }
 
-            _logger.LogInformation($"Updating {typeof(TModel).Name} ({PrimaryKey.GetValue(model)})");
+            _logger.LogInformation($"Updating {typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)})");
 
             string statement = GetUpdateStatement();
             DynamicParameters parameters = GetDynamicUpdateParameters(model);
@@ -218,31 +226,12 @@ namespace Snacks.Entity.Core
             await _cacheService.RemoveOneAsync(model);
             await _cacheService.RemoveManyAsync();
 
-            model = await GetOneAsync((TKey)PrimaryKey.GetValue(model), transaction);
+            model = await GetOneAsync((TKey)TableMapping.KeyColumn.GetValue(model), transaction);
 
             await _cacheService.SetOneAsync(model);
 
-            _logger.LogInformation($"Updated {typeof(TModel).Name} ({PrimaryKey.GetValue(model)})");
+            _logger.LogInformation($"Updated {typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)})");
             await _cacheService.RemoveManyAsync();
-        }
-
-        public virtual async Task InitializeAsync()
-        {
-            if (typeof(TDbConnection) == typeof(MySqlConnection))
-            {
-                if (!new[] { typeof(int?) }.Contains(PrimaryKey.PropertyType))
-                {
-                    throw new PrimaryKeyTypeNotValidException<TDbConnection>(PrimaryKey);
-                }
-            }
-            else if (typeof(TDbConnection) == typeof(SqliteConnection))
-            {
-                if (typeof(TDbService) == typeof(SqliteService))
-                {
-                    // TODO: Should this be an optional item?
-                    await (_databaseService as SqliteService).CreateTableAsync<TModel>();
-                }
-            }
         }
 
         private string GetSelectByKeyStatement()
@@ -251,8 +240,8 @@ namespace Snacks.Entity.Core
 
             return $@"
                 select {string.Join(',', columns.Select(x => $"{x.Item2.Name} `{x.Item1.Name}`"))}
-                from {TableName}
-                where {PrimaryKeyColumn.Name} = @Key";
+                from {TableMapping.Name}
+                where {TableMapping.KeyColumn.Name} = @Key";
         }
 
         private string GetSelectStatement(IQueryCollection queryCollection)
@@ -338,7 +327,7 @@ namespace Snacks.Entity.Core
 
             return $@"
                 select {string.Join(',', columns.Select(x => $"{x.Item2.Name} `{x.Item1.Name}`"))}
-                from {TableName}
+                from {TableMapping.Name}
                 {(filters.Any() ? "where" : "")} {string.Join(" and ", filterStrings)}
                 {(orderByColumns.Count > 0 ? $"order by {string.Join(',', orderByColumns.Select(x => $"{x.Item1.Name} {x.Item2}"))}" : "")}
                 {(limit != null ? $"limit {offset ?? 0}, {limit}" : "")}";
@@ -364,7 +353,7 @@ namespace Snacks.Entity.Core
                 GetColumns().Where(x => !x.Item1.IsDefined(typeof(ReadOnlyAttribute)));
 
             return $@"
-                update {TableName}
+                update {TableMapping.Name}
                 set {string.Join(",", columns.Select(x => $"{x.Item2.Name} = @{x.Item1.Name}"))}
                 where key = @Key";
         }
@@ -383,7 +372,7 @@ namespace Snacks.Entity.Core
 
         private string GetDeleteStatement()
         {
-            return $"delete from {TableName} where id = @Id";
+            return $"delete from {TableMapping.Name} where id = @Id";
         }
 
         private string GetInsertStatement()
@@ -399,7 +388,7 @@ namespace Snacks.Entity.Core
                 GetColumns().Where(x => x.Item1.GetCustomAttribute<ReadOnlyAttribute>() == null);
 
             return $@"
-                insert into {TableName} ({string.Join(",", columns.Select(x => $"{x.Item2.Name}"))})
+                insert into {TableMapping.Name} ({string.Join(",", columns.Select(x => $"{x.Item2.Name}"))})
                 values ({string.Join(",", columns.Select(x => $"@{x.Item1.Name}"))})";
         }
 
@@ -513,18 +502,23 @@ namespace Snacks.Entity.Core
 
                 await _databaseService.QuerySingleAsync<TModel>(@$"
                     select *
-                    from {TableName}
-                    where {PrimaryKeyColumn.Name} = @id", new { id }, transaction);
+                    from {TableMapping.Name}
+                    where {TableMapping.KeyColumn.Name} = @id", new { id }, transaction);
             }
             else if (typeof(TDbConnection) == typeof(SqliteConnection))
             {
                 return await _databaseService.QuerySingleAsync<TModel>(@$"
-                    SELECT 
-                    FROM {TableName}
+                    SELECT *
+                    FROM {TableMapping.Name}
                     WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
             }
 
             return default;
+        }
+
+        public virtual Task InitializeAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

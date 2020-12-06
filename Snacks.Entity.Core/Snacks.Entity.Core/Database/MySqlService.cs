@@ -6,7 +6,7 @@ using System.Data;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core
+namespace Snacks.Entity.Core.Database
 {
     public class MySqlService : IDbService<MySqlConnection>
     {

@@ -6,7 +6,7 @@ namespace Snacks.Entity.Core.Exceptions
     /// <summary>
     /// 
     /// </summary>
-    class EntityIdempotencyKeyUsedException : Exception, ISerializable
+    public class IdempotencyKeyUsedException : Exception, ISerializable
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core
+namespace Snacks.Entity.Core.Database
 {
     public class SqliteService : IDbService<SqliteConnection>
     {
