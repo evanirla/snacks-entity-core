@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Snacks.Entity.Core.Entity
@@ -14,5 +17,7 @@ namespace Snacks.Entity.Core.Entity
         /// </summary>
         [NotMapped]
         string IdempotencyKey { get; set; }
+
+        void SetKey(TKey key);
     }
 }

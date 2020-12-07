@@ -17,7 +17,7 @@ namespace Snacks.Entity.Core.Entity
     public interface IEntityService<TModel, TKey, TDbService, TDbConnection> 
         where TModel : IEntityModel<TKey> 
         where TDbConnection : IDbConnection
-        where TDbService : IDbService<IDbConnection>
+        where TDbService : IDbService<TDbConnection>
     {
         /// <summary>
         /// 

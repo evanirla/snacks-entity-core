@@ -31,9 +31,9 @@ namespace Snacks.Entity.Core.Entity
         IEntityService<TModel, TKey, TDbService, TDbConnection>
         where TModel : IEntityModel<TKey>
         where TDbConnection : IDbConnection
-        where TDbService : IDbService<IDbConnection>
+        where TDbService : IDbService<TDbConnection>
     {
-        protected readonly TDbService _databaseService;
+        protected readonly TDbService _dbService;
         protected readonly IEntityCacheService<TModel, TKey> _cacheService;
         protected readonly IServiceProvider _serviceProvider;
         protected readonly ILogger _logger;
@@ -44,7 +44,7 @@ namespace Snacks.Entity.Core.Entity
             IServiceProvider serviceProvider,
             ILogger logger)
         {
-            _databaseService = (TDbService)serviceProvider.GetService(typeof(IDbService<IDbConnection>));
+            _dbService = (TDbService)serviceProvider.GetService(typeof(IDbService<TDbConnection>));
             _cacheService = (IEntityCacheService<TModel, TKey>)serviceProvider.GetService(typeof(IEntityCacheService<TModel, TKey>));
             _serviceProvider = serviceProvider;
             _logger = logger;
@@ -75,9 +75,9 @@ namespace Snacks.Entity.Core.Entity
 
         public virtual async Task<TModel> CreateOneAsync(TModel model, IDbTransaction transaction = null)
         {
-            if (!TableMapping.KeyColumn.IsDatabaseGenerated || 
-                TableMapping.KeyColumn.GetValue(model) == null ||
-                TableMapping.KeyColumn.GetValue(model).Equals(default(TKey)))
+            if (!TableMapping.KeyColumn.IsDatabaseGenerated &&
+                (TableMapping.KeyColumn.GetValue(model) == null ||
+                TableMapping.KeyColumn.GetValue(model).Equals(default(TKey))))
             {
                 throw new KeyValueInvalidException();
             }
@@ -97,7 +97,7 @@ namespace Snacks.Entity.Core.Entity
 
             string statement = GetInsertStatement();
 
-            await _databaseService.ExecuteSqlAsync(
+            await _dbService.ExecuteSqlAsync(
                 statement,
                 GetDynamicInsertParameters(model),
                 transaction);
@@ -122,7 +122,7 @@ namespace Snacks.Entity.Core.Entity
         {
             string statement = GetDeleteStatement();
 
-            await _databaseService.ExecuteSqlAsync(statement, new { Key = TableMapping.KeyColumn.GetValue(model) });
+            await _dbService.ExecuteSqlAsync(statement, new { Key = TableMapping.KeyColumn.GetValue(model) });
 
             _logger.LogInformation($"{typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)}) deleted");
             await _cacheService.RemoveOneAsync(model);
@@ -139,7 +139,7 @@ namespace Snacks.Entity.Core.Entity
             _logger.LogInformation($"Deleting {typeof(TModel).Name} ({key})");
 
             string statement = GetDeleteStatement();
-            await _databaseService.ExecuteSqlAsync(statement, new { Key = key });
+            await _dbService.ExecuteSqlAsync(statement, new { Key = key });
 
             _logger.LogInformation($"{typeof(TModel).Name} ({key}) deleted");
             await _cacheService.RemoveOneAsync(key);
@@ -162,7 +162,7 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetSelectStatement(queryCollection);
             DynamicParameters parameters = GetDynamicQueryParameters(queryCollection);
 
-            List<TModel> models = (await _databaseService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
+            List<TModel> models = (await _dbService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
 
             _logger.LogInformation($"Retrieved {models.Count} {typeof(TModel).Name}s");
 
@@ -191,7 +191,7 @@ namespace Snacks.Entity.Core.Entity
 
             string statement = GetSelectByKeyStatement();
 
-            TModel model = await _databaseService.QuerySingleAsync<TModel>(statement, new { Key = key }, transaction);
+            TModel model = await _dbService.QuerySingleAsync<TModel>(statement, new { Key = key }, transaction);
 
             if (model != null)
             {
@@ -218,7 +218,7 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetUpdateStatement();
             DynamicParameters parameters = GetDynamicUpdateParameters(model);
 
-            await _databaseService.ExecuteSqlAsync(
+            await _dbService.ExecuteSqlAsync(
                 statement,
                 parameters,
                 transaction);
@@ -236,10 +236,8 @@ namespace Snacks.Entity.Core.Entity
 
         private string GetSelectByKeyStatement()
         {
-            List<Tuple<PropertyInfo, ColumnAttribute>> columns = GetColumns();
-
             return $@"
-                select {string.Join(',', columns.Select(x => $"{x.Item2.Name} `{x.Item1.Name}`"))}
+                select {string.Join(',', TableMapping.Columns.Select(x => $"{x.Name} `{x.Property.Name}`"))}
                 from {TableMapping.Name}
                 where {TableMapping.KeyColumn.Name} = @Key";
         }
@@ -248,11 +246,9 @@ namespace Snacks.Entity.Core.Entity
         {
             Type entityType = typeof(TModel);
 
-            List<Tuple<PropertyInfo, ColumnAttribute>> columns = GetColumns();
-
             Regex filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
 
-            List<Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>> filters =
+            List<Tuple<TableColumnMapping, string, object>> filters =
                 GetSelectFilters(queryCollection);
 
             int? limit = null;
@@ -286,47 +282,47 @@ namespace Snacks.Entity.Core.Entity
             {
                 if (filter.Item2 == "like")
                 {
-                    filterStrings.Add($"lower({filter.Item1.Item2.Name}) like lower(@{filter.Item1.Item1.Name})");
+                    filterStrings.Add($"lower({filter.Item1.Name}) like lower(@{filter.Item1.Property.Name})");
                 }
                 else
                 {
-                    filterStrings.Add($"{filter.Item1.Item2.Name} {filter.Item2} @{filter.Item1.Item1.Name}");
+                    filterStrings.Add($"{filter.Item1.Name} {filter.Item2} @{filter.Item1.Property.Name}");
                 }
             }
 
-            List<Tuple<ColumnAttribute, string>> orderByColumns =
-                new List<Tuple<ColumnAttribute, string>>();
+            List<Tuple<TableColumnMapping, string>> orderByColumns =
+                new List<Tuple<TableColumnMapping, string>>();
 
             foreach (string s in orderByAsc)
             {
-                Tuple<PropertyInfo, ColumnAttribute> orderByColumn =
-                    columns.FirstOrDefault(x =>
-                        x.Item1.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase) ||
-                        x.Item2.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase));
+                TableColumnMapping orderByColumn =
+                    TableMapping.Columns.FirstOrDefault(x =>
+                        x.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase) ||
+                        x.Property.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase));
 
                 if (orderByColumn != null)
                 {
-                    orderByColumns.Add(new Tuple<ColumnAttribute, string>(
-                        orderByColumn.Item2, "asc"));
+                    orderByColumns.Add(new Tuple<TableColumnMapping, string>(
+                        orderByColumn, "asc"));
                 }
             }
 
             foreach (string s in orderByDesc)
             {
-                Tuple<PropertyInfo, ColumnAttribute> orderByColumn =
-                    columns.FirstOrDefault(x =>
-                        x.Item1.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase) ||
-                        x.Item2.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase));
+                TableColumnMapping orderByColumn =
+                    TableMapping.Columns.FirstOrDefault(x =>
+                        x.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase) ||
+                        x.Property.Name.Equals(s, StringComparison.InvariantCultureIgnoreCase));
 
                 if (orderByColumn != null)
                 {
-                    orderByColumns.Add(new Tuple<ColumnAttribute, string>(
-                        orderByColumn.Item2, "desc"));
+                    orderByColumns.Add(new Tuple<TableColumnMapping, string>(
+                        orderByColumn, "desc"));
                 }
             }
 
             return $@"
-                select {string.Join(',', columns.Select(x => $"{x.Item2.Name} `{x.Item1.Name}`"))}
+                select {string.Join(',', TableMapping.Columns.Select(x => $"{x.Name} `{x.Property.Name}`"))}
                 from {TableMapping.Name}
                 {(filters.Any() ? "where" : "")} {string.Join(" and ", filterStrings)}
                 {(orderByColumns.Count > 0 ? $"order by {string.Join(',', orderByColumns.Select(x => $"{x.Item1.Name} {x.Item2}"))}" : "")}
@@ -335,13 +331,13 @@ namespace Snacks.Entity.Core.Entity
 
         private DynamicParameters GetDynamicQueryParameters(IQueryCollection queryCollection)
         {
-            List<Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>> filters = GetSelectFilters(queryCollection);
+            List<Tuple<TableColumnMapping, string, object>> filters = GetSelectFilters(queryCollection);
 
             DynamicParameters parameters = new DynamicParameters();
 
             foreach (var filter in filters)
             {
-                parameters.Add(filter.Item1.Item1.Name, filter.Item3);
+                parameters.Add(filter.Item1.Property.Name, filter.Item3);
             }
 
             return parameters;
@@ -349,12 +345,14 @@ namespace Snacks.Entity.Core.Entity
 
         private string GetUpdateStatement()
         {
-            IEnumerable<Tuple<PropertyInfo, ColumnAttribute>> columns =
-                GetColumns().Where(x => !x.Item1.IsDefined(typeof(ReadOnlyAttribute)));
+            IEnumerable<TableColumnMapping> columns =
+                TableMapping.Columns.Where(x => !(
+                    x.IsDatabaseGenerated && 
+                    x.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Computed));
 
             return $@"
                 update {TableMapping.Name}
-                set {string.Join(",", columns.Select(x => $"{x.Item2.Name} = @{x.Item1.Name}"))}
+                set {string.Join(",", columns.Select(x => $"{x.Name} = @{x.Property.Name}"))}
                 where key = @Key";
         }
 
@@ -362,9 +360,9 @@ namespace Snacks.Entity.Core.Entity
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            foreach (Tuple<PropertyInfo, ColumnAttribute> column in GetColumns())
+            foreach (TableColumnMapping column in TableMapping.Columns)
             {
-                parameters.Add(column.Item1.Name, column.Item1.GetValue(model));
+                parameters.Add(column.Property.Name, column.GetValue(model));
             }
 
             return parameters;
@@ -377,62 +375,27 @@ namespace Snacks.Entity.Core.Entity
 
         private string GetInsertStatement()
         {
-            Type entityType = typeof(TModel);
-
-            if (!entityType.IsDefined(typeof(TableAttribute)))
-            {
-                throw new Exception($"{entityType.Name} must have a table attribute specified.");
-            }
-
-            IEnumerable<Tuple<PropertyInfo, ColumnAttribute>> columns =
-                GetColumns().Where(x => x.Item1.GetCustomAttribute<ReadOnlyAttribute>() == null);
-
             return $@"
-                insert into {TableMapping.Name} ({string.Join(",", columns.Select(x => $"{x.Item2.Name}"))})
-                values ({string.Join(",", columns.Select(x => $"@{x.Item1.Name}"))})";
+                insert into {TableMapping.Name} ({string.Join(",", TableMapping.Columns.Select(x => $"{x.Name}"))})
+                values ({string.Join(",", TableMapping.Columns.Select(x => $"@{x.Property.Name}"))})";
         }
 
         private DynamicParameters GetDynamicInsertParameters(TModel model)
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            foreach (Tuple<PropertyInfo, ColumnAttribute> column in GetColumns())
+            foreach (TableColumnMapping column in TableMapping.Columns)
             {
-                if (column.Item1.GetCustomAttribute<ReadOnlyAttribute>() == null)
-                {
-                    parameters.Add(column.Item1.Name, column.Item1.GetValue(model));
-                }
+                parameters.Add(column.Property.Name, column.GetValue(model));
             }
 
             return parameters;
         }
 
-        private List<Tuple<PropertyInfo, ColumnAttribute>> GetColumns()
+        private List<Tuple<TableColumnMapping, string, object>> GetSelectFilters(IQueryCollection queryCollection)
         {
-            Type entityType = typeof(TModel);
-
-            List<PropertyInfo> properties = entityType.GetProperties().ToList();
-
-            List<Tuple<PropertyInfo, ColumnAttribute>> columns = new List<Tuple<PropertyInfo, ColumnAttribute>>();
-
-            foreach (PropertyInfo property in properties)
-            {
-                ColumnAttribute columnAttribute = property.GetCustomAttribute<ColumnAttribute>();
-
-                if (columnAttribute != null)
-                {
-                    columns.Add(new Tuple<PropertyInfo, ColumnAttribute>(property, columnAttribute));
-                }
-            }
-
-            return columns;
-        }
-
-        private List<Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>> GetSelectFilters(IQueryCollection queryCollection)
-        {
-            List<Tuple<PropertyInfo, ColumnAttribute>> columns = GetColumns();
-            List<Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>> filters =
-                new List<Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>>();
+            List<Tuple<TableColumnMapping, string, object>> filters = 
+                new List<Tuple<TableColumnMapping, string, object>>();
 
             Regex filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
 
@@ -444,10 +407,10 @@ namespace Snacks.Entity.Core.Entity
 
                     GroupCollection filterGroups = filterMatch.Groups;
 
-                    Tuple<PropertyInfo, ColumnAttribute> column =
-                        columns.FirstOrDefault(x =>
-                            x.Item1.Name.Equals(filterGroups[1].Value, StringComparison.InvariantCultureIgnoreCase) ||
-                            x.Item2.Name.Equals(filterGroups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                    TableColumnMapping column =
+                        TableMapping.Columns.FirstOrDefault(x =>
+                            x.Name.Equals(filterGroups[1].Value, StringComparison.InvariantCultureIgnoreCase) ||
+                            x.Property.Name.Equals(filterGroups[1].Value, StringComparison.InvariantCultureIgnoreCase));
 
                     if (column == null)
                     {
@@ -468,11 +431,13 @@ namespace Snacks.Entity.Core.Entity
                     };
                     object castedValue = null;
 
-                    if (column.Item1.PropertyType == typeof(DateTime) || column.Item1.PropertyType == typeof(DateTime?))
+                    Type propertyType = Nullable.GetUnderlyingType(column.Property.PropertyType) ?? column.Property.PropertyType;
+
+                    if (propertyType == typeof(DateTime))
                     {
                         castedValue = DateTime.Parse(query.Value.ToString());
                     }
-                    else if (column.Item1.PropertyType == typeof(int) || column.Item1.PropertyType == typeof(int?))
+                    else if (propertyType == typeof(int))
                     {
                         castedValue = int.Parse(query.Value.ToString());
                     }
@@ -480,10 +445,10 @@ namespace Snacks.Entity.Core.Entity
                     {
                         castedValue = Convert.ChangeType(
                             query.Value.ToString(),
-                            column.Item1.PropertyType);
+                            column.Property.PropertyType);
                     }
 
-                    filters.Add(new Tuple<Tuple<PropertyInfo, ColumnAttribute>, string, object>(
+                    filters.Add(new Tuple<TableColumnMapping, string, object>(
                         column,
                         @operator,
                         castedValue));
@@ -497,17 +462,17 @@ namespace Snacks.Entity.Core.Entity
         {
             if (typeof(TDbConnection) == typeof(MySqlConnection))
             {
-                int? id = await _databaseService.QuerySingleAsync<int>(
+                int? id = await _dbService.QuerySingleAsync<int>(
                     "select last_insert_id() from dual", null, transaction);
 
-                await _databaseService.QuerySingleAsync<TModel>(@$"
+                await _dbService.QuerySingleAsync<TModel>(@$"
                     select *
                     from {TableMapping.Name}
                     where {TableMapping.KeyColumn.Name} = @id", new { id }, transaction);
             }
             else if (typeof(TDbConnection) == typeof(SqliteConnection))
             {
-                return await _databaseService.QuerySingleAsync<TModel>(@$"
+                return await _dbService.QuerySingleAsync<TModel>(@$"
                     SELECT *
                     FROM {TableMapping.Name}
                     WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
@@ -518,7 +483,13 @@ namespace Snacks.Entity.Core.Entity
 
         public virtual Task InitializeAsync()
         {
-            throw new NotImplementedException();
+            if (TableMapping.KeyColumn == null)
+            {
+                // TODO: Better exception
+                throw new Exception("Key column doesn't exist.");
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Snacks.Entity.Core.Database;
+using TestApplication.Services;
 
 namespace TestApplication
 {
@@ -27,6 +30,10 @@ namespace TestApplication
         {
             services.AddControllers();
 
+            services.AddSingleton<IDbService<SqliteConnection>>(new SqliteService("Data Source=snacks.db"));
+            services.AddSingleton<ClassService>();
+            services.AddSingleton<StudentService>();
+            services.AddSingleton<ClassStudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +54,9 @@ namespace TestApplication
             {
                 endpoints.MapControllers();
             });
+
+            Task.WaitAll(
+                app.ApplicationServices.GetService<ClassService>().InitializeAsync());
         }
     }
 }

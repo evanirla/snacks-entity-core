@@ -20,7 +20,7 @@ namespace Snacks.Entity.Core.Caching
             IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
-            _primaryKey = typeof(TModel).GetProperties(BindingFlags.Public)
+            _primaryKey = typeof(TModel).GetProperties()
                 .FirstOrDefault(x => x.IsDefined(typeof(KeyAttribute)));
         }
 

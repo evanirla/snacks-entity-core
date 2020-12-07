@@ -11,11 +11,12 @@ namespace Snacks.Entity.Core.Database
 {
     public class TableMapping
     {
+        public Type ModelType { get; set; }
         public TableAttribute TableAttribute { get; set; }
         public List<TableColumnMapping> Columns { get; set; }
 
-        public string Name => TableAttribute.Name;
-        public string Schema => TableAttribute.Schema;
+        public string Name => TableAttribute?.Name ?? ModelType.Name;
+        public string Schema => TableAttribute?.Schema;
         public TableColumnMapping KeyColumn => Columns.FirstOrDefault(x => x.IsKey);
         public IEnumerable<IGrouping<string, TableColumnMapping>> Indexes => Columns
             .Where(x => x.IsIndexed)
@@ -30,8 +31,9 @@ namespace Snacks.Entity.Core.Database
         {
             return new TableMapping
             {
+                ModelType = type,
                 TableAttribute = type.GetCustomAttribute<TableAttribute>(),
-                Columns = type.GetProperties(BindingFlags.Public)
+                Columns = type.GetProperties()
                     .Where(x => !x.IsDefined(typeof(NotMappedAttribute)))
                     .Select(x => new TableColumnMapping
                     {

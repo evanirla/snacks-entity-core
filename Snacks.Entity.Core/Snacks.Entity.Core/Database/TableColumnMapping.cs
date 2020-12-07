@@ -1,6 +1,7 @@
 ﻿using Snacks.Entity.Core.Attributes;
 using Snacks.Entity.Core.Entity;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;

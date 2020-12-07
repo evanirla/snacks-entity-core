@@ -1,4 +1,5 @@
 ﻿using Snacks.Entity.Core;
+using Snacks.Entity.Core.Attributes;
 using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace TestApplication.Models
 {
     public class Student : BaseEntityModel<int>
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int StudentId { get; set; }
+
+        [Unique]
         public string Name { get; set; }
     }
 }
