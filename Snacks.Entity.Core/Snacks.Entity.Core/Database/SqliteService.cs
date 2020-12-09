@@ -49,6 +49,11 @@ namespace Snacks.Entity.Core.Database
             return connection;
         }
 
+        async Task<IDbConnection> IDbService.GetConnectionAsync()
+        {
+            return await GetConnectionAsync();
+        }
+
         public async Task InitializeAsync()
         {
             if (_initialized) return;

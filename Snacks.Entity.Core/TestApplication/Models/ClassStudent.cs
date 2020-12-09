@@ -16,8 +16,13 @@ namespace TestApplication.Models
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }
+        public Student Student { get; set; }
 
         [ForeignKey("Class")]
         public int ClassId { get; set; }
+        public Class Class { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

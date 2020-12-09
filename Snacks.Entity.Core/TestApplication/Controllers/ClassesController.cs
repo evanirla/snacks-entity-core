@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Snacks.Entity.Core.Controllers;
 using Snacks.Entity.Core.Database;
+using Snacks.Entity.Core.Entity;
 using TestApplication.Models;
 using TestApplication.Services;
 
@@ -16,9 +17,32 @@ namespace TestApplication.Controllers
     [ApiController]
     public class ClassesController : BaseEntityController<Class, int, SqliteService, SqliteConnection>
     {
-        public ClassesController(ClassService classService) : base(classService)
+        public ClassesController(IEntityService<Class> classService) : base((ClassService)classService)
         {
             
+        }
+
+        public override async Task<IActionResult> GetAsync()
+        {
+            await _entityService.CreateManyAsync(new List<Class>
+            {
+                new Class
+                {
+                    Name = "Math 101",
+                    Students = new List<ClassStudent>
+                    {
+                        new ClassStudent
+                        {
+                            Student = new Student
+                            {
+                                Name = "Jase Markerton"
+                            }
+                        }
+                    }
+                }
+            });
+
+            return await base.GetAsync();
         }
     }
 }

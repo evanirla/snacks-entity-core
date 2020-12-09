@@ -17,9 +17,10 @@ namespace TestApplication.Services
             
         }
 
-        public override Task InitializeAsync()
+        public override async Task InitializeAsync()
         {
-            throw new NotImplementedException();
+            SqliteTableBuilder sqliteTableBuilder = new SqliteTableBuilder(_dbService);
+            await sqliteTableBuilder.CreateTableAsync<Student>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Snacks.Entity.Core.Attributes;
+using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,8 @@ namespace Snacks.Entity.Core.Database
                 TableAttribute = type.GetCustomAttribute<TableAttribute>(),
                 Columns = type.GetProperties()
                     .Where(x => !x.IsDefined(typeof(NotMappedAttribute)))
+                    .Where(x => !x.PropertyType.IsGenericType)
+                    .Where(x => !typeof(IEntityModel).IsAssignableFrom(x.PropertyType))
                     .Select(x => new TableColumnMapping
                     {
                         ColumnAttribute = x.GetCustomAttribute<ColumnAttribute>(),

@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Snacks.Entity.Core.Database;
+using Snacks.Entity.Core.Entity;
+using TestApplication.Models;
 using TestApplication.Services;
 
 namespace TestApplication
@@ -31,9 +33,9 @@ namespace TestApplication
             services.AddControllers();
 
             services.AddSingleton<IDbService<SqliteConnection>>(new SqliteService("Data Source=snacks.db"));
-            services.AddSingleton<ClassService>();
-            services.AddSingleton<StudentService>();
-            services.AddSingleton<ClassStudentService>();
+            services.AddSingleton<IEntityService<Class>, ClassService>();
+            services.AddSingleton<IEntityService<Student>, StudentService>();
+            services.AddSingleton<IEntityService<ClassStudent>, ClassStudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +58,9 @@ namespace TestApplication
             });
 
             Task.WaitAll(
-                app.ApplicationServices.GetService<ClassService>().InitializeAsync());
+                app.ApplicationServices.GetService<IEntityService<Class>>().InitializeAsync(),
+                app.ApplicationServices.GetService<IEntityService<Student>>().InitializeAsync(),
+                app.ApplicationServices.GetService<IEntityService<ClassStudent>>().InitializeAsync());
         }
     }
 }

@@ -212,5 +212,10 @@ namespace Snacks.Entity.Core.Database
             _logger.LogInformation("MySql connection successful");
             return connection;
         }
+
+        async Task<IDbConnection> IDbService.GetConnectionAsync()
+        {
+            return await GetConnectionAsync();
+        }
     }
 }

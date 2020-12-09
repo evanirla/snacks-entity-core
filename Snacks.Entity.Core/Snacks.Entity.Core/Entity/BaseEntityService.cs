@@ -10,11 +10,9 @@ using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -52,6 +50,17 @@ namespace Snacks.Entity.Core.Entity
             TableMapping = TableMapping.GetMapping<TModel>();
         }
 
+        public virtual Task InitializeAsync()
+        {
+            if (TableMapping.KeyColumn == null)
+            {
+                // TODO: Better exception
+                throw new Exception("Key column doesn't exist.");
+            }
+
+            return Task.CompletedTask;
+        }
+
         public virtual async Task<IList<TModel>> CreateManyAsync(IList<TModel> models, IDbTransaction transaction = null)
         {
             _logger.LogInformation($"Inserting {models.Count} {typeof(TModel).Name}s");
@@ -84,7 +93,6 @@ namespace Snacks.Entity.Core.Entity
 
             _logger.LogInformation($"Inserting one {typeof(TModel).Name}");
 
-
             if (model.IdempotencyKey != null && _cacheService != null)
             {
                 TModel idempotentModel = await _cacheService.GetCustomOneAsync(
@@ -105,7 +113,48 @@ namespace Snacks.Entity.Core.Entity
                     GetDynamicInsertParameters(model),
                     transaction);
 
+                //TModel newModel = await GetLastInsertedAsync(transaction);
                 model = await GetLastInsertedAsync(transaction);
+
+                // Loop through all columns that have a related entity property and determine whether a new
+                // entity needs to be created.
+                // TODO: Need to handle all the intricacies and errors here.
+                //foreach (TableColumnMapping column in TableMapping.Columns.Where(x => x.ToModelProperty != null))
+                //{
+                //    if (column.GetValue(model) == column.GetDefaultValue())
+                //    {
+                //        IEntityModel relatedModel = (IEntityModel)column.ToModelProperty.GetValue(model);
+                //        if (relatedModel != null)
+                //        {
+                //            TableColumnMapping relatedKey = 
+                //                TableMapping.GetMapping(column.ToModelProperty.PropertyType).KeyColumn;
+
+                //            IEntityService relatedEntityService = GetRelatedService(column.ToModelProperty.PropertyType);
+
+                //            object relatedKeyValue = relatedKey.GetValue(relatedModel);
+
+                //            if (relatedKeyValue != relatedKey.GetDefaultValue())
+                //            {
+                //                if (relatedKey.IsDatabaseGenerated)
+                //                {
+                //                    if (relatedEntityService.GetOneAsync(relatedKeyValue, transaction) != null)
+                //                    {
+                //                        column.SetValue(model, relatedKey.GetValue(relatedModel));
+                //                    }
+                //                }
+                //                else
+                //                {
+                //                    relatedModel = await relatedEntityService.CreateOneAsync(relatedModel, transaction);
+                //                    column.SetValue(newModel, relatedKey.GetValue(relatedModel));
+                //                }
+                //            }
+                //            else
+                //            {
+                //                relatedModel = await relatedEntityService.CreateOneAsync(relatedModel, transaction);
+                //            }
+                //        }
+                //    }
+                //}
             }
 
             if (transaction != null)
@@ -114,14 +163,10 @@ namespace Snacks.Entity.Core.Entity
             }
             else
             {
-                using (var conn = await _dbService.GetConnectionAsync())
-                {
-                    transaction = conn.BeginTransaction();
-
-                    await createOne();
-
-                    transaction.Commit();
-                }
+                using var conn = await _dbService.GetConnectionAsync();
+                transaction = conn.BeginTransaction();
+                await createOne();
+                transaction.Commit();
             }
 
             _logger.LogInformation($"{typeof(TModel).Name} ({TableMapping.KeyColumn.GetValue(model)}) inserted");
@@ -288,6 +333,30 @@ namespace Snacks.Entity.Core.Entity
             }
         }
 
+        protected virtual async Task<TModel> GetLastInsertedAsync(IDbTransaction transaction)
+        {
+            if (typeof(TDbConnection) == typeof(MySqlConnection))
+            {
+                // TODO: This relies on TKey being an integer type, so we need to raise
+                // a proper error if that isn't the case.
+                TKey key = await _dbService.QuerySingleAsync<TKey>(
+                    "select last_insert_id() from dual", null, transaction);
+
+                return await GetOneAsync(key, transaction);
+            }
+            else if (typeof(TDbConnection) == typeof(SqliteConnection))
+            {
+                TKey key = await _dbService.QuerySingleAsync<TKey>(@$"
+                    SELECT {TableMapping.KeyColumn.Name}
+                    FROM {TableMapping.Name}
+                    WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
+
+                return await GetOneAsync(key, transaction);
+            }
+
+            return default;
+        }
+
         private string GetSelectByKeyStatement()
         {
             return $@"
@@ -399,10 +468,11 @@ namespace Snacks.Entity.Core.Entity
 
         private string GetUpdateStatement()
         {
-            IEnumerable<TableColumnMapping> columns =
-                TableMapping.Columns.Where(x => !(
-                    x.IsDatabaseGenerated && 
-                    x.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Computed));
+            IEnumerable<TableColumnMapping> columns = TableMapping.Columns
+                .Where(x => x.IsKey)
+                .Where(x => 
+                    !x.IsDatabaseGenerated ||
+                    x.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Computed);
 
             return $@"
                 update {TableMapping.Name}
@@ -427,10 +497,15 @@ namespace Snacks.Entity.Core.Entity
             return $"delete from {TableMapping.Name} where id = @Id";
         }
 
+        private IEnumerable<TableColumnMapping> GetInsertColumns()
+        {
+            return TableMapping.Columns
+                .Where(x => !x.IsKey || !x.IsDatabaseGenerated);
+        }
+
         private string GetInsertStatement()
         {
-            var insertColumns = TableMapping.Columns.Where(
-                x => !(x == TableMapping.KeyColumn && x.IsDatabaseGenerated));
+            var insertColumns = GetInsertColumns();
 
             return $@"
                 insert into {TableMapping.Name} ({string.Join(",", insertColumns.Select(x => $"{x.Name}"))})
@@ -441,8 +516,7 @@ namespace Snacks.Entity.Core.Entity
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            var insertColumns = TableMapping.Columns.Where(
-                x => !(x == TableMapping.KeyColumn && x.IsDatabaseGenerated));
+            var insertColumns = GetInsertColumns();
 
             foreach (TableColumnMapping column in insertColumns)
             {
@@ -513,44 +587,67 @@ namespace Snacks.Entity.Core.Entity
                         @operator,
                         castedValue));
                 }
+                else
+                {
+                    TableColumnMapping column =
+                        TableMapping.Columns.FirstOrDefault(x =>
+                            x.Name.Equals(query.Key, StringComparison.InvariantCultureIgnoreCase) ||
+                            x.Property.Name.Equals(query.Key, StringComparison.InvariantCultureIgnoreCase));
+                }
             }
 
             return filters;
         }
 
-        protected virtual async Task<TModel> GetLastInsertedAsync(IDbTransaction transaction)
+        public async Task<TModel> GetOneAsync(dynamic key, IDbTransaction transaction = null)
         {
-            if (typeof(TDbConnection) == typeof(MySqlConnection))
-            {
-                // TODO: This relies on TKey being an integer type, so we need to raise
-                // a proper error if that isn't the case.
-                TKey key = await _dbService.QuerySingleAsync<TKey>(
-                    "select last_insert_id() from dual", null, transaction);
-
-                return await GetOneAsync(key, transaction);
-            }
-            else if (typeof(TDbConnection) == typeof(SqliteConnection))
-            {
-                TKey key = await _dbService.QuerySingleAsync<TKey>(@$"
-                    SELECT {TableMapping.KeyColumn.Name}
-                    FROM {TableMapping.Name}
-                    WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
-
-                return await GetOneAsync(key, transaction);
-            }
-
-            return default;
+            return await GetOneAsync((TKey)key, transaction);
         }
 
-        public virtual Task InitializeAsync()
+        async Task<IEntityModel> IEntityService.GetOneAsync(dynamic key, IDbTransaction transaction)
         {
-            if (TableMapping.KeyColumn == null)
-            {
-                // TODO: Better exception
-                throw new Exception("Key column doesn't exist.");
-            }
-
-            return Task.CompletedTask;
+            return await GetOneAsync((TKey)key, transaction);
         }
+
+        async Task<IList<IEntityModel>> IEntityService.GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction)
+        {
+            return (await GetManyAsync(queryCollection, transaction)).Select(x => (IEntityModel)x).ToList();
+        }
+
+        async Task<IList<IEntityModel>> IEntityService.GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction)
+        {
+            return (await GetManyAsync(queryCollection, transaction)).Select(x => (IEntityModel)x).ToList();
+        }
+
+        public async Task<IEntityModel> CreateOneAsync(IEntityModel model, IDbTransaction transaction = null)
+        {
+            return await CreateOneAsync((TModel)model, transaction);
+        }
+
+        public async Task<IList<IEntityModel>> CreateManyAsync(IList<IEntityModel> models, IDbTransaction transaction = null)
+        {
+            return (await CreateManyAsync(models.Select(x => (TModel)x).ToList(), transaction)).Select(x => (IEntityModel)x).ToList();
+        }
+
+        public async Task UpdateOneAsync(IEntityModel model, IDbTransaction transaction = null)
+        {
+            await UpdateOneAsync((TModel)model, transaction);
+        }
+
+        public async Task DeleteOneAsync(dynamic key, IDbTransaction transaction = null)
+        {
+            await DeleteOneAsync((TKey)key, transaction);
+        }
+
+        public async Task DeleteOneAsync(IEntityModel model, IDbTransaction transaction = null)
+        {
+            await DeleteOneAsync((TModel)model, transaction);
+        }
+
+        //private IEntityService GetRelatedService(Type relatedType)
+        //{
+        //    Type relatedServiceType = typeof(IEntityService<>).MakeGenericType(relatedType);
+        //    return (IEntityService)_serviceProvider.GetService(relatedServiceType);
+        //}
     }
 }

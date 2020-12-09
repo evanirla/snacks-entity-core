@@ -12,6 +12,7 @@ namespace Snacks.Entity.Core.Database
     public class TableColumnMapping
     {
         public PropertyInfo Property { get; set; }
+        public PropertyInfo ToModelProperty { get; set; }
         public ColumnAttribute ColumnAttribute { get; set; }
         public DatabaseGeneratedAttribute DatabaseGeneratedAttribute { get; set; }
         public KeyAttribute KeyAttribute { get; set; }
@@ -30,7 +31,7 @@ namespace Snacks.Entity.Core.Database
         public bool IsUnique => IndexedAttribute.Unique;
         public Type ForeignType => AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(x => x.GetTypes())
-            .Where(x => typeof(IEntityModel<>).IsAssignableFrom(x))
+            .Where(x => typeof(IEntityModel).IsAssignableFrom(x))
             .FirstOrDefault(x => x.Name == ForeignKeyAttribute?.Name);
         public TableMapping ForeignTable => TableMapping.GetMapping(ForeignType);
         public TableColumnMapping ForeignColumn => ForeignTable.Columns.FirstOrDefault(x => x.IsKey);
@@ -97,6 +98,21 @@ namespace Snacks.Entity.Core.Database
         public object GetValue(object obj)
         {
             return Property.GetValue(obj);
+        }
+
+        public void SetValue(object obj, object value)
+        {
+            Property.SetValue(obj, value);
+        }
+
+        public object GetDefaultValue()
+        {
+            if (Property.PropertyType.IsValueType)
+            {
+                return Activator.CreateInstance(Property.PropertyType);
+            }
+
+            return null;
         }
     }
 }

@@ -4,6 +4,7 @@ using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using TestApplication.Models;
 
@@ -11,33 +12,66 @@ namespace TestApplication.Services
 {
     public class ClassService : BaseEntityService<Class, int, SqliteService, SqliteConnection>
     {
+        private readonly ClassStudentService _classStudentService;
+        private readonly StudentService _studentService;
+
         public ClassService(
             IServiceProvider serviceProvider,
-            ILogger<ClassService> logger) : base(serviceProvider, logger)
+            ILogger<ClassService> logger,
+            IEntityService<ClassStudent> classStudentService,
+            IEntityService<Student> studentService) : base(serviceProvider, logger)
         {
-            
+            _classStudentService = (ClassStudentService)classStudentService;
+            _studentService = (StudentService)studentService;
         }
 
         public override async Task InitializeAsync()
         {
             SqliteTableBuilder sqliteTableBuilder = new SqliteTableBuilder(_dbService);
             await sqliteTableBuilder.CreateTableAsync<Class>();
+        }
 
-            await CreateManyAsync(new List<Class>
+        public override async Task<Class> CreateOneAsync(Class model, IDbTransaction transaction = null)
+        {
+            async Task<Class> createOne()
             {
-                new Class
+                Class newModel = await base.CreateOneAsync(model, transaction);
+
+                foreach (ClassStudent classStudent in model.Students)
                 {
-                    Name = "Class 1"
-                },
-                new Class
-                {
-                    Name = "Class 2"
-                },
-                new Class
-                {
-                    Name = "Class 3"
+                    classStudent.ClassId = newModel.ClassId;
+
+                    if (classStudent.Student != null)
+                    {
+                        if (classStudent.Student.StudentId != default)
+                        {
+                            classStudent.StudentId = classStudent.Student.StudentId;
+                        }
+                        else
+                        {
+                            classStudent.Student = await _studentService.CreateOneAsync(classStudent.Student, transaction);
+                            classStudent.StudentId = classStudent.Student.StudentId;
+                        }
+                    }
+
+                    await _classStudentService.CreateOneAsync(classStudent, transaction);
                 }
-            });
+
+                return newModel;
+            }
+
+            if (transaction == null)
+            {
+                using SqliteConnection connection = await _dbService.GetConnectionAsync();
+                transaction = connection.BeginTransaction();
+                Class newModel = await createOne();
+                transaction.Commit();
+                return newModel;
+            }
+            else
+            {
+                return await createOne();
+            }
         }
     }
 }

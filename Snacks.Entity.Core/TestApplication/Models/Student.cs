@@ -19,5 +19,13 @@ namespace TestApplication.Models
 
         [Unique]
         public string Name { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
+
+        public IList<ClassStudent> Classes { get; set; }
     }
 }
