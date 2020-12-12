@@ -88,7 +88,7 @@ namespace Snacks.Entity.Core.Database
             if (transaction == null)
             {
                 using SqliteConnection connection = await GetConnectionAsync();
-                return await connection.QueryAsync<T>(sql, parameters, transaction); ;
+                return await connection.QueryAsync<T>(sql, parameters, transaction);
             }
             else
             {

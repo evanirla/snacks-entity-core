@@ -6,6 +6,7 @@ using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using TestApplication.Models;
 
@@ -79,14 +80,24 @@ namespace TestApplication.Services
         {
             Class @class = await GetOneAsync(key);
 
+            if (@class == null)
+            {
+                return default;
+            }
+
             IEnumerable<ClassStudent> classStudents = await _classStudentService.GetManyAsync(@$"
-                select ClassStudentId
+                select StudentId
                 from ClassStudent
                 where ClassId = @Key", @class, transaction);
 
             List<Student> students = new List<Student>();
+            foreach (ClassStudent classStudent in classStudents)
+            {
+                Student student = await _studentService.GetOneAsync(classStudent.StudentId);
+                students.Add(student);
+            }
 
-
+            return students;
         }
     }
 }

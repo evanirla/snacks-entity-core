@@ -11,17 +11,11 @@ namespace TestApplication.Services
 {
     public class ClassStudentService : BaseEntityService<ClassStudent, int, SqliteService, SqliteConnection>
     {
-        readonly IEntityService<Class> _classService;
-        readonly IEntityService<Student> _studentService;
-
         public ClassStudentService(
             IServiceProvider serviceProvider,
-            ILogger<ClassStudentService> logger,
-            IEntityService<Class> classService,
-            IEntityService<Student> studentService) : base(serviceProvider, logger)
+            ILogger<ClassStudentService> logger) : base(serviceProvider, logger)
         {
-            _classService = classService;
-            _studentService = studentService;
+
         }
 
         public override async Task InitializeAsync()
@@ -34,8 +28,8 @@ namespace TestApplication.Services
         {
             ClassStudent classStudent = await base.GetOneAsync(key, transaction);
 
-            classStudent.Class = await _classService.GetOneAsync(classStudent.ClassId);
-            classStudent.Student = await _studentService.GetOneAsync(classStudent.StudentId);
+            classStudent.Class = await GetOtherEntityService<Class>().GetOneAsync(classStudent.ClassId);
+            classStudent.Student = await GetOtherEntityService<Student>().GetOneAsync(classStudent.StudentId);
 
             return classStudent;
         }

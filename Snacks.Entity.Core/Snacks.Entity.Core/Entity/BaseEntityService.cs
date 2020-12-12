@@ -64,7 +64,7 @@ namespace Snacks.Entity.Core.Entity
 
         public virtual async Task<IEnumerable<TModel>> CreateManyAsync(IEnumerable<TModel> models, IDbTransaction transaction = null)
         {
-            _logger.LogInformation($"Inserting {models.Count} {typeof(TModel).Name}s");
+            _logger.LogInformation($"Inserting many {typeof(TModel).Name}s");
 
             List<TModel> newModels = new List<TModel>();
 
@@ -264,15 +264,7 @@ namespace Snacks.Entity.Core.Entity
 
         public async Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null)
         {
-            IEnumerable<TModel> models = await _dbService.QueryAsync<TModel>(sql, parameters, transaction);
-            List<TModel> retrievedModels = new List<TModel>();
-
-            foreach (TModel model in models)
-            {
-                retrievedModels.Add(await GetOneAsync(model.Key));
-            }
-
-            return retrievedModels;
+            return await _dbService.QueryAsync<TModel>(sql, parameters, transaction);
         }
 
         async Task<IEnumerable<IEntityModel>> IEntityService.GetManyAsync(string sql, object parameters, IDbTransaction transaction)
@@ -365,6 +357,11 @@ namespace Snacks.Entity.Core.Entity
             }
 
             return default;
+        }
+
+        protected IEntityService<TOtherModel> GetOtherEntityService<TOtherModel>() where TOtherModel : IEntityModel
+        {
+            return (IEntityService<TOtherModel>)_serviceProvider.GetService(typeof(IEntityService<TOtherModel>));
         }
 
         private string GetSelectByKeyStatement()

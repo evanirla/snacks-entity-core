@@ -18,6 +18,8 @@ namespace TestApplication.Controllers
     [ApiController]
     public class ClassesController : BaseEntityController<Class, int, SqliteService, SqliteConnection>
     {
+        ClassService EntityService => (ClassService)_entityService;
+
         public ClassesController(IEntityService<Class> classService) : base((ClassService)classService)
         {
             
@@ -49,7 +51,8 @@ namespace TestApplication.Controllers
         [HttpGet("{key}/students")]
         public async Task<IActionResult> GetStudentsAsync(int key)
         {
-            
+            var students = await EntityService.GetStudentsAsync(key);
+            return new JsonResult(students);
         }
     }
 }
