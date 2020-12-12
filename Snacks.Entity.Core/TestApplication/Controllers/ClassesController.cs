@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Controllers;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
@@ -43,6 +44,12 @@ namespace TestApplication.Controllers
             });
 
             return await base.GetAsync();
+        }
+
+        [HttpGet("{key}/students")]
+        public async Task<IActionResult> GetStudentsAsync(int key)
+        {
+            
         }
     }
 }

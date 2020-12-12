@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Database;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ namespace Snacks.Entity.Core.Entity
     {
         Task<IEntityModel> GetOneAsync(dynamic key, IDbTransaction transaction = null);
 
-        Task<IList<IEntityModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
+        Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
 
-        Task<IList<IEntityModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null);
+        Task<IEnumerable<IEntityModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
 
         Task<IEntityModel> CreateOneAsync(IEntityModel model, IDbTransaction transaction = null);
 
-        Task<IList<IEntityModel>> CreateManyAsync(IList<IEntityModel> models, IDbTransaction transaction = null);
+        Task<IEnumerable<IEntityModel>> CreateManyAsync(IEnumerable<IEntityModel> models, IDbTransaction transaction = null);
 
         Task UpdateOneAsync(IEntityModel model, IDbTransaction transaction = null);
 
@@ -33,13 +34,13 @@ namespace Snacks.Entity.Core.Entity
     {
         new Task<TModel> GetOneAsync(dynamic key, IDbTransaction transaction = null);
 
-        new Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
+        new Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
 
-        new Task<IList<TModel>> GetManyAsync(Dictionary<string, StringValues> queryCollection, IDbTransaction transaction = null);
+        new Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
 
         Task<TModel> CreateOneAsync(TModel model, IDbTransaction transaction = null);
 
-        Task<IList<TModel>> CreateManyAsync(IList<TModel> models, IDbTransaction transaction = null);
+        Task<IEnumerable<TModel>> CreateManyAsync(IEnumerable<TModel> models, IDbTransaction transaction = null);
 
         Task UpdateOneAsync(TModel model, IDbTransaction transaction = null);
 

@@ -13,6 +13,11 @@ namespace Snacks.Entity.Core.Entity
         /// </summary>
         [NotMapped]
         string IdempotencyKey { get; set; }
+
+        [NotMapped]
+        dynamic Key { get; set; }
+
+        string TableName { get; }
     }
 
     /// <summary>
@@ -21,10 +26,7 @@ namespace Snacks.Entity.Core.Entity
     /// <typeparam name="TKey">The property type of the primary key.</typeparam>
     public interface IEntityModel<TKey> : IEntityModel
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        void SetKey(TKey key);
+        [NotMapped]
+        new TKey Key { get; set; }
     }
 }

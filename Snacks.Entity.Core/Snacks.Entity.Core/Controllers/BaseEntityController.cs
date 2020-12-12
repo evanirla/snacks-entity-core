@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Controllers
@@ -72,7 +70,7 @@ namespace Snacks.Entity.Core.Controllers
                 return NotFound();
             }
 
-            model.SetKey(key);
+            model.Key = key;
 
             await _entityService.UpdateOneAsync(model);
 

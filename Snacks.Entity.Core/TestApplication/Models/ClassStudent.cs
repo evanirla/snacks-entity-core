@@ -1,10 +1,8 @@
 ﻿using Snacks.Entity.Core.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace TestApplication.Models
 {
@@ -16,10 +14,12 @@ namespace TestApplication.Models
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }
+        [JsonIgnore]
         public Student Student { get; set; }
 
         [ForeignKey("Class")]
         public int ClassId { get; set; }
+        [JsonIgnore]
         public Class Class { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

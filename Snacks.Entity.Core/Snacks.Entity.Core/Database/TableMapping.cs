@@ -22,6 +22,8 @@ namespace Snacks.Entity.Core.Database
         public IEnumerable<IGrouping<string, TableColumnMapping>> Indexes => Columns
             .Where(x => x.IsIndexed)
             .GroupBy(x => x.IndexedAttribute.Name ?? $"IX_{Name}_{x.Name}");
+        public IEnumerable<TableColumnMapping> ForeignKeyColumns => Columns
+            .Where(x => x.IsForeignKey);
 
         public static TableMapping GetMapping<T>()
         {

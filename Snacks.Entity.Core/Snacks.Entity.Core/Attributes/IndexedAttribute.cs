@@ -25,7 +25,7 @@ using System;
 namespace Snacks.Entity.Core.Attributes
 {
     /// <summary>
-    /// 
+    /// Denotes that the column behind the property is or should be indexed.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class IndexedAttribute : Attribute

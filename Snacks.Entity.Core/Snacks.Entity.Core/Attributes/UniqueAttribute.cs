@@ -19,13 +19,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
 using System;
 
 namespace Snacks.Entity.Core.Attributes
 {
     /// <summary>
-    /// 
+    /// Denotes that the column behind the property has or should have a unique index applied.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class UniqueAttribute : IndexedAttribute

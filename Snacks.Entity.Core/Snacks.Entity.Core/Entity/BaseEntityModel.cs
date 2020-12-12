@@ -1,24 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Snacks.Entity.Core.Entity
 {
     public class BaseEntityModel<TKey> : IEntityModel<TKey>
     {
+        PropertyInfo KeyProperty => GetType().GetProperties()
+            .FirstOrDefault(x => x.IsDefined(typeof(KeyAttribute)));
+
         [NotMapped]
         public string IdempotencyKey { get; set; }
 
-        public void SetKey(TKey key)
+        [NotMapped]
+        public TKey Key
         {
-            PropertyInfo keyProperty = GetType().GetProperties()
-                .FirstOrDefault(x => x.IsDefined(typeof(KeyAttribute)));
-
-            keyProperty.SetValue(this, key);
+            get
+            {
+                return (TKey)KeyProperty.GetValue(this);
+            }
+            set
+            {
+                KeyProperty.SetValue(this, value);
+            }
         }
+
+        dynamic IEntityModel.Key 
+        {
+            get => Key;
+            set => Key = (TKey)value;
+        }
+
+        public string TableName => GetType().GetCustomAttribute<TableAttribute>()?.Name ?? GetType().Name;
     }
 }

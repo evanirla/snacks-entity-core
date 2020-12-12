@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
@@ -72,6 +73,20 @@ namespace TestApplication.Services
             {
                 return await createOne();
             }
+        }
+
+        public async Task<IEnumerable<Student>> GetStudentsAsync(int key, IDbTransaction transaction = null)
+        {
+            Class @class = await GetOneAsync(key);
+
+            IEnumerable<ClassStudent> classStudents = await _classStudentService.GetManyAsync(@$"
+                select ClassStudentId
+                from ClassStudent
+                where ClassId = @Key", @class, transaction);
+
+            List<Student> students = new List<Student>();
+
+
         }
     }
 }

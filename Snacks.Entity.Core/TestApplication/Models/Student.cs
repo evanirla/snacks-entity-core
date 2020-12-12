@@ -1,13 +1,10 @@
-﻿using Snacks.Entity.Core;
-using Snacks.Entity.Core.Attributes;
+﻿using Snacks.Entity.Core.Attributes;
 using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace TestApplication.Models
 {
@@ -26,6 +23,7 @@ namespace TestApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdateDate { get; set; } = DateTime.Now;
 
+        [JsonIgnore]
         public IList<ClassStudent> Classes { get; set; }
     }
 }
