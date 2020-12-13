@@ -19,9 +19,8 @@ namespace Snacks.Entity.Core.Caching
         /// 
         /// </summary>
         /// <param name="cacheKey"></param>
-        /// <param name="queryCollection"></param>
         /// <returns></returns>
-        Task<IList<TModel>> GetCustomManyAsync(string cacheKey, IQueryCollection queryCollection);
+        Task<IList<TModel>> GetCustomManyAsync(string cacheKey);
 
         /// <summary>
         /// 
@@ -52,7 +51,7 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="queryCollection"></param>
         /// <param name="models"></param>
         /// <returns></returns>
-        Task SetCustomManyAsync(string cacheKey, IQueryCollection queryCollection, IList<TModel> models);
+        Task SetCustomManyAsync(string cacheKey, IList<TModel> models);
 
         /// <summary>
         /// 

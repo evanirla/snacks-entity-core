@@ -175,11 +175,11 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetSelectStatement(queryCollection);
             DynamicParameters parameters = GetDynamicQueryParameters(queryCollection);
 
-            IEnumerable<TModel> models = await _dbService.QueryAsync<TModel>(statement, parameters, transaction);
+            IList<TModel> models = (await _dbService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
 
             if (_cacheService != null)
             {
-                await _cacheService.SetManyAsync(queryCollection, models.ToList());
+                await _cacheService.SetManyAsync(queryCollection, models);
             }
 
             return models;
@@ -214,7 +214,27 @@ namespace Snacks.Entity.Core.Entity
 
         public async Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null)
         {
-            return await _dbService.QueryAsync<TModel>(sql, parameters, transaction);
+            string cacheKey = parameters != null ? sql :
+                $"{sql}({parameters.GetType().GetProperties().Select(x => $"{x.Name}={x.GetValue(parameters)}")})";
+
+            if (_cacheService != null)
+            {
+                IList<TModel> cachedModels = await _cacheService.GetCustomManyAsync(cacheKey);
+
+                if (cachedModels != default)
+                {
+                    return cachedModels;
+                }
+            }
+
+            IList<TModel> models = (await _dbService.QueryAsync<TModel>(sql, parameters, transaction)).ToList();
+
+            if (_cacheService != null)
+            {
+                await _cacheService.SetCustomManyAsync(cacheKey, models);
+            }
+
+            return models;
         }
 
         public async Task<IEntityModel> CreateOneAsync(IEntityModel model, IDbTransaction transaction = null)

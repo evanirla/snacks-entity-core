@@ -63,7 +63,7 @@ namespace Snacks.Entity.Core.Caching
                 return modelListData.ToObject<List<TModel>>();
             }
 
-            return null;
+            return default;
         }
 
         /// <summary>
@@ -124,23 +124,16 @@ namespace Snacks.Entity.Core.Caching
             return default;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cacheKey"></param>
-        /// <param name="queryCollection"></param>
-        /// <returns></returns>
-        public async Task<IList<TModel>> GetCustomManyAsync(string cacheKey, IQueryCollection queryCollection)
+        public async Task<IList<TModel>> GetCustomManyAsync(string cacheKey)
         {
-            byte[] modelListData = await _distributedCache.GetAsync(
-                cacheKey + $"({queryCollection.Select(x => $"{x.Key}={x.Value}")})");
+            byte[] modelListData = await _distributedCache.GetAsync(cacheKey);
 
             if (modelListData != null)
             {
                 return modelListData.ToObject<List<TModel>>();
             }
 
-            return null;
+            return default;
         }
 
         /// <summary>
@@ -154,17 +147,9 @@ namespace Snacks.Entity.Core.Caching
             await _distributedCache.SetAsync(cacheKey, model.ToByteArray());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="queryCollection"></param>
-        /// <param name="models"></param>
-        /// <returns></returns>
-        public async Task SetCustomManyAsync(string key, IQueryCollection queryCollection, IList<TModel> models)
+        public async Task SetCustomManyAsync(string cacheKey, IList<TModel> models)
         {
-            await _distributedCache.SetAsync(
-                key + $"({queryCollection.Select(x => $"{x.Key}={x.Value}")})", models.ToByteArray());
+            await _distributedCache.SetAsync(cacheKey, models.ToByteArray());
         }
 
         /// <summary>
