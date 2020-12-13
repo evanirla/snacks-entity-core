@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Controllers
 {
-    public class BaseEntityController<TModel, TKey, TDbService, TDbConnection> : ControllerBase, IEntityController<TModel, TKey>
-        where TModel : IEntityModel<TKey>
-        where TDbService : IDbService<TDbConnection>
-        where TDbConnection : IDbConnection
+    public class BaseEntityController<TModel> : ControllerBase, IEntityController<TModel>
+        where TModel : IEntityModel
     {
-        protected readonly IEntityService<TModel, TKey, TDbService, TDbConnection> _entityService;
+        protected readonly IEntityService<TModel> _entityService;
 
-        public BaseEntityController(IEntityService<TModel, TKey, TDbService, TDbConnection> entityService)
+        public BaseEntityController(IServiceProvider serviceProvider)
         {
-            _entityService = entityService;
+            _entityService = (IEntityService<TModel>)serviceProvider.GetService(typeof(IEntityService<TModel>));
         }
 
         [HttpDelete("{key}")]
-        public virtual async Task<IActionResult> DeleteAsync(TKey key)
+        public virtual async Task<IActionResult> DeleteAsync(dynamic key)
         {
             TModel model = await _entityService.GetOneAsync(key);
 
@@ -30,7 +29,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpGet("{key}")]
-        public virtual async Task<IActionResult> GetAsync(TKey key)
+        public virtual async Task<IActionResult> GetAsync(dynamic key)
         {
             TModel model = await _entityService.GetOneAsync(key);
 
@@ -61,7 +60,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpPut("{key}")]
-        public virtual async Task<IActionResult> PutAsync(TKey key, [FromBody] TModel model)
+        public virtual async Task<IActionResult> PutAsync(dynamic key, [FromBody] TModel model)
         {
             TModel existingModel = await _entityService.GetOneAsync(key);
 

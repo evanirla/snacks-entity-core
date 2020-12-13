@@ -102,10 +102,6 @@ namespace Snacks.Entity.Core.Database
     /// <typeparam name="T"></typeparam>
     public interface IDbService<TDbConnection> : IDbService where TDbConnection : IDbConnection
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        new Task<TDbConnection> GetConnectionAsync();
+
     }
 }

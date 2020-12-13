@@ -3,14 +3,12 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Database
 {
-    public abstract class BaseTableBuilder<TDbService, TDbConnection> :
-        IDbTableBuilder<TDbService, TDbConnection>
-        where TDbService : IDbService<TDbConnection>
-        where TDbConnection : IDbConnection
+    public abstract class BaseTableBuilder<TDbService> : IDbTableBuilder<TDbService>
+        where TDbService : IDbService
     {
-        protected readonly IDbService<TDbConnection> _dbService;
+        protected readonly IDbService _dbService;
 
-        public BaseTableBuilder(IDbService<TDbConnection> dbService)
+        public BaseTableBuilder(IDbService dbService)
         {
             _dbService = dbService;
         }

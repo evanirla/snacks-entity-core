@@ -1,12 +1,13 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
+using Snacks.Entity.Core.Database;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Database
+namespace Snacks.Entity.Core.MySql
 {
     public class MySqlService : IDbService<MySqlConnection>
     {

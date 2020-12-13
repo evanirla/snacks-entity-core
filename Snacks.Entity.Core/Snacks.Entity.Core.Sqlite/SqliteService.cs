@@ -1,10 +1,11 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
+using Snacks.Entity.Core.Database;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Database
+namespace Snacks.Entity.Core.Sqlite
 {
     public class SqliteService : IDbService<SqliteConnection>
     {

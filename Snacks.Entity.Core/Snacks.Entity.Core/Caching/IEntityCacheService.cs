@@ -5,13 +5,8 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Caching
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TModel"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
-    public interface IEntityCacheService<TModel, TKey>
-        where TModel : IEntityModel<TKey>
+    public interface IEntityCacheService<TModel>
+        where TModel : IEntityModel
     {
         /// <summary>
         /// 
@@ -19,7 +14,7 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="cacheKey"></param>
         /// <returns></returns>
         Task<TModel> GetCustomOneAsync(string cacheKey);
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -27,21 +22,21 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="queryCollection"></param>
         /// <returns></returns>
         Task<IList<TModel>> GetCustomManyAsync(string cacheKey, IQueryCollection queryCollection);
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<TModel> GetOneAsync(TKey key);
-        
+        Task<TModel> GetOneAsync(dynamic key);
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="queryCollection"></param>
         /// <returns></returns>
         Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection);
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -49,7 +44,7 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="model"></param>
         /// <returns></returns>
         Task SetCustomOneAsync(string cacheKey, TModel model);
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,7 +53,7 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="models"></param>
         /// <returns></returns>
         Task SetCustomManyAsync(string cacheKey, IQueryCollection queryCollection, IList<TModel> models);
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -86,7 +81,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task RemoveOneAsync(TKey key);
+        Task RemoveOneAsync(dynamic key);
 
         /// <summary>
         /// 
@@ -94,5 +89,28 @@ namespace Snacks.Entity.Core.Caching
         /// <param name="queryCollection"></param>
         /// <returns></returns>
         Task RemoveManyAsync(IQueryCollection queryCollection = null);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public interface IEntityCacheService<TModel, TKey> : IEntityCacheService<TModel>
+        where TModel : IEntityModel<TKey>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<TModel> GetOneAsync(TKey key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task RemoveOneAsync(TKey key);
     }
 }

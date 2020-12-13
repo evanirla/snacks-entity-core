@@ -1,17 +1,19 @@
 ﻿using Microsoft.Data.Sqlite;
+using Snacks.Entity.Core.Database;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Database
+namespace Snacks.Entity.Core.Sqlite
 {
     /// <summary>
     /// 
     /// </summary>
-    public class SqliteTableBuilder : BaseTableBuilder<SqliteService, SqliteConnection>
+    public class SqliteTableBuilder : BaseTableBuilder<SqliteService>
     {
-        public SqliteTableBuilder(IDbService<SqliteConnection> dbService) : base(dbService)
+        public SqliteTableBuilder(IDbService dbService) : base(dbService)
         {
             
         }
@@ -74,7 +76,7 @@ namespace Snacks.Entity.Core.Database
 
             tableBuilder.Append(")");
 
-            using SqliteConnection connection = await _dbService.GetConnectionAsync();
+            using SqliteConnection connection = (SqliteConnection)await _dbService.GetConnectionAsync();
 
             SqliteTransaction transaction = connection.BeginTransaction();
 

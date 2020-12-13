@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
+using Snacks.Entity.Core.Sqlite;
 using System;
 using System.Threading.Tasks;
 using TestApplication.Models;

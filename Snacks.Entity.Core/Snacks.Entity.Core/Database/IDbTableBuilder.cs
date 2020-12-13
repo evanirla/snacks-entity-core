@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Database
 {
-    public interface IDbTableBuilder<TDbService, TDbConnection> 
-        where TDbService : IDbService<TDbConnection>
-        where TDbConnection : IDbConnection
+    public interface IDbTableBuilder<TDbService> where TDbService : IDbService
     {
         Task CreateTableAsync<T>();
     }

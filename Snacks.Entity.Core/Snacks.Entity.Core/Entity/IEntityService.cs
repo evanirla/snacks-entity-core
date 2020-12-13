@@ -10,7 +10,7 @@ namespace Snacks.Entity.Core.Entity
 {
     public interface IEntityService
     {
-        Task<IEntityModel> GetOneAsync(dynamic key, IDbTransaction transaction = null);
+        Task<IEntityModel> GetOneAsync(object key, IDbTransaction transaction = null);
 
         Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
 
@@ -22,7 +22,7 @@ namespace Snacks.Entity.Core.Entity
 
         Task UpdateOneAsync(IEntityModel model, IDbTransaction transaction = null);
 
-        Task DeleteOneAsync(dynamic key, IDbTransaction transaction = null);
+        Task DeleteOneAsync(object key, IDbTransaction transaction = null);
 
         Task DeleteOneAsync(IEntityModel model, IDbTransaction transaction = null);
 
@@ -32,7 +32,7 @@ namespace Snacks.Entity.Core.Entity
     public interface IEntityService<TModel> : IEntityService
         where TModel : IEntityModel
     {
-        new Task<TModel> GetOneAsync(dynamic key, IDbTransaction transaction = null);
+        new Task<TModel> GetOneAsync(object key, IDbTransaction transaction = null);
 
         new Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
 
@@ -47,26 +47,10 @@ namespace Snacks.Entity.Core.Entity
         Task DeleteOneAsync(TModel model, IDbTransaction transaction = null);
     }
 
-    public interface IEntityService<TModel, TKey> : IEntityService<TModel>
-        where TModel : IEntityModel<TKey>
-    {
-        Task<TModel> GetOneAsync(TKey key, IDbTransaction transaction = null);
-
-        Task DeleteOneAsync(TKey key, IDbTransaction transaction = null);
-    }
-
-    public interface IEntityService<TModel, TKey, TDbService> : IEntityService<TModel, TKey>
-        where TModel : IEntityModel<TKey>
+    public interface IEntityService<TModel, TDbService> : IEntityService<TModel>
+        where TModel : IEntityModel
         where TDbService : IDbService
     {
 
-    }
-
-    public interface IEntityService<TModel, TKey, TDbService, TDbConnection> : IEntityService<TModel, TKey, TDbService>
-        where TModel : IEntityModel<TKey> 
-        where TDbConnection : IDbConnection
-        where TDbService : IDbService<TDbConnection>
-    {
-        
     }
 }

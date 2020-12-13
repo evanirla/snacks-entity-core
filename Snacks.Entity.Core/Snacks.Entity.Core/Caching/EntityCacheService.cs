@@ -10,13 +10,8 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Caching
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TModel"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
-    public class EntityCacheService<TModel, TKey> : IEntityCacheService<TModel, TKey>
-        where TModel : IEntityModel<TKey>
+    public class EntityCacheService<TModel> : IEntityCacheService<TModel>
+        where TModel : IEntityModel
     {
         protected readonly IDistributedCache _distributedCache;
         protected readonly PropertyInfo _primaryKey;
@@ -40,7 +35,7 @@ namespace Snacks.Entity.Core.Caching
         /// <returns></returns>
         public async Task RemoveOneAsync(TModel model)
         {
-            await _distributedCache.RemoveAsync(GetCacheKey(model));
+            await _distributedCache.RemoveAsync(GetCacheKey(model.Key));
         }
 
         /// <summary>
@@ -48,7 +43,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task RemoveOneAsync(TKey key)
+        public async Task RemoveOneAsync(dynamic key)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
@@ -76,7 +71,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<TModel> GetOneAsync(TKey key)
+        public async Task<TModel> GetOneAsync(dynamic key)
         {
             byte[] modelData =
                 await _distributedCache.GetAsync(GetCacheKey(key));
@@ -108,7 +103,8 @@ namespace Snacks.Entity.Core.Caching
         /// <returns></returns>
         public async Task SetOneAsync(TModel model)
         {
-            await _distributedCache.SetAsync(GetCacheKey(model), model.ToByteArray());
+            string cacheKey = GetCacheKey(model.Key);
+            await _distributedCache.SetAsync(cacheKey, model.ToByteArray());
         }
 
         /// <summary>
@@ -194,20 +190,9 @@ namespace Snacks.Entity.Core.Caching
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        private string GetCacheKey(TModel model)
-        {
-            TKey key = (TKey)_primaryKey.GetValue(model);
-            return $"{typeof(TModel).Name}({key})";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        private string GetCacheKey(TKey key)
+        protected string GetCacheKey(dynamic key)
         {
             return $"{typeof(TModel).Name}({key})";
         }
@@ -217,7 +202,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="queryCollection"></param>
         /// <returns></returns>
-        private string GetModelListKey(IQueryCollection queryCollection)
+        protected string GetModelListKey(IQueryCollection queryCollection)
         {
             string queryCollectionString = string.Empty;
 
@@ -238,7 +223,7 @@ namespace Snacks.Entity.Core.Caching
         /// 
         /// </summary>
         /// <returns></returns>
-        private async Task<List<string>> GetModelListKeysAsync()
+        protected async Task<List<string>> GetModelListKeysAsync()
         {
             string key = $"{typeof(TModel).Name}Keys";
 
@@ -257,7 +242,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="queryCollection"></param>
         /// <returns></returns>
-        private async Task AddModelListKey(IQueryCollection queryCollection)
+        protected async Task AddModelListKey(IQueryCollection queryCollection)
         {
             string key = $"{typeof(TModel).Name}Keys";
 
@@ -271,6 +256,52 @@ namespace Snacks.Entity.Core.Caching
             keys.Add(GetModelListKey(queryCollection));
 
             await _distributedCache.SetAsync(key, keys.ToByteArray());
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public class EntityCacheService<TModel, TKey> : EntityCacheService<TModel>
+        where TModel : IEntityModel<TKey>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="distributedCache"></param>
+        public EntityCacheService(
+            IDistributedCache distributedCache) : base(distributedCache)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task RemoveOneAsync(TKey key)
+        {
+            await _distributedCache.RemoveAsync(GetCacheKey(key));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<TModel> GetOneAsync(TKey key)
+        {
+            byte[] modelData =
+                await _distributedCache.GetAsync(GetCacheKey(key));
+
+            if (modelData != null)
+            {
+                return modelData.ToObject<TModel>();
+            }
+
+            return default;
         }
     }
 }

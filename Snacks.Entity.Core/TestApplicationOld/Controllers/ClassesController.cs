@@ -9,6 +9,7 @@ using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Controllers;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
+using Snacks.Entity.Core.Sqlite;
 using TestApplication.Models;
 using TestApplication.Services;
 
