@@ -19,7 +19,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpDelete("{key}")]
-        public virtual async Task<IActionResult> DeleteAsync(dynamic key)
+        public virtual async Task<IActionResult> DeleteAsync(object key)
         {
             TModel model = await _entityService.GetOneAsync(key);
 
@@ -29,7 +29,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpGet("{key}")]
-        public virtual async Task<IActionResult> GetAsync(dynamic key)
+        public virtual async Task<IActionResult> GetAsync(object key)
         {
             TModel model = await _entityService.GetOneAsync(key);
 
@@ -60,7 +60,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpPut("{key}")]
-        public virtual async Task<IActionResult> PutAsync(dynamic key, [FromBody] TModel model)
+        public virtual async Task<IActionResult> PutAsync(object key, [FromBody] TModel model)
         {
             TModel existingModel = await _entityService.GetOneAsync(key);
 

@@ -8,12 +8,12 @@ namespace Snacks.Entity.Core.Controllers
     public interface IEntityController<TModel>
         where TModel : IEntityModel
     {
-        Task<IActionResult> DeleteAsync(dynamic key);
-        Task<IActionResult> GetAsync(dynamic key);
+        Task<IActionResult> DeleteAsync(object key);
+        Task<IActionResult> GetAsync(object key);
         Task<IActionResult> GetAsync();
         Task<IActionResult> PostAsync([FromBody] TModel model);
         Task<IActionResult> PostAsync([FromBody] List<TModel> models);
-        Task<IActionResult> PutAsync(dynamic key, [FromBody] TModel model);
+        Task<IActionResult> PutAsync(object key, [FromBody] TModel model);
     }
 
     public interface IEntityController<TModel, TKey> : IEntityController<TModel>

@@ -15,7 +15,7 @@ namespace Snacks.Entity.Core.Entity
         string IdempotencyKey { get; set; }
 
         [NotMapped]
-        dynamic Key { get; set; }
+        object Key { get; set; }
 
         string TableName { get; }
     }

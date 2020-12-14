@@ -43,7 +43,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task RemoveOneAsync(dynamic key)
+        public async Task RemoveOneAsync(object key)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
@@ -71,7 +71,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<TModel> GetOneAsync(dynamic key)
+        public async Task<TModel> GetOneAsync(object key)
         {
             byte[] modelData =
                 await _distributedCache.GetAsync(GetCacheKey(key));
@@ -177,7 +177,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        protected string GetCacheKey(dynamic key)
+        protected string GetCacheKey(object key)
         {
             return $"{typeof(TModel).Name}({key})";
         }

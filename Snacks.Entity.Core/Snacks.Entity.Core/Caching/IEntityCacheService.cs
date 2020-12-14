@@ -27,7 +27,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<TModel> GetOneAsync(dynamic key);
+        Task<TModel> GetOneAsync(object key);
 
         /// <summary>
         /// 
@@ -80,7 +80,7 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task RemoveOneAsync(dynamic key);
+        Task RemoveOneAsync(object key);
 
         /// <summary>
         /// 

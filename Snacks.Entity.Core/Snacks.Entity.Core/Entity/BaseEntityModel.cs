@@ -26,7 +26,7 @@ namespace Snacks.Entity.Core.Entity
             }
         }
 
-        dynamic IEntityModel.Key 
+        object IEntityModel.Key
         {
             get => Key;
             set => Key = (TKey)value;
