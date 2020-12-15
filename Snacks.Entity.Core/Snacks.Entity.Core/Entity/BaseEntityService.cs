@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Caching;
@@ -19,16 +20,28 @@ namespace Snacks.Entity.Core.Entity
     /// 
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TDbService"></typeparam>
-    /// <typeparam name="TDbConnection"></typeparam>
     public abstract class BaseEntityService<TModel, TDbService> : 
         IEntityService<TModel, TDbService>
         where TModel : IEntityModel
         where TDbService : IDbService
     {
         protected readonly TDbService _dbService;
-        protected readonly IEntityCacheService<TModel> _cacheService;
+        private IEntityCacheService<TModel> _cacheService;
+        protected IEntityCacheService<TModel> CacheService
+        {
+            get
+            {
+                if (_cacheService != null)
+                {
+                    return _cacheService;
+                }
+
+                _cacheService = _serviceProvider.GetRequiredService<IEntityCacheService<TModel>>();
+
+                return _cacheService;
+            }
+        }
         protected readonly IServiceProvider _serviceProvider;
 
         public TableMapping Mapping { get; private set; }
@@ -36,8 +49,7 @@ namespace Snacks.Entity.Core.Entity
         public BaseEntityService(
             IServiceProvider serviceProvider)
         {
-            _dbService = (TDbService)serviceProvider.GetService(typeof(TDbService));
-            _cacheService = (IEntityCacheService<TModel>)serviceProvider.GetService(typeof(IEntityCacheService<TModel>));
+            _dbService = serviceProvider.GetRequiredService<TDbService>();
             _serviceProvider = serviceProvider;
 
             Mapping = TableMapping.GetMapping<TModel>();
@@ -63,9 +75,9 @@ namespace Snacks.Entity.Core.Entity
                 newModels.Add(await CreateOneAsync(model, transaction));
             }
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.RemoveManyAsync();
+                await CacheService.RemoveManyAsync();
             }
 
             return newModels;
@@ -80,9 +92,9 @@ namespace Snacks.Entity.Core.Entity
                 throw new KeyValueInvalidException();
             }
 
-            if (model.IdempotencyKey != null && _cacheService != null)
+            if (model.IdempotencyKey != null && CacheService != null)
             {
-                TModel idempotentModel = await _cacheService.GetCustomOneAsync(
+                TModel idempotentModel = await CacheService.GetCustomOneAsync(
                     $"{typeof(TModel).Name}(Idempotency={model.IdempotencyKey})");
 
                 if (idempotentModel != null)
@@ -115,16 +127,16 @@ namespace Snacks.Entity.Core.Entity
                 transaction.Commit();
             }
 
-            if (model.IdempotencyKey != null && _cacheService != null)
+            if (model.IdempotencyKey != null && CacheService != null)
             {
-                await _cacheService.SetCustomOneAsync(
+                await CacheService.SetCustomOneAsync(
                     $"{typeof(TModel).Name}(Idempotency={model.IdempotencyKey})", model);
             }
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.SetOneAsync(model);
-                await _cacheService.RemoveManyAsync();
+                await CacheService.SetOneAsync(model);
+                await CacheService.RemoveManyAsync();
             }
 
             return model;
@@ -136,10 +148,10 @@ namespace Snacks.Entity.Core.Entity
 
             await _dbService.ExecuteSqlAsync(statement, new { Key = Mapping.KeyColumn.GetValue(model) });
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.RemoveOneAsync(model);
-                await _cacheService.RemoveManyAsync();
+                await CacheService.RemoveOneAsync(model);
+                await CacheService.RemoveManyAsync();
             }
         }
 
@@ -153,18 +165,18 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetDeleteStatement();
             await _dbService.ExecuteSqlAsync(statement, new { Key = key });
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.RemoveOneAsync(key);
-                await _cacheService.RemoveManyAsync();
+                await CacheService.RemoveOneAsync(key);
+                await CacheService.RemoveManyAsync();
             }
         }
 
         public virtual async Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null)
         {
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                IList<TModel> cachedModels = await _cacheService.GetManyAsync(queryCollection);
+                IList<TModel> cachedModels = await CacheService.GetManyAsync(queryCollection);
 
                 if (cachedModels != null)
                 {
@@ -177,9 +189,9 @@ namespace Snacks.Entity.Core.Entity
 
             IList<TModel> models = (await _dbService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.SetManyAsync(queryCollection, models);
+                await CacheService.SetManyAsync(queryCollection, models);
             }
 
             return models;
@@ -187,9 +199,9 @@ namespace Snacks.Entity.Core.Entity
 
         public virtual async Task<TModel> GetOneAsync(object key, IDbTransaction transaction = null)
         {
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                TModel cachedModel = await _cacheService.GetOneAsync(key);
+                TModel cachedModel = await CacheService.GetOneAsync(key);
 
                 if (cachedModel != null)
                 {
@@ -203,9 +215,9 @@ namespace Snacks.Entity.Core.Entity
 
             if (model != null)
             {
-                if (_cacheService != null)
+                if (CacheService != null)
                 {
-                    await _cacheService.SetOneAsync(model);
+                    await CacheService.SetOneAsync(model);
                 }
             }
 
@@ -217,9 +229,9 @@ namespace Snacks.Entity.Core.Entity
             string cacheKey = parameters != null ? sql :
                 $"{sql}({parameters.GetType().GetProperties().Select(x => $"{x.Name}={x.GetValue(parameters)}")})";
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                IList<TModel> cachedModels = await _cacheService.GetCustomManyAsync(cacheKey);
+                IList<TModel> cachedModels = await CacheService.GetCustomManyAsync(cacheKey);
 
                 if (cachedModels != default)
                 {
@@ -229,9 +241,9 @@ namespace Snacks.Entity.Core.Entity
 
             IList<TModel> models = (await _dbService.QueryAsync<TModel>(sql, parameters, transaction)).ToList();
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.SetCustomManyAsync(cacheKey, models);
+                await CacheService.SetCustomManyAsync(cacheKey, models);
             }
 
             return models;
@@ -267,22 +279,22 @@ namespace Snacks.Entity.Core.Entity
                 parameters,
                 transaction);
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.RemoveOneAsync(model);
-                await _cacheService.RemoveManyAsync();
+                await CacheService.RemoveOneAsync(model);
+                await CacheService.RemoveManyAsync();
             }
 
             model = await GetOneAsync(Mapping.KeyColumn.GetValue(model), transaction);
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.SetOneAsync(model);
+                await CacheService.SetOneAsync(model);
             }
 
-            if (_cacheService != null)
+            if (CacheService != null)
             {
-                await _cacheService.RemoveManyAsync();
+                await CacheService.RemoveManyAsync();
             }
         }
 
@@ -318,7 +330,7 @@ namespace Snacks.Entity.Core.Entity
 
         protected IEntityService<TOtherModel> GetOtherEntityService<TOtherModel>() where TOtherModel : IEntityModel
         {
-            return (IEntityService<TOtherModel>)_serviceProvider.GetService(typeof(IEntityService<TOtherModel>));
+            return _serviceProvider.GetRequiredService<IEntityService<TOtherModel>>();
         }
 
         private string GetSelectByKeyStatement()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Entity;
 using System;
@@ -15,7 +16,7 @@ namespace Snacks.Entity.Core.Controllers
 
         public BaseEntityController(IServiceProvider serviceProvider)
         {
-            _entityService = (IEntityService<TModel>)serviceProvider.GetService(typeof(IEntityService<TModel>));
+            _entityService = serviceProvider.GetRequiredService<IEntityService<TModel>>();
         }
 
         [HttpDelete("{key}")]
