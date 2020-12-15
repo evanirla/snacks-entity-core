@@ -240,7 +240,7 @@ namespace Snacks.Entity.Core.Entity
 
         public async Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null)
         {
-            string cacheKey = parameters != null ? sql :
+            string cacheKey = parameters == null ? sql :
                 $"{sql}({parameters.GetType().GetProperties().Select(x => $"{x.Name}={x.GetValue(parameters)}")})";
 
             if (CacheService != null)
