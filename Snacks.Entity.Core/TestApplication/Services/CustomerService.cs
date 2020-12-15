@@ -17,7 +17,7 @@ namespace TestApplication.Services
         {
             await base.InitializeAsync();
 
-            SqliteTableBuilder tableBuilder = new SqliteTableBuilder(_dbService);
+            SqliteTableBuilder tableBuilder = new SqliteTableBuilder(DbService);
             await tableBuilder.CreateTableAsync<CustomerModel>();
         }
     }

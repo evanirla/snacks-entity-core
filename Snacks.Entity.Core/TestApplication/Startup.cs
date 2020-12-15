@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Snacks.Entity.Core.Caching;
 using Snacks.Entity.Core.Entity;
+using Snacks.Entity.Core.Extensions;
+using Snacks.Entity.Core.Sqlite.Extensions;
 using TestApplication.Models;
-using TestApplication.Services;
 
 namespace TestApplication
 {
@@ -23,8 +18,9 @@ namespace TestApplication
             services.AddControllers();
             services.AddDistributedMemoryCache();
 
-            services.AddSingleton<IEntityCacheService<CustomerModel>, EntityCacheService<CustomerModel>>();
-            services.AddSingleton<IEntityService<CustomerModel>, CustomerService>();
+            services.AddSqliteService("Data Source=snacks.db");
+            services.AddEntityServices();
+            services.AddEntityCacheServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,13 +33,12 @@ namespace TestApplication
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(options => 
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                options.MapDefaultControllerRoute();
             });
+
+            app.ApplicationServices.GetRequiredService<IEntityService<CustomerModel>>().InitializeAsync();
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 
 namespace Snacks.Entity.Core.Entity
 {
+    [Serializable]
     public class BaseEntityModel<TKey> : IEntityModel<TKey>
     {
         PropertyInfo KeyProperty => GetType().GetProperties()

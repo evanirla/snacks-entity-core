@@ -1,6 +1,4 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Http;
 using Snacks.Entity.Core.Database;
 using System.Collections.Generic;
 using System.Data;

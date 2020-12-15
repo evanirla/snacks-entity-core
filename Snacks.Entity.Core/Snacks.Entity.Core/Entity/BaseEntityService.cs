@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Caching;
 using Snacks.Entity.Core.Database;
@@ -26,7 +25,24 @@ namespace Snacks.Entity.Core.Entity
         where TModel : IEntityModel
         where TDbService : IDbService
     {
-        protected readonly TDbService _dbService;
+        private TDbService _dbService;
+        protected TDbService DbService
+        {
+            get
+            {
+                if (_dbService != null)
+                {
+                    return _dbService;
+                }
+
+                Type connectionType = typeof(TDbService).BaseType.GetGenericArguments().First();
+
+                _dbService = (TDbService)_serviceProvider.GetRequiredService(typeof(IDbService<>).MakeGenericType(connectionType));
+
+                return _dbService;
+            }
+        }
+
         private IEntityCacheService<TModel> _cacheService;
         protected IEntityCacheService<TModel> CacheService
         {
@@ -49,9 +65,7 @@ namespace Snacks.Entity.Core.Entity
         public BaseEntityService(
             IServiceProvider serviceProvider)
         {
-            _dbService = serviceProvider.GetRequiredService<TDbService>();
             _serviceProvider = serviceProvider;
-
             Mapping = TableMapping.GetMapping<TModel>();
         }
 
@@ -107,7 +121,7 @@ namespace Snacks.Entity.Core.Entity
 
             async Task createOne()
             {
-                await _dbService.ExecuteSqlAsync(
+                await DbService.ExecuteSqlAsync(
                     statement,
                     GetDynamicInsertParameters(model),
                     transaction);
@@ -121,7 +135,7 @@ namespace Snacks.Entity.Core.Entity
             }
             else
             {
-                using var conn = await _dbService.GetConnectionAsync();
+                using var conn = await DbService.GetConnectionAsync();
                 transaction = conn.BeginTransaction();
                 await createOne();
                 transaction.Commit();
@@ -146,7 +160,7 @@ namespace Snacks.Entity.Core.Entity
         {
             string statement = GetDeleteStatement();
 
-            await _dbService.ExecuteSqlAsync(statement, new { Key = Mapping.KeyColumn.GetValue(model) });
+            await DbService.ExecuteSqlAsync(statement, new { Key = Mapping.KeyColumn.GetValue(model) });
 
             if (CacheService != null)
             {
@@ -163,7 +177,7 @@ namespace Snacks.Entity.Core.Entity
             }
 
             string statement = GetDeleteStatement();
-            await _dbService.ExecuteSqlAsync(statement, new { Key = key });
+            await DbService.ExecuteSqlAsync(statement, new { Key = key });
 
             if (CacheService != null)
             {
@@ -187,7 +201,7 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetSelectStatement(queryCollection);
             DynamicParameters parameters = GetDynamicQueryParameters(queryCollection);
 
-            IList<TModel> models = (await _dbService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
+            IList<TModel> models = (await DbService.QueryAsync<TModel>(statement, parameters, transaction)).ToList();
 
             if (CacheService != null)
             {
@@ -211,7 +225,7 @@ namespace Snacks.Entity.Core.Entity
 
             string statement = GetSelectByKeyStatement();
 
-            TModel model = await _dbService.QuerySingleAsync<TModel>(statement, new { Key = key }, transaction);
+            TModel model = await DbService.QuerySingleAsync<TModel>(statement, new { Key = key }, transaction);
 
             if (model != null)
             {
@@ -239,7 +253,7 @@ namespace Snacks.Entity.Core.Entity
                 }
             }
 
-            IList<TModel> models = (await _dbService.QueryAsync<TModel>(sql, parameters, transaction)).ToList();
+            IList<TModel> models = (await DbService.QueryAsync<TModel>(sql, parameters, transaction)).ToList();
 
             if (CacheService != null)
             {
@@ -274,7 +288,7 @@ namespace Snacks.Entity.Core.Entity
             string statement = GetUpdateStatement();
             DynamicParameters parameters = GetDynamicUpdateParameters(model);
 
-            await _dbService.ExecuteSqlAsync(
+            await DbService.ExecuteSqlAsync(
                 statement,
                 parameters,
                 transaction);
@@ -310,14 +324,14 @@ namespace Snacks.Entity.Core.Entity
 
             if (dbConnectionType.Name == "MySqlConnection")
             {
-                int key = await _dbService.QuerySingleAsync<int>(
+                int key = await DbService.QuerySingleAsync<int>(
                     "select last_insert_id() from dual", null, transaction);
 
                 return await GetOneAsync(key, transaction);
             }
             else if (dbConnectionType.Name == "SqliteConnection")
             {
-                dynamic key = await _dbService.QuerySingleAsync<dynamic>(@$"
+                dynamic key = await DbService.QuerySingleAsync<dynamic>(@$"
                     SELECT {Mapping.KeyColumn.Name}
                     FROM {Mapping.Name}
                     WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
