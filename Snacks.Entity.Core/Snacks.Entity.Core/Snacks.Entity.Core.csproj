@@ -9,13 +9,13 @@
     <Description>A simple entity framework that easily integrates into Sqlite or MySql/MariaDB databases.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>2020 - Evan Irla</Copyright>
-    <PackageReleaseNotes>First Stable Release</PackageReleaseNotes>
+    <PackageReleaseNotes>Entity services can now inherit directly from IEntityService&lt;TModel&gt;</PackageReleaseNotes>
     <PackageProjectUrl>https://bitbucket.org/jem-solutions/snacks-entity-core</PackageProjectUrl>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <RepositoryUrl>https://bitbucket.org/jem-solutions/snacks-entity-core</RepositoryUrl>
     <RepositoryType>Bitbucket (Git)</RepositoryType>
     <PackageTags>entity-framework, dot-net-core</PackageTags>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

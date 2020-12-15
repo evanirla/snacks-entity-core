@@ -8,6 +8,8 @@ namespace Snacks.Entity.Core.Entity
 {
     public interface IEntityService
     {
+        TableMapping Mapping { get; }
+
         Task<IEntityModel> GetOneAsync(object key, IDbTransaction transaction = null);
 
         Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);

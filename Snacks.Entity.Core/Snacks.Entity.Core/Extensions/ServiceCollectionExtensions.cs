@@ -20,8 +20,12 @@ namespace Snacks.Entity.Core.Extensions
         {
             foreach (Type serviceType in EntityServiceTypes)
             {
-                Type modelType = serviceType.BaseType.GetGenericArguments().First();
-                services.AddSingleton(typeof(IEntityService<>).MakeGenericType(modelType), serviceType);
+                Type modelType = GetModelTypeFromServiceType(serviceType);
+
+                if (modelType != null)
+                {
+                    services.AddSingleton(typeof(IEntityService<>).MakeGenericType(modelType), serviceType);
+                }
             }
 
             return services;
@@ -31,12 +35,24 @@ namespace Snacks.Entity.Core.Extensions
         {
             foreach (Type serviceType in EntityServiceTypes)
             {
-                Type modelType = serviceType.BaseType.GetGenericArguments().First();
+                Type modelType = GetModelTypeFromServiceType(serviceType);
                 services.AddSingleton(typeof(IEntityCacheService<>).MakeGenericType(modelType),
                     typeof(EntityCacheService<>).MakeGenericType(modelType));
             }
 
             return services;
+        }
+
+        private static Type GetModelTypeFromServiceType(Type serviceType)
+        {
+            Type modelType = serviceType.BaseType.GetGenericArguments().FirstOrDefault();
+
+            if (modelType == null)
+            {
+                modelType = serviceType.GetInterface("IEntityService`1").GetGenericArguments().FirstOrDefault();
+            }
+
+            return modelType;
         }
     }
 }
