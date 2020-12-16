@@ -8,7 +8,7 @@ namespace TestApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : BaseEntityController<CustomerModel>
+    public class CustomersController : BaseEntityController<CustomerModel, int>
     {
         public CustomersController(IServiceProvider serviceProvider) : base(serviceProvider)
         {

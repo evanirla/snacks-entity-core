@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Controllers
 {
-    public class BaseEntityController<TModel> : ControllerBase, IEntityController<TModel>
-        where TModel : IEntityModel
+    public abstract class BaseEntityController<TModel, TKey> : ControllerBase, IEntityController<TModel, TKey>
+        where TModel : IEntityModel<TKey>
     {
         protected readonly IServiceProvider _serviceProvider;
 
@@ -34,7 +34,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpDelete("{key}")]
-        public virtual async Task<IActionResult> DeleteAsync([FromRoute] object key)
+        public virtual async Task<IActionResult> DeleteAsync(TKey key)
         {
             TModel model = await EntityService.GetOneAsync(key);
 
@@ -44,7 +44,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpGet("{key}")]
-        public virtual async Task<IActionResult> GetAsync([FromRoute]object key)
+        public virtual async Task<IActionResult> GetAsync(TKey key)
         {
             TModel model = await EntityService.GetOneAsync(key);
 
@@ -75,7 +75,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpPut("{key}")]
-        public virtual async Task<IActionResult> PutAsync([FromRoute]object key, [FromBody] TModel model)
+        public virtual async Task<IActionResult> PutAsync([FromRoute] TKey key, [FromBody] TModel model)
         {
             TModel existingModel = await EntityService.GetOneAsync(key);
 

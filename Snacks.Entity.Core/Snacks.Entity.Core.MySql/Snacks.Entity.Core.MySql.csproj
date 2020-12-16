@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.22" />
-    <PackageReference Include="Snacks.Entity.Core" Version="1.0.4" />
+    <PackageReference Include="Snacks.Entity.Core" Version="1.0.11" />
   </ItemGroup>
 
   <ItemGroup>
