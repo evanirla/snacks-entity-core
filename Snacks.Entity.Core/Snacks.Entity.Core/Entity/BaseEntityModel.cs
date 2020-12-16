@@ -34,6 +34,7 @@ namespace Snacks.Entity.Core.Entity
             set => Key = (TKey)value;
         }
 
+        [NotMapped]
         public string TableName => GetType().GetCustomAttribute<TableAttribute>()?.Name ?? GetType().Name;
     }
 }

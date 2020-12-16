@@ -126,7 +126,14 @@ namespace Snacks.Entity.Core.Entity
                     GetDynamicInsertParameters(model),
                     transaction);
 
-                model = await GetLastInsertedAsync(transaction);
+                if (model.Key == Mapping.KeyColumn.GetDefaultValue())
+                {
+                    model = await GetLastInsertedAsync(transaction);
+                }
+                else
+                {
+                    model = await GetOneAsync(model.Key, transaction);
+                }
             }
 
             if (transaction != null)
@@ -320,7 +327,7 @@ namespace Snacks.Entity.Core.Entity
         protected virtual async Task<TModel> GetLastInsertedAsync(IDbTransaction transaction)
         {
             Type dbServiceType = typeof(TDbService);
-            Type dbConnectionType = dbServiceType.GetGenericArguments().First();
+            Type dbConnectionType = dbServiceType.BaseType.GetGenericArguments().First();
 
             if (dbConnectionType.Name == "MySqlConnection")
             {
@@ -331,12 +338,12 @@ namespace Snacks.Entity.Core.Entity
             }
             else if (dbConnectionType.Name == "SqliteConnection")
             {
-                dynamic key = await DbService.QuerySingleAsync<dynamic>(@$"
-                    SELECT {Mapping.KeyColumn.Name}
+                dynamic row = await DbService.QuerySingleAsync<dynamic>(@$"
+                    SELECT {Mapping.KeyColumn.Name} `Key`
                     FROM {Mapping.Name}
                     WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
 
-                return await GetOneAsync(key, transaction);
+                return await GetOneAsync(row.Key, transaction);
             }
 
             return default;

@@ -10,6 +10,7 @@ namespace TestApplication.Models
     {
         [Key]
         [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
     }
 }
