@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Controllers
@@ -44,7 +45,7 @@ namespace Snacks.Entity.Core.Controllers
         }
 
         [HttpGet("{key}")]
-        public virtual async Task<IActionResult> GetAsync(TKey key)
+        public virtual async Task<ActionResult<TModel>> GetAsync(TKey key)
         {
             TModel model = await EntityService.GetOneAsync(key);
 
@@ -53,25 +54,25 @@ namespace Snacks.Entity.Core.Controllers
                 return NotFound();
             }
 
-            return new JsonResult(model);
+            return model;
         }
 
-        [HttpGet("")]
-        public virtual async Task<IActionResult> GetAsync()
+        [HttpGet]
+        public virtual async Task<ActionResult<IList<TModel>>> GetAsync()
         {
-            return new JsonResult(await EntityService.GetManyAsync(Request.Query));
+            return (await EntityService.GetManyAsync(Request.Query)).ToList();
         }
 
-        [HttpPost("")]
-        public virtual async Task<IActionResult> PostAsync([FromBody] TModel model)
+        [HttpPost]
+        public virtual async Task<ActionResult<TModel>> PostAsync([FromBody] TModel model)
         {
-            return new JsonResult(await EntityService.CreateOneAsync(model));
+            return await EntityService.CreateOneAsync(model);
         }
 
-        [HttpPost("multiple")]
-        public virtual async Task<IActionResult> PostAsync([FromBody] List<TModel> models)
+        [HttpPost]
+        public virtual async Task<ActionResult<IList<TModel>>> PostAsync([FromBody] List<TModel> models)
         {
-            return new JsonResult(await EntityService.CreateManyAsync(models));
+            return (await EntityService.CreateManyAsync(models)).ToList();
         }
 
         [HttpPut("{key}")]

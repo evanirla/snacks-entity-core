@@ -126,7 +126,7 @@ namespace Snacks.Entity.Core.Entity
                     GetDynamicInsertParameters(model),
                     transaction);
 
-                if (model.Key == Mapping.KeyColumn.GetDefaultValue())
+                if (Mapping.KeyColumn.GetValue(model).Equals(Mapping.KeyColumn.GetDefaultValue()))
                 {
                     model = await GetLastInsertedAsync(transaction);
                 }

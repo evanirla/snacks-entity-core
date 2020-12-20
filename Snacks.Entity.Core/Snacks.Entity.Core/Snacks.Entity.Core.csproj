@@ -9,13 +9,13 @@
     <Description>A simple entity framework that easily integrates into Sqlite or MySql/MariaDB databases.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>2020 - Evan Irla</Copyright>
-    <PackageReleaseNotes>Key types must now be provided in controllers</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/evanirla/snacks-entity-core</PackageProjectUrl>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/evanirla/snacks-entity-core</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>entity-framework, dot-net-core</PackageTags>
-    <Version>1.0.11</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

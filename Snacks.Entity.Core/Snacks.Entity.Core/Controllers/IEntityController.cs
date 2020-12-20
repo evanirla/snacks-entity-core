@@ -9,10 +9,10 @@ namespace Snacks.Entity.Core.Controllers
         where TModel : IEntityModel<TKey>
     {
         Task<IActionResult> DeleteAsync(TKey key);
-        Task<IActionResult> GetAsync(TKey key);
-        Task<IActionResult> GetAsync();
-        Task<IActionResult> PostAsync([FromBody] TModel model);
-        Task<IActionResult> PostAsync([FromBody] List<TModel> models);
+        Task<ActionResult<TModel>> GetAsync(TKey key);
+        Task<ActionResult<IList<TModel>>> GetAsync();
+        Task<ActionResult<TModel>> PostAsync([FromBody] TModel model);
+        Task<ActionResult<IList<TModel>>> PostAsync([FromBody] List<TModel> models);
         Task<IActionResult> PutAsync(TKey key, [FromBody] TModel model);
     }
 }

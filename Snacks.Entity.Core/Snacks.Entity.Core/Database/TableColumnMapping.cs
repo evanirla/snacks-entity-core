@@ -108,7 +108,8 @@ namespace Snacks.Entity.Core.Database
         {
             if (Property.PropertyType.IsValueType)
             {
-                return Activator.CreateInstance(Property.PropertyType);
+                object value = Activator.CreateInstance(Property.PropertyType);
+                return value;
             }
 
             return null;

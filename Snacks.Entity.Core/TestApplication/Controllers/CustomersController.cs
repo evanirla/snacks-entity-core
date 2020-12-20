@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Snacks.Entity.Core.Controllers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestApplication.Models;
 
@@ -15,8 +16,8 @@ namespace TestApplication.Controllers
             
         }
 
-        [HttpGet("")]
-        public override async Task<IActionResult> GetAsync()
+        [HttpGet]
+        public override async Task<ActionResult<IList<CustomerModel>>> GetAsync()
         {
             await EntityService.CreateOneAsync(new CustomerModel
             {
