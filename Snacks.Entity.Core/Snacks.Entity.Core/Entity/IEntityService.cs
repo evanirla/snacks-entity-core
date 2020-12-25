@@ -20,7 +20,7 @@ namespace Snacks.Entity.Core.Entity
 
         Task<IEnumerable<IEntityModel>> CreateManyAsync(IEnumerable<IEntityModel> models, IDbTransaction transaction = null);
 
-        Task UpdateOneAsync(IEntityModel model, IDbTransaction transaction = null);
+        Task<IEntityModel> UpdateOneAsync(IEntityModel model, object data, IDbTransaction transaction = null);
 
         Task DeleteOneAsync(object key, IDbTransaction transaction = null);
 
@@ -42,7 +42,7 @@ namespace Snacks.Entity.Core.Entity
 
         Task<IEnumerable<TModel>> CreateManyAsync(IEnumerable<TModel> models, IDbTransaction transaction = null);
 
-        Task UpdateOneAsync(TModel model, IDbTransaction transaction = null);
+        Task<TModel> UpdateOneAsync(TModel model, object data, IDbTransaction transaction = null);
 
         Task DeleteOneAsync(TModel model, IDbTransaction transaction = null);
     }

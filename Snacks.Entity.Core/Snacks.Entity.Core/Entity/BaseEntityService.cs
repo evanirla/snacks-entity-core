@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -167,7 +168,10 @@ namespace Snacks.Entity.Core.Entity
         {
             string statement = GetDeleteStatement();
 
-            await DbService.ExecuteSqlAsync(statement, new { Key = Mapping.KeyColumn.GetValue(model) });
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add(Mapping.KeyColumn.Name, model.Key);
+
+            await DbService.ExecuteSqlAsync(statement, parameters);
 
             if (CacheService != null)
             {
@@ -280,20 +284,20 @@ namespace Snacks.Entity.Core.Entity
             return (await CreateManyAsync(models.Select(x => (TModel)x).ToList(), transaction)).Select(x => (IEntityModel)x);
         }
 
-        public async Task UpdateOneAsync(IEntityModel model, IDbTransaction transaction = null)
+        public async Task<IEntityModel> UpdateOneAsync(IEntityModel model, object data, IDbTransaction transaction = null)
         {
-            await UpdateOneAsync((TModel)model, transaction);
+            return await UpdateOneAsync((TModel)model, data, transaction);
         }
 
-        public virtual async Task UpdateOneAsync(TModel model, IDbTransaction transaction = null)
+        public virtual async Task<TModel> UpdateOneAsync(TModel model, object data, IDbTransaction transaction = null)
         {
             if (Mapping.KeyColumn.GetValue(model) == null)
             {
                 throw new ArgumentException("Model must contain a value for Id.");
             }
 
-            string statement = GetUpdateStatement();
-            DynamicParameters parameters = GetDynamicUpdateParameters(model);
+            string statement = GetUpdateStatement(data);
+            DynamicParameters parameters = GetDynamicUpdateParameters(model, data);
 
             await DbService.ExecuteSqlAsync(
                 statement,
@@ -317,6 +321,8 @@ namespace Snacks.Entity.Core.Entity
             {
                 await CacheService.RemoveManyAsync();
             }
+
+            return model;
         }
 
         public async Task DeleteOneAsync(IEntityModel model, IDbTransaction transaction = null)
@@ -463,35 +469,65 @@ namespace Snacks.Entity.Core.Entity
             return parameters;
         }
 
-        private string GetUpdateStatement()
+        private string GetUpdateStatement(object data)
         {
-            IEnumerable<TableColumnMapping> columns = Mapping.Columns
-                .Where(x => x.IsKey)
-                .Where(x => 
-                    !x.IsDatabaseGenerated ||
-                    x.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Computed);
+            List<TableColumnMapping> columns = new List<TableColumnMapping>();
+
+            foreach (PropertyInfo property in data.GetType().GetProperties())
+            {
+                TableColumnMapping column = Mapping.Columns
+                    .FirstOrDefault(x => x.Property.Name.Equals(property.Name, StringComparison.InvariantCultureIgnoreCase));
+
+                if (column == null)
+                {
+                    // TODO: Custom exception?
+                    throw new Exception($"{typeof(TModel).Name} does not contain property {property.Name}");
+                }
+
+                if (column.IsKey)
+                {
+                    // TODO: Custom exception?
+                    throw new Exception($"Cannot update {typeof(TModel).Name} key.");
+                }
+
+                if (column.IsDatabaseGenerated && column.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Identity)
+                {
+                    // TODO: Custom exception?
+                    throw new Exception($"Cannot update {column.Property.Name} as it is read-only.");
+                }
+
+                columns.Add(column);
+            }
 
             return $@"
                 update {Mapping.Name}
                 set {string.Join(",", columns.Select(x => $"{x.Name} = @{x.Property.Name}"))}
-                where key = @Key";
+                where {Mapping.KeyColumn.Name} = @{Mapping.KeyColumn.Property.Name}";
         }
 
-        private DynamicParameters GetDynamicUpdateParameters(TModel model)
+        private DynamicParameters GetDynamicUpdateParameters(TModel model, object data)
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            foreach (TableColumnMapping column in Mapping.Columns)
+            foreach (PropertyInfo property in data.GetType().GetProperties())
             {
-                parameters.Add(column.Property.Name, column.GetValue(model));
+                TableColumnMapping column = Mapping.Columns
+                    .FirstOrDefault(x => x.Property.Name.Equals(property.Name, StringComparison.InvariantCultureIgnoreCase));
+
+                if (column != null)
+                {
+                    parameters.Add(column.Property.Name, property.GetValue(data));
+                }
             }
+
+            parameters.Add(Mapping.KeyColumn.Property.Name, model.Key);
 
             return parameters;
         }
 
         private string GetDeleteStatement()
         {
-            return $"delete from {Mapping.Name} where id = @Id";
+            return $"delete from {Mapping.Name} where {Mapping.KeyColumn.Name} = @{Mapping.KeyColumn.Property.Name}";
         }
 
         private IEnumerable<TableColumnMapping> GetInsertColumns()

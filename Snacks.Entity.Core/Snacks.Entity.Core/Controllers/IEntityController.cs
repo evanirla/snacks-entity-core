@@ -12,7 +12,6 @@ namespace Snacks.Entity.Core.Controllers
         Task<ActionResult<TModel>> GetAsync(TKey key);
         Task<ActionResult<IList<TModel>>> GetAsync();
         Task<ActionResult<TModel>> PostAsync([FromBody] TModel model);
-        Task<ActionResult<IList<TModel>>> PostAsync([FromBody] List<TModel> models);
-        Task<IActionResult> PutAsync(TKey key, [FromBody] TModel model);
+        Task<IActionResult> PatchAsync(TKey key, [FromBody] object data);
     }
 }

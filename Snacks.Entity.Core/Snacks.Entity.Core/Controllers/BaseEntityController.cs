@@ -69,14 +69,8 @@ namespace Snacks.Entity.Core.Controllers
             return await EntityService.CreateOneAsync(model);
         }
 
-        [HttpPost]
-        public virtual async Task<ActionResult<IList<TModel>>> PostAsync([FromBody] List<TModel> models)
-        {
-            return (await EntityService.CreateManyAsync(models)).ToList();
-        }
-
-        [HttpPut("{key}")]
-        public virtual async Task<IActionResult> PutAsync([FromRoute] TKey key, [FromBody] TModel model)
+        [HttpPatch("{key}")]
+        public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey key, [FromBody] object data)
         {
             TModel existingModel = await EntityService.GetOneAsync(key);
 
@@ -85,9 +79,7 @@ namespace Snacks.Entity.Core.Controllers
                 return NotFound();
             }
 
-            model.Key = key;
-
-            await EntityService.UpdateOneAsync(model);
+            await EntityService.UpdateOneAsync(existingModel, data);
 
             return Ok();
         }
