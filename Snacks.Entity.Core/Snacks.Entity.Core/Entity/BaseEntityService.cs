@@ -124,7 +124,7 @@ namespace Snacks.Entity.Core.Entity
             {
                 await DbService.ExecuteSqlAsync(
                     statement,
-                    GetDynamicInsertParameters(model),
+                    GetInsertParameters(model),
                     transaction);
 
                 if (Mapping.KeyColumn.GetValue(model).Equals(Mapping.KeyColumn.GetDefaultValue()))
@@ -532,8 +532,25 @@ namespace Snacks.Entity.Core.Entity
 
         private IEnumerable<TableColumnMapping> GetInsertColumns()
         {
-            return Mapping.Columns
-                .Where(x => !x.IsKey || !x.IsDatabaseGenerated);
+            // We want to get the default values of "DatabaseGenerated" columns.
+            TModel referenceModel = Activator.CreateInstance<TModel>();
+
+            List<TableColumnMapping> insertableColumns = new List<TableColumnMapping>();
+
+            foreach (TableColumnMapping column in Mapping.Columns)
+            {
+                if (column.IsDatabaseGenerated)
+                {
+                    if (column.IsKey || column.GetValue(referenceModel).Equals(column.GetDefaultValue()))
+                    {
+                        continue;
+                    }
+                }
+
+                insertableColumns.Add(column);
+            }
+
+            return insertableColumns;
         }
 
         private string GetInsertStatement()
@@ -545,15 +562,25 @@ namespace Snacks.Entity.Core.Entity
                 values ({string.Join(",", insertColumns.Select(x => $"@{x.Property.Name}"))})";
         }
 
-        private DynamicParameters GetDynamicInsertParameters(TModel model)
+        private DynamicParameters GetInsertParameters(TModel model)
         {
+            // We want to get the default values of "DatabaseGenerated" columns.
+            TModel referenceModel = Activator.CreateInstance<TModel>();
+
             DynamicParameters parameters = new DynamicParameters();
 
             var insertColumns = GetInsertColumns();
 
             foreach (TableColumnMapping column in insertColumns)
             {
-                parameters.Add(column.Property.Name, column.GetValue(model));
+                if (column.IsDatabaseGenerated)
+                {
+                    parameters.Add(column.Property.Name, column.GetValue(referenceModel));
+                }
+                else
+                {
+                    parameters.Add(column.Property.Name, column.GetValue(model));
+                }
             }
 
             return parameters;

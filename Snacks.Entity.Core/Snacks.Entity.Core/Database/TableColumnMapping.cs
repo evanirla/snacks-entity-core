@@ -27,7 +27,7 @@ namespace Snacks.Entity.Core.Database
             DatabaseGeneratedAttribute.DatabaseGeneratedOption != DatabaseGeneratedOption.None;
         public bool IsIndexed => IndexedAttribute != null;
         public bool IsRequired => RequiredAttribute != null;
-        public bool IsUnique => IndexedAttribute.Unique;
+        public bool IsUnique => IndexedAttribute?.Unique ?? false;
         public Type ForeignType => AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(x => x.GetTypes())
             .Where(x => typeof(IEntityModel).IsAssignableFrom(x))
