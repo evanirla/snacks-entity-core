@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Snacks.Entity.Core.Entity
 {
@@ -35,6 +36,7 @@ namespace Snacks.Entity.Core.Entity
         }
 
         [NotMapped]
+        [JsonIgnore]
         public string TableName => GetType().GetCustomAttribute<TableAttribute>()?.Name ?? GetType().Name;
     }
 }

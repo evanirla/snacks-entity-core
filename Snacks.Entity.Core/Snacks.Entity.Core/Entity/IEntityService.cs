@@ -12,7 +12,7 @@ namespace Snacks.Entity.Core.Entity
 
         Task<IEntityModel> GetOneAsync(object key, IDbTransaction transaction = null);
 
-        Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
+        Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection = null, IDbTransaction transaction = null);
 
         Task<IEnumerable<IEntityModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
 
@@ -34,7 +34,7 @@ namespace Snacks.Entity.Core.Entity
     {
         new Task<TModel> GetOneAsync(object key, IDbTransaction transaction = null);
 
-        new Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null);
+        new Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection = null, IDbTransaction transaction = null);
 
         new Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
 

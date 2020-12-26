@@ -63,19 +63,22 @@ namespace Snacks.Entity.Core.Entity
 
         public TableMapping Mapping { get; private set; }
 
+        protected readonly string _insertStatement;
+
         public BaseEntityService(
             IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             Mapping = TableMapping.GetMapping<TModel>();
+
+            _insertStatement = GetInsertStatement();
         }
 
         public virtual Task InitializeAsync()
         {
             if (Mapping.KeyColumn == null)
             {
-                // TODO: Better exception
-                throw new Exception("Key column doesn't exist.");
+                throw new NoKeyColumnException($"No key column for {typeof(TModel).Name}");
             }
 
             return Task.CompletedTask;
@@ -118,12 +121,10 @@ namespace Snacks.Entity.Core.Entity
                 }
             }
 
-            string statement = GetInsertStatement();
-
             async Task createOne()
             {
                 await DbService.ExecuteSqlAsync(
-                    statement,
+                    _insertStatement,
                     GetInsertParameters(model),
                     transaction);
 
@@ -197,7 +198,7 @@ namespace Snacks.Entity.Core.Entity
             }
         }
 
-        public virtual async Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction = null)
+        public virtual async Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection = null, IDbTransaction transaction = null)
         {
             if (CacheService != null)
             {
@@ -382,24 +383,27 @@ namespace Snacks.Entity.Core.Entity
             StringValues orderByAsc;
             StringValues orderByDesc;
 
-            if (queryCollection.ContainsKey("limit"))
+            if (queryCollection != null)
             {
-                limit = Convert.ToInt32(queryCollection["limit"]);
-            }
+                if (queryCollection.ContainsKey("limit"))
+                {
+                    limit = Convert.ToInt32(queryCollection["limit"]);
+                }
 
-            if (queryCollection.ContainsKey("offset"))
-            {
-                offset = Convert.ToInt32(queryCollection["offset"]);
-            }
+                if (queryCollection.ContainsKey("offset"))
+                {
+                    offset = Convert.ToInt32(queryCollection["offset"]);
+                }
 
-            if (queryCollection.ContainsKey("orderby[asc]"))
-            {
-                orderByAsc = queryCollection["orderby[asc]"];
-            }
+                if (queryCollection.ContainsKey("orderby[asc]"))
+                {
+                    orderByAsc = queryCollection["orderby[asc]"];
+                }
 
-            if (queryCollection.ContainsKey("orderby[desc]"))
-            {
-                orderByDesc = queryCollection["orderby[desc]"];
+                if (queryCollection.ContainsKey("orderby[desc]"))
+                {
+                    orderByDesc = queryCollection["orderby[desc]"];
+                }
             }
 
             List<string> filterStrings = new List<string>();
@@ -591,6 +595,11 @@ namespace Snacks.Entity.Core.Entity
             List<Tuple<TableColumnMapping, string, object>> filters = 
                 new List<Tuple<TableColumnMapping, string, object>>();
 
+            if (queryCollection == null)
+            {
+                return filters;
+            }
+
             Regex filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
 
             foreach (KeyValuePair<string, StringValues> query in queryCollection)
@@ -659,19 +668,19 @@ namespace Snacks.Entity.Core.Entity
             return filters;
         }
 
-        Task<IEntityModel> IEntityService.GetOneAsync(object key, IDbTransaction transaction)
+        async Task<IEntityModel> IEntityService.GetOneAsync(object key, IDbTransaction transaction)
         {
-            throw new NotImplementedException();
+            return await GetOneAsync(key, transaction);
         }
 
-        Task<IEnumerable<IEntityModel>> IEntityService.GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction)
+        async Task<IEnumerable<IEntityModel>> IEntityService.GetManyAsync(IQueryCollection queryCollection, IDbTransaction transaction)
         {
-            throw new NotImplementedException();
+            return (await GetManyAsync(queryCollection, transaction)).Select(x => (IEntityModel)x);
         }
 
-        Task<IEnumerable<IEntityModel>> IEntityService.GetManyAsync(string sql, object parameters, IDbTransaction transaction)
+        async Task<IEnumerable<IEntityModel>> IEntityService.GetManyAsync(string sql, object parameters, IDbTransaction transaction)
         {
-            throw new NotImplementedException();
+            return (await GetManyAsync(sql, parameters, transaction)).Select(x => (IEntityModel)x);
         }
     }
 }

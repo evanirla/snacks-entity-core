@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Snacks.Entity.Core.Database;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Snacks.Entity.Core.Sqlite
 
             foreach (TableColumnMapping column in table.Columns)
             {
-                tableBuilder.Append($"{column.Name} {column.TypeName}");
+                tableBuilder.Append($"{column.Name} {GetColumnDataType(column)}");
 
                 if (column.IsKey)
                 {
@@ -37,7 +38,7 @@ namespace Snacks.Entity.Core.Sqlite
                     if (column.IsDatabaseGenerated &&
                         column.DatabaseGeneratedAttribute.DatabaseGeneratedOption == DatabaseGeneratedOption.Identity)
                     {
-                        if (column.TypeName.ToUpper().Contains("INT"))
+                        if (GetColumnDataType(column).ToUpper().Contains("INT"))
                         {
                             tableBuilder.Append(" AUTOINCREMENT");
                         }
@@ -115,6 +116,61 @@ namespace Snacks.Entity.Core.Sqlite
             }
 
             transaction.Commit();
+        }
+
+        private string GetColumnDataType(TableColumnMapping column)
+        {
+            if (column.ColumnAttribute?.TypeName != null)
+            {
+                return column.ColumnAttribute.TypeName;
+            }
+
+            Type propertyType = Nullable.GetUnderlyingType(column.Property.PropertyType) ?? column.Property.PropertyType;
+
+            Type[] integerTypes = new Type[]
+            {
+                    typeof(bool),
+                    typeof(byte),
+                    typeof(short),
+                    typeof(int),
+                    typeof(long),
+                    typeof(sbyte),
+                    typeof(ushort),
+                    typeof(uint),
+                    typeof(ulong)
+            };
+
+            Type[] textTypes = new Type[]
+            {
+                    typeof(char),
+                    typeof(DateTime),
+                    typeof(DateTimeOffset),
+                    typeof(decimal),
+                    typeof(Guid),
+                    typeof(string),
+                    typeof(TimeSpan)
+            };
+
+            Type[] realTypes = new Type[]
+            {
+                    typeof(double),
+                    typeof(float)
+            };
+
+            if (integerTypes.Contains(propertyType))
+            {
+                return "INTEGER";
+            }
+            else if (textTypes.Contains(propertyType))
+            {
+                return "TEXT";
+            }
+            else if (realTypes.Contains(propertyType))
+            {
+                return "REAL";
+            }
+
+            throw new Exception($"Invalid type {propertyType.Name}");
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
 using Snacks.Entity.Core.Entity;
 using Snacks.Entity.Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,49 +12,50 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Caching
 {
+    /// <summary>
+    /// Utilized by Entity Services to cache query results
+    /// </summary>
+    /// <typeparam name="TModel">The entity type to cache</typeparam>
     public class EntityCacheService<TModel> : IEntityCacheService<TModel>
         where TModel : IEntityModel
     {
         protected readonly IDistributedCache _distributedCache;
         protected readonly PropertyInfo _primaryKey;
+        protected readonly EntityCacheOptions _options;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="distributedCache"></param>
         public EntityCacheService(
-            IDistributedCache distributedCache)
+            IDistributedCache distributedCache,
+            IOptions<EntityCacheOptions> options)
         {
             _distributedCache = distributedCache;
+            _options = options.Value;
             _primaryKey = typeof(TModel).GetProperties()
                 .FirstOrDefault(x => x.IsDefined(typeof(KeyAttribute)));
         }
 
         /// <summary>
-        /// 
+        /// Remove the specified model from the cache
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
         public async Task RemoveOneAsync(TModel model)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(model.Key));
         }
 
         /// <summary>
-        /// 
+        /// Remove the specified model from the cache by key
         /// </summary>
         /// <param name="key"></param>
-        /// <returns></returns>
         public async Task RemoveOneAsync(object key)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
 
         /// <summary>
-        /// 
+        /// Return the models that match the given request
         /// </summary>
-        /// <param name="queryCollection"></param>
-        /// <returns></returns>
+        /// <param name="queryCollection">The query collection from a request</param>
+        /// <returns>Models that match the given request</returns>
         public async Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection)
         {
             byte[] modelListData =
@@ -92,7 +95,7 @@ namespace Snacks.Entity.Core.Caching
         /// <returns></returns>
         public async Task SetManyAsync(IQueryCollection queryCollection, IList<TModel> models)
         {
-            await _distributedCache.SetAsync(GetModelListKey(queryCollection), models.ToByteArray());
+            await _distributedCache.SetAsync(GetModelListKey(queryCollection), models.ToByteArray(), GetEntryOptions());
             await AddModelListKey(queryCollection);
         }
 
@@ -104,7 +107,7 @@ namespace Snacks.Entity.Core.Caching
         public async Task SetOneAsync(TModel model)
         {
             string cacheKey = GetCacheKey(model.Key);
-            await _distributedCache.SetAsync(cacheKey, model.ToByteArray());
+            await _distributedCache.SetAsync(cacheKey, model.ToByteArray(), GetEntryOptions());
         }
 
         /// <summary>
@@ -144,12 +147,12 @@ namespace Snacks.Entity.Core.Caching
         /// <returns></returns>
         public async Task SetCustomOneAsync(string cacheKey, TModel model)
         {
-            await _distributedCache.SetAsync(cacheKey, model.ToByteArray());
+            await _distributedCache.SetAsync(cacheKey, model.ToByteArray(), GetEntryOptions());
         }
 
         public async Task SetCustomManyAsync(string cacheKey, IList<TModel> models)
         {
-            await _distributedCache.SetAsync(cacheKey, models.ToByteArray());
+            await _distributedCache.SetAsync(cacheKey, models.ToByteArray(), GetEntryOptions());
         }
 
         /// <summary>
@@ -240,7 +243,19 @@ namespace Snacks.Entity.Core.Caching
 
             keys.Add(GetModelListKey(queryCollection));
 
-            await _distributedCache.SetAsync(key, keys.ToByteArray());
+            await _distributedCache.SetAsync(key, keys.ToByteArray(), GetEntryOptions());
+        }
+
+        protected DistributedCacheEntryOptions GetEntryOptions()
+        {
+            DistributedCacheEntryOptions entryOptions = new DistributedCacheEntryOptions();
+
+            if (_options.EntryAction != null)
+            {
+                _options.EntryAction.Invoke(entryOptions);
+            }
+
+            return entryOptions;
         }
     }
 
@@ -257,7 +272,8 @@ namespace Snacks.Entity.Core.Caching
         /// </summary>
         /// <param name="distributedCache"></param>
         public EntityCacheService(
-            IDistributedCache distributedCache) : base(distributedCache)
+            IDistributedCache distributedCache,
+            IOptions<EntityCacheOptions> options) : base(distributedCache, options)
         {
         }
 

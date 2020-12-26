@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Snacks.Entity.Core.MySql\Snacks.Entity.Core.MySql.csproj" />
     <ProjectReference Include="..\Snacks.Entity.Core.Sqlite\Snacks.Entity.Core.Sqlite.csproj" />
     <ProjectReference Include="..\Snacks.Entity.Core\Snacks.Entity.Core.csproj" />

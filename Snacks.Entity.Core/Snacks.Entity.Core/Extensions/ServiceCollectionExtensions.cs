@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core.Caching;
 using Snacks.Entity.Core.Entity;
 using System;
@@ -31,8 +32,13 @@ namespace Snacks.Entity.Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddEntityCacheServices(this IServiceCollection services)
+        public static IServiceCollection AddEntityCacheServices(this IServiceCollection services, Action<EntityCacheOptions> setupAction = null)
         {
+            if (setupAction != null)
+            {
+                services.Configure(setupAction);
+            }
+
             foreach (Type serviceType in EntityServiceTypes)
             {
                 Type modelType = GetModelTypeFromServiceType(serviceType);
