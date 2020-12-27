@@ -333,27 +333,8 @@ namespace Snacks.Entity.Core.Entity
 
         protected virtual async Task<TModel> GetLastInsertedAsync(IDbTransaction transaction)
         {
-            Type dbServiceType = typeof(TDbService);
-            Type dbConnectionType = dbServiceType.BaseType.GetGenericArguments().First();
-
-            if (dbConnectionType.Name == "MySqlConnection")
-            {
-                int key = await DbService.QuerySingleAsync<int>(
-                    "select last_insert_id() from dual", null, transaction);
-
-                return await GetOneAsync(key, transaction);
-            }
-            else if (dbConnectionType.Name == "SqliteConnection")
-            {
-                dynamic row = await DbService.QuerySingleAsync<dynamic>(@$"
-                    SELECT {Mapping.KeyColumn.Name} `Key`
-                    FROM {Mapping.Name}
-                    WHERE ROWID = LAST_INSERT_ROWID()", null, transaction);
-
-                return await GetOneAsync(row.Key, transaction);
-            }
-
-            return default;
+            int key = await DbService.GetLastInsertId(transaction);
+            return await GetOneAsync(key, transaction);
         }
 
         protected IEntityService<TOtherModel> GetOtherEntityService<TOtherModel>() where TOtherModel : IEntityModel

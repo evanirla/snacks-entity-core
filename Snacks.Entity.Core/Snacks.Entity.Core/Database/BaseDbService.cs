@@ -101,6 +101,8 @@ namespace Snacks.Entity.Core.Database
             return await QuerySingleAsync<T>(sql, (object)parameters, transaction);
         }
 
+        public abstract Task<int> GetLastInsertId(IDbTransaction transaction);
+
         public abstract Task<TDbConnection> GetConnectionAsync();
 
         async Task<IDbConnection> IDbService.GetConnectionAsync()

@@ -24,7 +24,10 @@ namespace TestApplication
                 });
             services.AddDistributedMemoryCache();
 
-            services.AddSqliteService("Data Source=snacks.db");
+            services.AddSqliteService(options =>
+            {
+                options.ConnectionString = "Data Source=snacks.db";
+            });
             services.AddEntityServices();
             services.AddEntityCacheServices(options => 
             {

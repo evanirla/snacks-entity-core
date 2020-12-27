@@ -33,29 +33,16 @@ namespace Snacks.Entity.Core.Caching
                 .FirstOrDefault(x => x.IsDefined(typeof(KeyAttribute)));
         }
 
-        /// <summary>
-        /// Remove the specified model from the cache
-        /// </summary>
-        /// <param name="model"></param>
         public async Task RemoveOneAsync(TModel model)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(model.Key));
         }
 
-        /// <summary>
-        /// Remove the specified model from the cache by key
-        /// </summary>
-        /// <param name="key"></param>
         public async Task RemoveOneAsync(object key)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
 
-        /// <summary>
-        /// Return the models that match the given request
-        /// </summary>
-        /// <param name="queryCollection">The query collection from a request</param>
-        /// <returns>Models that match the given request</returns>
         public async Task<IList<TModel>> GetManyAsync(IQueryCollection queryCollection)
         {
             byte[] modelListData =
@@ -69,11 +56,6 @@ namespace Snacks.Entity.Core.Caching
             return default;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public async Task<TModel> GetOneAsync(object key)
         {
             byte[] modelData =
@@ -87,34 +69,18 @@ namespace Snacks.Entity.Core.Caching
             return default;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryCollection"></param>
-        /// <param name="models"></param>
-        /// <returns></returns>
         public async Task SetManyAsync(IQueryCollection queryCollection, IList<TModel> models)
         {
             await _distributedCache.SetAsync(GetModelListKey(queryCollection), models.ToByteArray(), GetEntryOptions());
             await AddModelListKey(queryCollection);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
         public async Task SetOneAsync(TModel model)
         {
             string cacheKey = GetCacheKey(model.Key);
             await _distributedCache.SetAsync(cacheKey, model.ToByteArray(), GetEntryOptions());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cacheKey"></param>
-        /// <returns></returns>
         public async Task<TModel> GetCustomOneAsync(string cacheKey)
         {
             byte[] modelData = await _distributedCache.GetAsync(cacheKey);
@@ -139,12 +105,6 @@ namespace Snacks.Entity.Core.Caching
             return default;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cacheKey"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
         public async Task SetCustomOneAsync(string cacheKey, TModel model)
         {
             await _distributedCache.SetAsync(cacheKey, model.ToByteArray(), GetEntryOptions());
@@ -155,11 +115,6 @@ namespace Snacks.Entity.Core.Caching
             await _distributedCache.SetAsync(cacheKey, models.ToByteArray(), GetEntryOptions());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryCollection"></param>
-        /// <returns></returns>
         public async Task RemoveManyAsync(IQueryCollection queryCollection = null)
         {
             if (queryCollection != null)
@@ -175,21 +130,11 @@ namespace Snacks.Entity.Core.Caching
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         protected string GetCacheKey(object key)
         {
             return $"{typeof(TModel).Name}({key})";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryCollection"></param>
-        /// <returns></returns>
         protected string GetModelListKey(IQueryCollection queryCollection)
         {
             string queryCollectionString = string.Empty;
@@ -207,10 +152,6 @@ namespace Snacks.Entity.Core.Caching
             return $"{typeof(TModel).Name}({queryCollectionString})";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         protected async Task<List<string>> GetModelListKeysAsync()
         {
             string key = $"{typeof(TModel).Name}Keys";
@@ -225,11 +166,6 @@ namespace Snacks.Entity.Core.Caching
             return new List<string>();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryCollection"></param>
-        /// <returns></returns>
         protected async Task AddModelListKey(IQueryCollection queryCollection)
         {
             string key = $"{typeof(TModel).Name}Keys";
@@ -259,39 +195,20 @@ namespace Snacks.Entity.Core.Caching
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TModel"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
     public class EntityCacheService<TModel, TKey> : EntityCacheService<TModel>
         where TModel : IEntityModel<TKey>
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="distributedCache"></param>
         public EntityCacheService(
             IDistributedCache distributedCache,
             IOptions<EntityCacheOptions> options) : base(distributedCache, options)
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public async Task RemoveOneAsync(TKey key)
         {
             await _distributedCache.RemoveAsync(GetCacheKey(key));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public async Task<TModel> GetOneAsync(TKey key)
         {
             byte[] modelData =

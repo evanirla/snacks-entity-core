@@ -89,6 +89,8 @@ namespace Snacks.Entity.Core.Database
         /// <returns></returns>
         Task ExecuteSqlAsync(string sql, DynamicParameters parameters, IDbTransaction transaction = null);
 
+        Task<int> GetLastInsertId(IDbTransaction transaction);
+
         /// <summary>
         /// 
         /// </summary>
