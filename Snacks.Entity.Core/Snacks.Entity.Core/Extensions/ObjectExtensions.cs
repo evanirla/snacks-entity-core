@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Snacks.Entity.Core.Extensions
 {
-    public static class ObjectExtensions
+    static class ObjectExtensions
     {
         static readonly BinaryFormatter binaryFormatter = new BinaryFormatter();
 
