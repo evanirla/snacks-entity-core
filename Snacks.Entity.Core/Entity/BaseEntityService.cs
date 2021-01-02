@@ -165,20 +165,9 @@ namespace Snacks.Entity.Core.Entity
             return model;
         }
 
-        public virtual async Task DeleteOneAsync(TModel model, IDbTransaction transaction = null)
+        public async Task DeleteOneAsync(TModel model, IDbTransaction transaction = null)
         {
-            string statement = GetDeleteStatement();
-
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add(Mapping.KeyColumn.Name, model.Key);
-
-            await DbService.ExecuteSqlAsync(statement, parameters);
-
-            if (CacheService != null)
-            {
-                await CacheService.RemoveOneAsync(model);
-                await CacheService.RemoveManyAsync();
-            }
+            await DeleteOneAsync(model.Key, transaction);
         }
 
         public virtual async Task DeleteOneAsync(object key, IDbTransaction transaction = null)
@@ -189,7 +178,9 @@ namespace Snacks.Entity.Core.Entity
             }
 
             string statement = GetDeleteStatement();
-            await DbService.ExecuteSqlAsync(statement, new { Key = key });
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add(Mapping.KeyColumn.Name, key);
+            await DbService.ExecuteSqlAsync(statement, parameters);
 
             if (CacheService != null)
             {
@@ -252,27 +243,7 @@ namespace Snacks.Entity.Core.Entity
 
         public async Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null)
         {
-            string cacheKey = parameters == null ? sql :
-                $"{sql}({parameters.GetType().GetProperties().Select(x => $"{x.Name}={x.GetValue(parameters)}")})";
-
-            if (CacheService != null)
-            {
-                IList<TModel> cachedModels = await CacheService.GetCustomManyAsync(cacheKey);
-
-                if (cachedModels != default)
-                {
-                    return cachedModels;
-                }
-            }
-
-            IList<TModel> models = (await DbService.QueryAsync<TModel>(sql, parameters, transaction)).ToList();
-
-            if (CacheService != null)
-            {
-                await CacheService.SetCustomManyAsync(cacheKey, models);
-            }
-
-            return models;
+            return await DbService.QueryAsync<TModel>(sql, parameters, transaction);
         }
 
         public async Task<IEntityModel> CreateOneAsync(IEntityModel model, IDbTransaction transaction = null)
