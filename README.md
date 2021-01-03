@@ -5,7 +5,7 @@ Snacks.Entity.Core is a .NET Core framework that aims to simplify the relationsh
 Use the NuGet package manager to install the latest version of Snacks.Entity.Core
 
 ```bash
-Install-Package Snacks.Entity.Core -Version 1.2.0
+Install-Package Snacks.Entity.Core
 ```
 
 ## Usage
