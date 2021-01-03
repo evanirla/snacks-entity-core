@@ -1,32 +1,67 @@
-## Snacks.Entity.Core
-This framework aims to simplify the relationship between .Net Core API controllers and the database.
-
-## Motivation
-After building numerous applications with Microsoft's Entity Framework, I asked myself, "is there a better way?"
-
-## Features
-Coming Soon
-
-## Code Example
-Coming Soon
+# Snacks.Entity.Core
+Snacks.Entity.Core is a .NET Core framework that aims to simplify the relationship between the database and the public-facing REST API.
 
 ## Installation
-Coming Soon
+Use the NuGet package manager to install the latest version of Snacks.Entity.Core
 
-## API Reference
-Coming Soon
+```bash
+Install-Package Snacks.Entity.Core -Version 1.2.0
+```
 
-## Tests
-Coming Soon
+## Usage
+Create a model
+```csharp
+using Snacks.Entity.Core;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-## How to use?
-Coming Soon
+public class StudentModel : BaseEntityModel<int>
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+```
+Create a model service
+```csharp
+using System;
+using Snacks.Entity.Core;
+using Snacks.Entity.Sqlite;
 
-## Contribute
-Coming Soon
+public class StudentService : BaseEntityService<StudentModel, SqliteService>
+{
+    public StudentService(
+        IServiceProvider serviceProvider) : base(serviceProvider) { }
+}
+```
+Create a model controller
+```csharp
+using System;
+using Snacks.Entity.Core;
 
-## Credits
-Coming Soon
+public class StudentController : BaseEntityController<StudentModel, int>
+{
+    public StudentController(
+        IServiceProvider serviceProvider) : base(serviceProvider) { }
+}
+```
+In your `Startup.cs` file, register the services.
+```csharp
+using Snacks.Entity.Core;
+using Snacks.Entity.Core.Sqlite
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSqliteService(options => { });
+
+    services.AddEntityServices();
+
+}
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-MIT © Evan Irla
+[MIT](https://choosealicense.com/licenses/mit/) © Evan Irla
