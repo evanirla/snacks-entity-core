@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Controllers
+namespace Snacks.Entity.Core
 {
     public abstract class BaseEntityController<TModel, TKey> : ControllerBase, IEntityController<TModel, TKey>
         where TModel : IEntityModel<TKey>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Snacks.Entity.Core.Entity
+namespace Snacks.Entity.Core
 {
     public interface IEntityModel
     {

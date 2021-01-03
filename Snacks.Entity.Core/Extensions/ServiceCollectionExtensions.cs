@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.DependencyInjection;
-using Snacks.Entity.Core.Caching;
-using Snacks.Entity.Core.Entity;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,23 +24,6 @@ namespace Snacks.Entity.Core.Extensions
                 {
                     services.AddSingleton(typeof(IEntityService<>).MakeGenericType(modelType), serviceType);
                 }
-            }
-
-            return services;
-        }
-
-        public static IServiceCollection AddEntityCacheServices(this IServiceCollection services, Action<EntityCacheOptions> setupAction = null)
-        {
-            if (setupAction != null)
-            {
-                services.Configure(setupAction);
-            }
-
-            foreach (Type serviceType in EntityServiceTypes)
-            {
-                Type modelType = GetModelTypeFromServiceType(serviceType);
-                services.AddSingleton(typeof(IEntityCacheService<>).MakeGenericType(modelType),
-                    typeof(EntityCacheService<>).MakeGenericType(modelType));
             }
 
             return services;

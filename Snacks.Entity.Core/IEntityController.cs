@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Snacks.Entity.Core.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Controllers
+namespace Snacks.Entity.Core
 {
     public interface IEntityController<TModel, TKey>
         where TModel : IEntityModel<TKey>

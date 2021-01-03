@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace Snacks.Entity.Core.Entity
+namespace Snacks.Entity.Core
 {
     [Serializable]
     public class BaseEntityModel<TKey> : IEntityModel<TKey>

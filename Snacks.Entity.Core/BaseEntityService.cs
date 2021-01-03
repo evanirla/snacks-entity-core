@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using Snacks.Entity.Core.Caching;
 using Snacks.Entity.Core.Database;
 using Snacks.Entity.Core.Exceptions;
 using System;
@@ -14,7 +13,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Entity
+namespace Snacks.Entity.Core
 {
     /// <summary>
     /// 

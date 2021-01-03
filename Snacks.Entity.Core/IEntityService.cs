@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Entity
+namespace Snacks.Entity.Core
 {
     public interface IEntityService
     {

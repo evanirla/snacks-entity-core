@@ -1,5 +1,4 @@
 ﻿using Snacks.Entity.Core.Attributes;
-using Snacks.Entity.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Snacks.Entity.Core.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Core.Caching
+namespace Snacks.Entity.Core
 {
     public interface IEntityCacheService<TModel>
         where TModel : IEntityModel
