@@ -54,9 +54,7 @@ using Snacks.Entity.Core.Sqlite
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddSqliteService(options => { });
-
     services.AddEntityServices();
-
 }
 ```
 
