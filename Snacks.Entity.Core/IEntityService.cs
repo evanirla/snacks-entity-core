@@ -1,55 +1,47 @@
-﻿using Microsoft.AspNetCore.Http;
-using Snacks.Entity.Core.Database;
-using System.Collections.Generic;
-using System.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    public interface IEntityService
+    public interface IEntityService<TEntity>
+        where TEntity : class
     {
-        TableMapping Mapping { get; }
+        DbContext DbContext { get; }
+        DbSet<TEntity> Entities { get; }
 
-        Task<IEntityModel> GetOneAsync(object key, IDbTransaction transaction = null);
+        Task<TEntity> FindAsync(params object[] keyValues);
 
-        Task<IEnumerable<IEntityModel>> GetManyAsync(IQueryCollection queryCollection = null, IDbTransaction transaction = null);
+        Task<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<IEntityModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
+        /// <summary>
+        /// Create the given entity and save the changes to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The created entity</returns>
+        Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default);
 
-        Task<IEntityModel> CreateOneAsync(IEntityModel model, IDbTransaction transaction = null);
+        /// <summary>
+        /// Update the given entity and save the changes to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<TEntity> UpdateAsync(TEntity model, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<IEntityModel>> CreateManyAsync(IEnumerable<IEntityModel> models, IDbTransaction transaction = null);
-
-        Task<IEntityModel> UpdateOneAsync(IEntityModel model, object data, IDbTransaction transaction = null);
-
-        Task DeleteOneAsync(object key, IDbTransaction transaction = null);
-
-        Task DeleteOneAsync(IEntityModel model, IDbTransaction transaction = null);
-
-        Task InitializeAsync();
+        /// <summary>
+        /// Remove the given entity and save the changes to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default);
     }
 
-    public interface IEntityService<TModel> : IEntityService
-        where TModel : IEntityModel
-    {
-        new Task<TModel> GetOneAsync(object key, IDbTransaction transaction = null);
-
-        new Task<IEnumerable<TModel>> GetManyAsync(IQueryCollection queryCollection = null, IDbTransaction transaction = null);
-
-        new Task<IEnumerable<TModel>> GetManyAsync(string sql, object parameters, IDbTransaction transaction = null);
-
-        Task<TModel> CreateOneAsync(TModel model, IDbTransaction transaction = null);
-
-        Task<IEnumerable<TModel>> CreateManyAsync(IEnumerable<TModel> models, IDbTransaction transaction = null);
-
-        Task<TModel> UpdateOneAsync(TModel model, object data, IDbTransaction transaction = null);
-
-        Task DeleteOneAsync(TModel model, IDbTransaction transaction = null);
-    }
-
-    public interface IEntityService<TModel, TDbService> : IEntityService<TModel>
-        where TModel : IEntityModel
-        where TDbService : IDbService
+    public interface IEntityService<TEntity, TDbContext> : IEntityService<TEntity>
+        where TEntity : class
+        where TDbContext : DbContext
     {
 
     }

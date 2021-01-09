@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    public interface IEntityController<TModel, TKey>
-        where TModel : IEntityModel<TKey>
+    public interface IEntityController<TEntity>
+        where TEntity : class
     {
-        Task<IActionResult> DeleteAsync(TKey key);
-        Task<ActionResult<TModel>> GetAsync(TKey key);
-        Task<ActionResult<IList<TModel>>> GetAsync();
-        Task<ActionResult<TModel>> PostAsync([FromBody] TModel model);
-        Task<IActionResult> PatchAsync(TKey key, [FromBody] object data);
+        Task<IActionResult> DeleteAsync([FromRoute] object id);
+        Task<ActionResult<TEntity>> GetAsync([FromRoute] object id);
+        Task<ActionResult<IList<TEntity>>> GetAsync();
+        Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model);
+        Task<IActionResult> PatchAsync([FromRoute] object id, [FromBody] object data);
     }
 }
