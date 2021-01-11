@@ -43,6 +43,6 @@ namespace Snacks.Entity.Core
         where TEntity : class
         where TDbContext : DbContext
     {
-
+        new TDbContext DbContext { get; }
     }
 }

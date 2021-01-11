@@ -13,4 +13,11 @@ namespace Snacks.Entity.Core
         Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model);
         Task<IActionResult> PatchAsync([FromRoute] object id, [FromBody] object data);
     }
+
+    public interface IEntityController<TEntity, TEntityService>
+        where TEntity : class
+        where TEntityService : IEntityService<TEntity>
+    {
+        
+    }
 }

@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +10,8 @@ namespace Snacks.Entity.Core
         where TDbContext : DbContext
     {
         public TDbContext DbContext => _dbContext;
+        DbContext IEntityService<TEntity>.DbContext => DbContext;
+        
         public DbSet<TEntity> Entities => _dbContext.Set<TEntity>();
 
         protected readonly TDbContext _dbContext;
@@ -23,14 +21,14 @@ namespace Snacks.Entity.Core
             _dbContext = dbContext;
         }
 
-        public async Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
-            EntityEntry<TEntity> entry = await _dbContext.AddAsync(model, cancellationToken).ConfigureAwait(false);
+            EntityEntry<TEntity> entry = _dbContext.Add(model);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             return entry.Entity;
         }
 
-        public async Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             _dbContext.Remove(model);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -38,20 +36,15 @@ namespace Snacks.Entity.Core
 
         public async Task<TEntity> FindAsync(params object[] keyValues)
         {
-            return await _dbContext.FindAsync<TEntity>(keyValues).ConfigureAwait(false);
+            return await FindAsync(keyValues, default).ConfigureAwait(false);
         }
 
-        public async Task<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken = default)
         {
             return await _dbContext.FindAsync<TEntity>(keyValues, cancellationToken).ConfigureAwait(false);
         }
 
-        public IQueryable<TEntity> Query()
-        {
-            return _dbContext.Set<TEntity>();
-        }
-
-        public async Task<TEntity> UpdateAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> UpdateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             EntityEntry<TEntity> entry = _dbContext.Update(model);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
