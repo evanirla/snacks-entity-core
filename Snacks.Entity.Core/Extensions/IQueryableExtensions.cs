@@ -84,6 +84,8 @@ namespace Snacks.Entity.Core.Extensions
                 }
             }
 
+            // apply order by?
+
             if (queryParameters.ContainsKey("offset"))
             {
                 int offset = Convert.ToInt32(queryParameters["offset"]);

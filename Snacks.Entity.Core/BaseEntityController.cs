@@ -15,7 +15,6 @@ namespace Snacks.Entity.Core
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
-        private readonly Regex _filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
 
         protected IEntityService<TEntity> Service { get; private set; }
 
@@ -42,11 +41,25 @@ namespace Snacks.Entity.Core
         {
             if (Request.Query.Count == 0)
             {
-                return await Service.Entities.ToListAsync();
+                List<TEntity> entities = default;
+
+                await Service.AccessDbSetAsync(async Entities =>
+                {
+                    entities = await Entities.ToListAsync();
+                });
+
+                return entities;
             }
             else
             {
-                return Service.Entities.ApplyQueryParameters(Request.Query).ToList();
+                List<TEntity> entities = default;
+
+                await Service.AccessDbSetAsync(async Entities =>
+                {
+                    entities = await Entities.ApplyQueryParameters(Request.Query).ToListAsync();
+                });
+
+                return entities;
             }
         }
 
