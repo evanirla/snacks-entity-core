@@ -33,13 +33,15 @@ namespace Snacks.Entity.Core
         /// <returns></returns>
         Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default);
 
-        Task AccessDbSetAsync(Func<DbSet<TEntity>, Task> dbSetFunc);
+        void AccessEntities(Action<DbSet<TEntity>> dbSetAction);
+        Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc);
     }
 
     public interface IEntityService<TEntity, TDbContext> : IEntityService<TEntity>
         where TEntity : class
         where TDbContext : DbContext
     {
+        void AccessDbContext(Action<TDbContext> dbContextAction);
         Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc);
     }
 }

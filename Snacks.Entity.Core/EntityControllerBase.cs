@@ -4,21 +4,19 @@ using Snacks.Entity.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    public abstract class BaseEntityController<TEntity> : ControllerBase, IEntityController<TEntity>
+    public abstract class EntityControllerBase<TEntity> : ControllerBase, IEntityController<TEntity>
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
         protected IEntityService<TEntity> Service { get; private set; }
 
-        public BaseEntityController(IEntityService<TEntity> entityService)
+        public EntityControllerBase(IEntityService<TEntity> entityService)
         {
             Service = entityService;
         }
@@ -43,7 +41,7 @@ namespace Snacks.Entity.Core
             {
                 List<TEntity> entities = default;
 
-                await Service.AccessDbSetAsync(async Entities =>
+                await Service.AccessEntitiesAsync(async Entities =>
                 {
                     entities = await Entities.ToListAsync();
                 });
@@ -54,7 +52,7 @@ namespace Snacks.Entity.Core
             {
                 List<TEntity> entities = default;
 
-                await Service.AccessDbSetAsync(async Entities =>
+                await Service.AccessEntitiesAsync(async Entities =>
                 {
                     entities = await Entities.ApplyQueryParameters(Request.Query).ToListAsync();
                 });
@@ -111,13 +109,13 @@ namespace Snacks.Entity.Core
         }
     }
 
-    public abstract class BaseEntityController<TEntity, TEntityService> : BaseEntityController<TEntity>
+    public abstract class EntityControllerBase<TEntity, TEntityService> : EntityControllerBase<TEntity>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
         new protected TEntityService Service => (TEntityService)base.Service;
 
-        public BaseEntityController(TEntityService entityService) : base(entityService)
+        public EntityControllerBase(TEntityService entityService) : base(entityService)
         {
             
         }

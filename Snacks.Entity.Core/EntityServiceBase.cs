@@ -7,16 +7,24 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Snacks.Entity.Core
 {
-    public abstract class BaseEntityService<TEntity, TDbContext> : IEntityService<TEntity, TDbContext>
+    public abstract class EntityServiceBase<TEntity, TDbContext> : IEntityService<TEntity, TDbContext>
         where TEntity : class
         where TDbContext : DbContext
     {
         protected IServiceScopeFactory _scopeFactory;
         
 
-        public BaseEntityService(IServiceScopeFactory scopeFactory)
+        public EntityServiceBase(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
+        }
+
+        public void AccessDbContext(Action<TDbContext> dbContextAction)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            dbContextAction.Invoke(dbContext);
         }
 
         public Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc)
@@ -27,7 +35,15 @@ namespace Snacks.Entity.Core
             return dbContextFunc.Invoke(dbContext);
         }
 
-        public Task AccessDbSetAsync(Func<DbSet<TEntity>, Task> dbSetFunc)
+        public void AccessEntities(Action<DbSet<TEntity>> dbSetAction)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            dbSetAction.Invoke(dbContext.Set<TEntity>());
+        }
+
+        public Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc)
         {
             using var scope = _scopeFactory.CreateScope();
             var dbContext = GetDbContext(scope);
