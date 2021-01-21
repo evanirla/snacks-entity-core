@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    public abstract class EntityControllerBase<TEntity> : ControllerBase, IEntityController<TEntity>
+    /// <summary>
+    /// Handles GET, POST, PATCH, and DELETE web requests for a specific entity.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type for the controller</typeparam>
+    /// <typeparam name="TKey">A primitive type that matches the key type of the entity.</typeparam>
+    public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase, IEntityController<TEntity, TKey>
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
@@ -22,7 +27,7 @@ namespace Snacks.Entity.Core
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] object id)
+        public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
             TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
 
@@ -62,7 +67,7 @@ namespace Snacks.Entity.Core
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> DeleteAsync([FromRoute] object id)
+        public virtual async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
         {
             TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
 
@@ -83,7 +88,7 @@ namespace Snacks.Entity.Core
         }
 
         [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> PatchAsync([FromRoute] object id, [FromBody] object data)
+        public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
         {
             TEntity existingModel = await Service.FindAsync(id).ConfigureAwait(false);
 
@@ -109,7 +114,8 @@ namespace Snacks.Entity.Core
         }
     }
 
-    public abstract class EntityControllerBase<TEntity, TEntityService> : EntityControllerBase<TEntity>
+    /// <typeparam name="TEntityService"></typeparam>
+    public abstract class EntityControllerBase<TEntity, TKey, TEntityService> : EntityControllerBase<TEntity, TKey>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {

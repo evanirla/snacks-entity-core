@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,22 +19,28 @@ namespace Snacks.Entity.Core.Extensions
         {
             PropertyInfo[] properties;
 
-            if (_entityProperties.ContainsKey(typeof(TEntity)))
+            lock (_entityProperties)
             {
-                properties = _entityProperties[typeof(TEntity)];
-            }
-            else
-            {
-                properties = typeof(TEntity).GetProperties();
-                _entityProperties.Add(typeof(TEntity), properties);
+                if (_entityProperties.ContainsKey(typeof(TEntity)))
+                {
+                    properties = _entityProperties[typeof(TEntity)];
+                }
+                else
+                {
+                    properties = typeof(TEntity).GetProperties();
+                    _entityProperties.Add(typeof(TEntity), properties);
+                }
             }
 
             List<Expression<Func<TEntity, bool>>> expressions = new List<Expression<Func<TEntity, bool>>>();
             ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "x");
 
+            List<Tuple<string, string, StringValues>> otherParameters = new List<Tuple<string, string, StringValues>>();
+
             foreach (var param in queryParameters)
             {
                 PropertyInfo property = null;
+                string propertyName = string.Empty;
                 string @operator = "=";
 
                 if (_filterRegex.IsMatch(param.Key))
@@ -41,12 +48,15 @@ namespace Snacks.Entity.Core.Extensions
                     Match filterMatch = _filterRegex.Match(param.Key);
                     GroupCollection filterGroups = filterMatch.Groups;
 
-                    property = properties.FirstOrDefault(x => x.Name.Equals(filterGroups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                    propertyName = filterGroups[1].Value;
+                    @operator = filterGroups[2].Value;
                 }
                 else
                 {
-                    property = properties.FirstOrDefault(x => x.Name.Equals(param.Key, StringComparison.InvariantCultureIgnoreCase));
+                    propertyName = param.Key;
                 }
+
+                property = properties.FirstOrDefault(x => x.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
 
                 if (property != null)
                 {
@@ -80,11 +90,42 @@ namespace Snacks.Entity.Core.Extensions
                         _ => throw new Exception("Operator not valid."),
                     };
 
-                    queryable = queryable.Where(Expression.Lambda<Func<TEntity, bool>>(equality, new[] { parameter }));
+                    queryable = queryable.Where(Expression.Lambda<Func<TEntity, bool>>(equality, parameter));
+                }
+                else
+                {
+                    otherParameters.Add(new Tuple<string, string, StringValues>(propertyName, @operator, param.Value));
                 }
             }
 
-            // apply order by?
+            foreach (var param in otherParameters)
+            {
+                if (param.Item1 == "orderby")
+                {
+                    bool descending = param.Item2 == "desc";
+
+                    foreach (string propertyName in param.Item3)
+                    {
+                        PropertyInfo property = properties.FirstOrDefault(x => x.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
+
+                        if (property != null)
+                        {
+                            MemberExpression member = Expression.Property(parameter, property);
+
+                            var lambda = Expression.Lambda<Func<TEntity, dynamic>>(member, parameter);
+
+                            if (descending)
+                            {
+                                queryable = queryable.OrderByDescending(lambda);
+                            }
+                            else
+                            {
+                                queryable = queryable.OrderBy(lambda);
+                            }
+                        }
+                    }
+                }
+            }
 
             if (queryParameters.ContainsKey("offset"))
             {

@@ -10,8 +10,6 @@ namespace Snacks.Entity.Core
     {
         Task<TEntity> FindAsync(params object[] keyValues);
 
-        Task<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken = default);
-
         /// <summary>
         /// Create the given entity and save the changes to the database.
         /// </summary>
