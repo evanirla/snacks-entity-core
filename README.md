@@ -9,7 +9,7 @@ Install-Package Snacks.Entity.Core
 ```
 
 ## Usage
-Create an entity service for an EF Core model
+### Create an entity service
 ```csharp
 using System;
 using Snacks.Entity.Core;
@@ -20,7 +20,7 @@ public class StudentService : BaseEntityService<StudentModel, MyDbContext>
         IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
 }
 ```
-Create an entity controller
+### Create an entity controller
 ```csharp
 using System;
 using Snacks.Entity.Core;
@@ -31,7 +31,8 @@ public class StudentController : EntityControllerBase<StudentModel, int, Student
         IServiceProvider serviceProvider) : base(serviceProvider) { }
 }
 ```
-In your `Startup.cs` file, register the services
+### Register entity services
+In your `Startup.cs` file, add the entity services in the ConfigureServices method.
 ```csharp
 using Snacks.Entity.Core;
 
