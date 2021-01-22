@@ -24,6 +24,7 @@ public class StudentService : BaseEntityService<StudentModel, MyDbContext>
 ### Create an entity controller
 ```csharp
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core;
 
 public class StudentController : EntityControllerBase<StudentModel, int, StudentService>
