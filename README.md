@@ -9,54 +9,44 @@ Install-Package Snacks.Entity.Core
 ```
 
 ## Usage
-Create a model
-```csharp
-using Snacks.Entity.Core;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-public class StudentModel : BaseEntityModel<int>
-{
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    public string Name { get; set; }
-}
-```
-Create a model service
+### Create an entity service
 ```csharp
 using System;
 using Snacks.Entity.Core;
-using Snacks.Entity.Sqlite;
 
-public class StudentService : BaseEntityService<StudentModel, SqliteService>
+public class StudentService : BaseEntityService<StudentModel, MyDbContext>
 {
     public StudentService(
-        IServiceProvider serviceProvider) : base(serviceProvider) { }
+        IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
 }
 ```
-Create a model controller
+
+### Create an entity controller
 ```csharp
 using System;
 using Snacks.Entity.Core;
 
-public class StudentController : BaseEntityController<StudentModel, int>
+public class StudentController : EntityControllerBase<StudentModel, int, StudentService>
 {
     public StudentController(
         IServiceProvider serviceProvider) : base(serviceProvider) { }
 }
 ```
-In your `Startup.cs` file, register the services.
+
+### Register entity services
+In your `Startup.cs` file, add the entity services in the ConfigureServices method.
 ```csharp
 using Snacks.Entity.Core;
-using Snacks.Entity.Core.Sqlite
 
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddSqliteService(options => { });
+    services.AddDbContext<MyDbContext>();
     services.AddEntityServices();
 }
 ```
+
+### Test
+Your application should now allow you to query data RESTfully like `api/students?grade[gte]=5&orderby[desc]=age&offset=5&limit=20`
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
