@@ -6,7 +6,7 @@
     <Authors>Evan Irla</Authors>
     <Company>API Snacks</Company>
     <PackageId>Snacks.Entity.Core</PackageId>
-    <Description>A simple entity framework that easily integrates into Sqlite or MySql/MariaDB databases.</Description>
+    <Description>Base classes that allow for easy construction of RESTful APIs using EF Core.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>2020 - Evan Irla</Copyright>
     <PackageReleaseNotes></PackageReleaseNotes>
@@ -14,18 +14,16 @@
     <RepositoryUrl>https://github.com/evanirla/snacks-entity-core</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>entity-framework, dot-net-core</PackageTags>
-    <Version>1.2.0</Version>
+    <Version>2.0.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.11" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.11" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.11" />
   </ItemGroup>
 
   <ItemGroup>

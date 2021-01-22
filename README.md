@@ -1,32 +1,52 @@
-## Snacks.Entity.Core
-This framework aims to simplify the relationship between .Net Core API controllers and the database.
-
-## Motivation
-After building numerous applications with Microsoft's Entity Framework, I asked myself, "is there a better way?"
-
-## Features
-Coming Soon
-
-## Code Example
-Coming Soon
+# Snacks.Entity.Core
+Snacks.Entity.Core is a .NET Core framework that aims to simplify the relationship between the database and the public-facing REST API.
 
 ## Installation
-Coming Soon
+Use the NuGet package manager to install the latest version of Snacks.Entity.Core
 
-## API Reference
-Coming Soon
+```bash
+Install-Package Snacks.Entity.Core
+```
 
-## Tests
-Coming Soon
+## Usage
+### Create an entity service
+```csharp
+using System;
+using Snacks.Entity.Core;
 
-## How to use?
-Coming Soon
+public class StudentService : BaseEntityService<StudentModel, MyDbContext>
+{
+    public StudentService(
+        IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
+}
+```
+### Create an entity controller
+```csharp
+using System;
+using Snacks.Entity.Core;
 
-## Contribute
-Coming Soon
+public class StudentController : EntityControllerBase<StudentModel, int, StudentService>
+{
+    public StudentController(
+        IServiceProvider serviceProvider) : base(serviceProvider) { }
+}
+```
+### Register entity services
+In your `Startup.cs` file, add the entity services in the ConfigureServices method.
+```csharp
+using Snacks.Entity.Core;
 
-## Credits
-Coming Soon
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<MyDbContext>();
+    services.AddEntityServices();
+}
+```
+### Test
+Your application should now allow you to query data RESTfully like `api/students?grade[gte]=5&orderby[desc]=age&offset=5&limit=20`
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-MIT © Evan Irla
+[MIT](https://choosealicense.com/licenses/mit/) © Evan Irla
