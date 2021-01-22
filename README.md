@@ -42,6 +42,8 @@ public void ConfigureServices(IServiceCollection services)
     services.AddEntityServices();
 }
 ```
+### Test
+Your application should now allow you to query data RESTfully like `api/students?grade[gte]=5&orderby[desc]=age&offset=5&limit=20`
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
