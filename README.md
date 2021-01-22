@@ -20,6 +20,7 @@ public class StudentService : BaseEntityService<StudentModel, MyDbContext>
         IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
 }
 ```
+
 ### Create an entity controller
 ```csharp
 using System;
@@ -31,6 +32,7 @@ public class StudentController : EntityControllerBase<StudentModel, int, Student
         IServiceProvider serviceProvider) : base(serviceProvider) { }
 }
 ```
+
 ### Register entity services
 In your `Startup.cs` file, add the entity services in the ConfigureServices method.
 ```csharp
@@ -42,6 +44,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddEntityServices();
 }
 ```
+
 ### Test
 Your application should now allow you to query data RESTfully like `api/students?grade[gte]=5&orderby[desc]=age&offset=5&limit=20`
 
