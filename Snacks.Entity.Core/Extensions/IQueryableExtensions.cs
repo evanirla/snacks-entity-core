@@ -9,10 +9,135 @@ using System.Text.RegularExpressions;
 
 namespace Snacks.Entity.Core.Extensions
 {
+    enum SortOrder 
+    { 
+        Ascending, 
+        Descending 
+    }
+
+    enum Operator 
+    { 
+        Equal,
+        NotEqual,
+        Like,
+        In,
+        LessThan, 
+        LessThanOrEqual, 
+        GreaterThan,
+        GreaterThanOrEqual
+    }
+
+    class QueryableParameters
+    {
+        const string ORDERBY = "orderby";
+        const string LIMIT = "limit";
+        const string OFFSET = "offset";
+        static readonly Regex _paramRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
+
+        public int? Limit { get; set; }
+        public int? Offset { get; set; }
+        public List<Tuple<string, SortOrder>> Orders { get; set; }
+        public List<Tuple<string, Operator, StringValues>> Filters { get; set; }
+
+        public static QueryableParameters Build(IQueryCollection queryParameters)
+        {
+            QueryableParameters queryableParameters = new QueryableParameters();
+
+            foreach (KeyValuePair<string, StringValues> param in queryParameters)
+            {
+                if (param.Key == LIMIT)
+                {
+                    int.TryParse(param.Value, out int value);
+                    queryableParameters.Limit = value;
+                    continue;
+                }
+                else if (param.Key == OFFSET)
+                {
+                    int.TryParse(param.Value, out int value);
+                    queryableParameters.Offset = value;
+                    continue;
+                }
+
+                Match paramMatch = _paramRegex.Match(param.Key);
+
+                if (paramMatch.Success)
+                {
+                    string key = paramMatch.Groups[1].Value;
+                    string @operator = paramMatch.Groups[2].Value;
+
+                    if (key == ORDERBY)
+                    {
+                        queryableParameters.Orders.Add(
+                            new Tuple<string, SortOrder>(param.Value, GetSortOrder(@operator)));
+                    }
+                    else
+                    {
+                        queryableParameters.Filters.Add(
+                            new Tuple<string, Operator, StringValues>(
+                                key, 
+                                GetOperator(@operator, param.Value), 
+                                param.Value));
+                    }
+                }
+                else
+                {
+                    if (param.Key == ORDERBY)
+                    {
+                        queryableParameters.Orders.Add(
+                            new Tuple<string, SortOrder>(param.Value, default));
+                    }
+                    else
+                    {
+                        queryableParameters.Filters.Add(
+                            new Tuple<string, Operator, StringValues>(
+                                param.Key,
+                                default,
+                                param.Value));
+                    }
+                }
+            }
+
+            return queryableParameters;
+        }
+
+        static SortOrder GetSortOrder(string sortOrder)
+        {
+            return sortOrder switch
+            {
+                "desc" => SortOrder.Descending,
+                "asc" => SortOrder.Ascending,
+                _ => default,
+            };
+        }
+
+        static Operator GetOperator(string @operator, StringValues strings)
+        {
+            switch (@operator)
+            {
+                case "!":
+                    return Operator.NotEqual;
+                case "lt":
+                    return Operator.LessThan;
+                case "lte":
+                    return Operator.GreaterThan;
+                case "gt":
+                    return Operator.GreaterThan;
+                case "gte":
+                    return Operator.GreaterThanOrEqual;
+                default:
+                    if (strings.Count > 1)
+                    {
+                        return Operator.In;
+                    }
+                    return default;
+            }
+        }
+    }
+
     public static class IQueryableExtensions
     {
-        private static Regex _filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
-        private static Dictionary<Type, PropertyInfo[]> _entityProperties = new Dictionary<Type, PropertyInfo[]>();
+        private static readonly Regex _filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
+        private static readonly Dictionary<Type, PropertyInfo[]> _entityProperties = new Dictionary<Type, PropertyInfo[]>();
         
         public static IQueryable<TEntity> ApplyQueryParameters<TEntity>(this IQueryable<TEntity> queryable, IQueryCollection queryParameters)
             where TEntity : class
@@ -34,6 +159,10 @@ namespace Snacks.Entity.Core.Extensions
 
             List<Expression<Func<TEntity, bool>>> expressions = new List<Expression<Func<TEntity, bool>>>();
             ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "x");
+
+            QueryableParameters queryableParameters = QueryableParameters.Build(queryParameters);
+
+            for (var filter = queryParameters.)
 
             List<Tuple<string, string, StringValues>> otherParameters = new List<Tuple<string, string, StringValues>>();
 
