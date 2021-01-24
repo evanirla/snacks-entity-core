@@ -9,20 +9,20 @@ using System.Text.RegularExpressions;
 
 namespace Snacks.Entity.Core.Extensions
 {
-    enum SortOrder 
-    { 
-        Ascending, 
-        Descending 
+    enum SortOrder
+    {
+        Ascending,
+        Descending
     }
 
-    enum Operator 
-    { 
+    enum Operator
+    {
         Equal,
         NotEqual,
         Like,
         In,
-        LessThan, 
-        LessThanOrEqual, 
+        LessThan,
+        LessThanOrEqual,
         GreaterThan,
         GreaterThanOrEqual
     }
@@ -38,6 +38,12 @@ namespace Snacks.Entity.Core.Extensions
         public int? Offset { get; set; }
         public List<Tuple<string, SortOrder>> Orders { get; set; }
         public List<Tuple<string, Operator, StringValues>> Filters { get; set; }
+
+        public QueryableParameters()
+        {
+            Orders = new List<Tuple<string, SortOrder>>();
+            Filters = new List<Tuple<string, Operator, StringValues>>();
+        }
 
         public static QueryableParameters Build(IQueryCollection queryParameters)
         {
@@ -74,8 +80,8 @@ namespace Snacks.Entity.Core.Extensions
                     {
                         queryableParameters.Filters.Add(
                             new Tuple<string, Operator, StringValues>(
-                                key, 
-                                GetOperator(@operator, param.Value), 
+                                key,
+                                GetOperator(@operator, param.Value),
                                 param.Value));
                     }
                 }
@@ -91,7 +97,7 @@ namespace Snacks.Entity.Core.Extensions
                         queryableParameters.Filters.Add(
                             new Tuple<string, Operator, StringValues>(
                                 param.Key,
-                                default,
+                                GetOperator(null, param.Value),
                                 param.Value));
                     }
                 }
@@ -138,7 +144,7 @@ namespace Snacks.Entity.Core.Extensions
     {
         private static readonly Regex _filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
         private static readonly Dictionary<Type, PropertyInfo[]> _entityProperties = new Dictionary<Type, PropertyInfo[]>();
-        
+
         public static IQueryable<TEntity> ApplyQueryParameters<TEntity>(this IQueryable<TEntity> queryable, IQueryCollection queryParameters)
             where TEntity : class
         {
@@ -162,113 +168,108 @@ namespace Snacks.Entity.Core.Extensions
 
             QueryableParameters queryableParameters = QueryableParameters.Build(queryParameters);
 
-            for (var filter = queryParameters.)
-
-            List<Tuple<string, string, StringValues>> otherParameters = new List<Tuple<string, string, StringValues>>();
-
-            foreach (var param in queryParameters)
+            foreach (var filter in queryableParameters.Filters)
             {
-                PropertyInfo property = null;
-                string propertyName = string.Empty;
-                string @operator = "=";
-
-                if (_filterRegex.IsMatch(param.Key))
-                {
-                    Match filterMatch = _filterRegex.Match(param.Key);
-                    GroupCollection filterGroups = filterMatch.Groups;
-
-                    propertyName = filterGroups[1].Value;
-                    @operator = filterGroups[2].Value;
-                }
-                else
-                {
-                    propertyName = param.Key;
-                }
-
-                property = properties.FirstOrDefault(x => x.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
+                PropertyInfo property = properties.FirstOrDefault(
+                    x => x.Name.Equals(filter.Item1, StringComparison.InvariantCultureIgnoreCase));
 
                 if (property != null)
                 {
                     MemberExpression member = Expression.Property(parameter, property);
-                    Type propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
-                    object castedValue = null;
 
-                    if (propertyType == typeof(DateTime))
+                    if (filter.Item2 == Operator.In)
                     {
-                        castedValue = DateTime.Parse(param.Value);
-                    }
-                    else if (propertyType == typeof(int))
-                    {
-                        castedValue = Convert.ToInt32(param.Value);
+                        Type propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+                        dynamic valueList = Activator.CreateInstance(typeof(List<>).MakeGenericType(propertyType));
+
+                        var values = filter.Item3
+                            .Select(x => ConvertStringToPropertyType(x, property));
+
+                        foreach (var value in values)
+                        {
+                            valueList.Add(Convert.ChangeType(value, propertyType));
+                        }
+
+                        Expression containsExpression = Expression.Call(
+                            Expression.Constant(valueList),
+                            valueList.GetType().GetMethod("Contains"),
+                            member);
+
+                        queryable = queryable.Where(Expression.Lambda<Func<TEntity, bool>>(containsExpression, parameter));
                     }
                     else
                     {
-                        castedValue = Convert.ChangeType(param.Value, propertyType);
-                    }
+                        object value = ConvertStringToPropertyType(filter.Item3, property);
+                        ConstantExpression constant = Expression.Constant(value);
 
-                    ConstantExpression constant = Expression.Constant(castedValue);
-
-                    BinaryExpression equality = default;
-
-                    equality = @operator switch
-                    {
-                        "lt" => Expression.LessThan(member, constant),
-                        "lte" => Expression.LessThanOrEqual(member, constant),
-                        "gt" => Expression.GreaterThan(member, constant),
-                        "gte" => Expression.GreaterThanOrEqual(member, constant),
-                        _ => throw new Exception("Operator not valid."),
-                    };
-
-                    queryable = queryable.Where(Expression.Lambda<Func<TEntity, bool>>(equality, parameter));
-                }
-                else
-                {
-                    otherParameters.Add(new Tuple<string, string, StringValues>(propertyName, @operator, param.Value));
-                }
-            }
-
-            foreach (var param in otherParameters)
-            {
-                if (param.Item1 == "orderby")
-                {
-                    bool descending = param.Item2 == "desc";
-
-                    foreach (string propertyName in param.Item3)
-                    {
-                        PropertyInfo property = properties.FirstOrDefault(x => x.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
-
-                        if (property != null)
+                        BinaryExpression equality = filter.Item2 switch
                         {
-                            MemberExpression member = Expression.Property(parameter, property);
+                            Operator.Equal => Expression.Equal(member, constant),
+                            Operator.NotEqual => Expression.NotEqual(member, constant),
+                            Operator.LessThan => Expression.LessThan(member, constant),
+                            Operator.LessThanOrEqual => Expression.LessThanOrEqual(member, constant),
+                            Operator.GreaterThan => Expression.GreaterThan(member, constant),
+                            Operator.GreaterThanOrEqual => Expression.GreaterThanOrEqual(member, constant),
+                            _ => throw new Exception("Operator not valid."),
+                        };
 
-                            var lambda = Expression.Lambda<Func<TEntity, dynamic>>(member, parameter);
-
-                            if (descending)
-                            {
-                                queryable = queryable.OrderByDescending(lambda);
-                            }
-                            else
-                            {
-                                queryable = queryable.OrderBy(lambda);
-                            }
-                        }
+                        queryable = queryable.Where(Expression.Lambda<Func<TEntity, bool>>(equality, parameter));
                     }
                 }
             }
 
-            if (queryParameters.ContainsKey("offset"))
+            foreach (var order in queryableParameters.Orders)
             {
-                int offset = Convert.ToInt32(queryParameters["offset"]);
-                queryable = queryable.Take(offset);
+                PropertyInfo property = properties
+                    .FirstOrDefault(x => x.Name.Equals(order.Item1, StringComparison.InvariantCultureIgnoreCase));
+
+                if (property != null)
+                {
+                    MemberExpression member = Expression.Property(parameter, property);
+
+                    var lambda = Expression.Lambda<Func<TEntity, dynamic>>(member, parameter);
+
+                    if (order.Item2 == SortOrder.Descending)
+                    {
+                        queryable = queryable.OrderByDescending(lambda);
+                    }
+                    else
+                    {
+                        queryable = queryable.OrderBy(lambda);
+                    }
+                }
             }
 
-            if (queryParameters.ContainsKey("limit"))
+            if (queryableParameters.Offset.HasValue)
             {
-                int limit = Convert.ToInt32(queryParameters["limit"]);
-                queryable = queryable.Take(limit);
+                queryable = queryable.Skip(queryableParameters.Offset.Value);
+            }
+
+            if (queryableParameters.Limit.HasValue)
+            {
+                queryable = queryable.Take(queryableParameters.Limit.Value);
             }
 
             return queryable;
+        }
+
+        private static object ConvertStringToPropertyType(string value, PropertyInfo property)
+        {
+            Type propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+            if (propertyType == typeof(DateTime))
+            {
+                return DateTime.Parse(value);
+            }
+            else if (propertyType == typeof(int))
+            {
+                return Convert.ToInt32(value);
+            }
+            else
+            {
+                return Convert.ChangeType(value, propertyType);
+            }
         }
     }
 }
