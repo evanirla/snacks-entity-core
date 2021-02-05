@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Snacks.Entity.Core.Extensions;
 using System;
 using System.Collections.Generic;
@@ -20,20 +21,43 @@ namespace Snacks.Entity.Core
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
         protected IEntityService<TEntity> Service { get; private set; }
+        protected GlobalCacheService<TEntity> GlobalCache { get; private set; }
+        protected UserCacheService<TEntity> UserCache { get; private set; }
 
-        public EntityControllerBase(IEntityService<TEntity> entityService)
+        public EntityControllerBase(
+            IEntityService<TEntity> entityService,
+            IDistributedCache distributedCache = null)
         {
+            if (distributedCache != null)
+            {
+                // is there any performance degradation here since controllers are scoped?
+                GlobalCache = new GlobalCacheService<TEntity>(distributedCache);
+            }
+            
             Service = entityService;
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
-            TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
+            if (GlobalCache != null)
+            {
+                TEntity cachedModel = await GlobalCache.FindAsync(Request).ConfigureAwait(false);
+                if (cachedModel != null)
+                {
+                    return cachedModel;
+                }
+            }
 
+            TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
             if (model == null)
             {
                 return NotFound();
+            }
+
+            if (GlobalCache != null)
+            {
+                await GlobalCache.AddAsync(Request, model).ConfigureAwait(false);
             }
 
             return model;
@@ -42,28 +66,36 @@ namespace Snacks.Entity.Core
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
-            if (Request.Query.Count == 0)
+            if (GlobalCache != null)
             {
-                List<TEntity> entities = default;
+                IList<TEntity> cachedModels = await GlobalCache.GetAsync(Request).ConfigureAwait(false);
 
-                await Service.AccessEntitiesAsync(async Entities =>
+                if (cachedModels != null)
                 {
-                    entities = await Entities.ToListAsync();
-                });
-
-                return entities;
+                    return cachedModels.ToList();
+                }
             }
-            else
+
+            List<TEntity> models = default;
+
+            await Service.AccessEntitiesAsync(async Entities =>
             {
-                List<TEntity> entities = default;
-
-                await Service.AccessEntitiesAsync(async Entities =>
+                if (Request.Query.Count == 0)
                 {
-                    entities = await Entities.ApplyQueryParameters(Request.Query).ToListAsync();
-                });
+                    models = await Entities.ToListAsync().ConfigureAwait(false);
+                }
+                else
+                {
+                    models = await Entities.ApplyQueryParameters(Request.Query).ToListAsync().ConfigureAwait(false);
+                }
+            });
 
-                return entities;
+            if (GlobalCache != null)
+            {
+                await GlobalCache.AddAsync(Request, models).ConfigureAwait(false);
             }
+
+            return models;
         }
 
         [HttpDelete("{id}")]
@@ -78,13 +110,25 @@ namespace Snacks.Entity.Core
 
             await Service.DeleteAsync(model).ConfigureAwait(false);
 
+            if (GlobalCache != null)
+            {
+                await GlobalCache.PurgeAsync().ConfigureAwait(false);
+            }
+
             return Ok();
         }
 
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
-            return await Service.CreateAsync(model).ConfigureAwait(false);
+            TEntity newModel = await Service.CreateAsync(model).ConfigureAwait(false);
+
+            if (GlobalCache != null)
+            {
+                await GlobalCache.PurgeAsync().ConfigureAwait(false);
+            }
+
+            return newModel;
         }
 
         [HttpPatch("{id}")]
@@ -108,20 +152,26 @@ namespace Snacks.Entity.Core
                 }
             }
 
-            await Service.UpdateAsync(existingModel);
+            await Service.UpdateAsync(existingModel).ConfigureAwait(false);
+
+            if (GlobalCache != null)
+            {
+                await GlobalCache.PurgeAsync().ConfigureAwait(false);
+            }
 
             return Ok();
         }
     }
 
-    /// <typeparam name="TEntityService"></typeparam>
     public abstract class EntityControllerBase<TEntity, TKey, TEntityService> : EntityControllerBase<TEntity, TKey>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
         new protected TEntityService Service => (TEntityService)base.Service;
 
-        public EntityControllerBase(TEntityService entityService) : base(entityService)
+        public EntityControllerBase(
+            TEntityService entityService,
+            IDistributedCache distributedCache = null) : base(entityService, distributedCache)
         {
             
         }
