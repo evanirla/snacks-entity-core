@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Snacks.Entity.Core.Extensions;
 using System;
 using System.Collections.Generic;
@@ -21,43 +20,21 @@ namespace Snacks.Entity.Core
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
         protected IEntityService<TEntity> Service { get; private set; }
-        protected GlobalCacheService<TEntity> GlobalCache { get; private set; }
-        protected UserCacheService<TEntity> UserCache { get; private set; }
 
         public EntityControllerBase(
-            IEntityService<TEntity> entityService,
-            IDistributedCache distributedCache = null)
+            IEntityService<TEntity> entityService)
         {
-            if (distributedCache != null)
-            {
-                // is there any performance degradation here since controllers are scoped?
-                GlobalCache = new GlobalCacheService<TEntity>(distributedCache);
-            }
-            
             Service = entityService;
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
-            if (GlobalCache != null)
-            {
-                TEntity cachedModel = await GlobalCache.FindAsync(Request).ConfigureAwait(false);
-                if (cachedModel != null)
-                {
-                    return cachedModel;
-                }
-            }
-
             TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
+
             if (model == null)
             {
                 return NotFound();
-            }
-
-            if (GlobalCache != null)
-            {
-                await GlobalCache.AddAsync(Request, model).ConfigureAwait(false);
             }
 
             return model;
@@ -66,16 +43,6 @@ namespace Snacks.Entity.Core
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
-            if (GlobalCache != null)
-            {
-                IList<TEntity> cachedModels = await GlobalCache.GetAsync(Request).ConfigureAwait(false);
-
-                if (cachedModels != null)
-                {
-                    return cachedModels.ToList();
-                }
-            }
-
             List<TEntity> models = default;
 
             await Service.AccessEntitiesAsync(async Entities =>
@@ -89,11 +56,6 @@ namespace Snacks.Entity.Core
                     models = await Entities.ApplyQueryParameters(Request.Query).ToListAsync().ConfigureAwait(false);
                 }
             });
-
-            if (GlobalCache != null)
-            {
-                await GlobalCache.AddAsync(Request, models).ConfigureAwait(false);
-            }
 
             return models;
         }
@@ -110,11 +72,6 @@ namespace Snacks.Entity.Core
 
             await Service.DeleteAsync(model).ConfigureAwait(false);
 
-            if (GlobalCache != null)
-            {
-                await GlobalCache.PurgeAsync().ConfigureAwait(false);
-            }
-
             return Ok();
         }
 
@@ -122,11 +79,6 @@ namespace Snacks.Entity.Core
         public virtual async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
             TEntity newModel = await Service.CreateAsync(model).ConfigureAwait(false);
-
-            if (GlobalCache != null)
-            {
-                await GlobalCache.PurgeAsync().ConfigureAwait(false);
-            }
 
             return newModel;
         }
@@ -154,11 +106,6 @@ namespace Snacks.Entity.Core
 
             await Service.UpdateAsync(existingModel).ConfigureAwait(false);
 
-            if (GlobalCache != null)
-            {
-                await GlobalCache.PurgeAsync().ConfigureAwait(false);
-            }
-
             return Ok();
         }
     }
@@ -170,8 +117,7 @@ namespace Snacks.Entity.Core
         new protected TEntityService Service => (TEntityService)base.Service;
 
         public EntityControllerBase(
-            TEntityService entityService,
-            IDistributedCache distributedCache = null) : base(entityService, distributedCache)
+            TEntityService entityService) : base(entityService)
         {
             
         }
