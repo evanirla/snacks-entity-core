@@ -14,7 +14,7 @@ Install-Package Snacks.Entity.Core
 using System;
 using Snacks.Entity.Core;
 
-public class StudentService : BaseEntityService<StudentModel, MyDbContext>
+public class StudentService : EntityServiceBase<StudentModel, MyDbContext>
 {
     public StudentService(
         IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
