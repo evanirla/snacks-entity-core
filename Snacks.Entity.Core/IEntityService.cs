@@ -33,15 +33,13 @@ namespace Snacks.Entity.Core
 
         void AccessEntities(Action<DbSet<TEntity>> dbSetAction);
         Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc);
-
-        void AccessDbContext(Action<DbContext> dbContextAction);
-        Task AccessDbContextAsync(Func<DbContext, Task> dbContextFunc);
     }
 
     public interface IEntityService<TEntity, TDbContext> : IEntityService<TEntity>
         where TEntity : class
         where TDbContext : DbContext
     {
-
+        void AccessDbContext(Action<TDbContext> dbContextAction);
+        Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc);
     }
 }

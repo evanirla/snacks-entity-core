@@ -32,23 +32,7 @@ namespace Snacks.Entity.Core
             dbContextAction.Invoke(dbContext);
         }
 
-        public void AccessDbContext(Action<DbContext> dbContextAction)
-        {
-            using var scope = _scopeFactory.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            dbContextAction.Invoke(dbContext);
-        }
-
         public async Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc)
-        {
-            using var scope = _scopeFactory.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
-        }
-
-        public async Task AccessDbContextAsync(Func<DbContext, Task> dbContextFunc)
         {
             using var scope = _scopeFactory.CreateScope();
             var dbContext = GetDbContext(scope);
