@@ -24,3 +24,8 @@ jobs:
       with:
         PROJECT_FILE_PATH: Snacks.Entity.Core/Snacks.Entity.Core.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2.2.0
+      with:
+        # Build directory to deploy
+        build_dir: Snacks.Entity.Core/_site
