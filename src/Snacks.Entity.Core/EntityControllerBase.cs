@@ -27,6 +27,11 @@ namespace Snacks.Entity.Core
             Service = entityService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">The identifier of </param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
@@ -110,6 +115,7 @@ namespace Snacks.Entity.Core
         }
     }
 
+    /// <inheritdoc/>
     public abstract class EntityControllerBase<TEntity, TKey, TEntityService> : EntityControllerBase<TEntity, TKey>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>

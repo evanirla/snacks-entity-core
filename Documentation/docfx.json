@@ -6,7 +6,7 @@
           "files": [
             "**.csproj"
           ],
-          "src": "../../src"
+          "src": "../src/"
         }
       ],
       "dest": "api",
@@ -53,7 +53,7 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "statictoc"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
