@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Snacks.Entity.Core
 {
     /// <summary>
-    /// Provides CRUD operations for the given entity type.
+    /// Provides CRUD operations for <typeparamref name="TEntity"/>.
     /// </summary>
     /// <remarks>
     /// Not intended to be implemented, see <see cref="IEntityService{TEntity, TDbContext}"/>.
@@ -73,11 +73,8 @@ namespace Snacks.Entity.Core
     }
 
     /// <summary>
-    /// Provides CRUD operations for the given entity type.
+    /// Provides CRUD operations for <typeparamref name="TEntity"/>.
     /// </summary>
-    /// <remarks>
-    /// Implemented by <see cref="EntityServiceBase{TEntity, TDbContext}"/>
-    /// </remarks>
     /// <typeparam name="TEntity">An entity model type</typeparam>
     /// <typeparam name="TDbContext">An implementation of <see cref="DbContext"/> that contains a <see cref="DbSet{}"/> of <typeparamref name="TEntity"/></typeparam>
     public interface IEntityService<TEntity, TDbContext> : IEntityService<TEntity>

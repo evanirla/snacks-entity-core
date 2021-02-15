@@ -140,11 +140,29 @@ namespace Snacks.Entity.Core.Extensions
         }
     }
 
+    /// <summary>
+    /// Extensions for <see cref="IQueryable"/>
+    /// </summary>
     public static class IQueryableExtensions
     {
         private static readonly Regex _filterRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
         private static readonly Dictionary<Type, PropertyInfo[]> _entityProperties = new Dictionary<Type, PropertyInfo[]>();
 
+        /// <summary>
+        /// Filters the given <see cref="IQueryable{TEntity}"/> by the given request parameters.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be used to simplify filtering entities for GET requests. 
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// // from <see cref="EntityControllerBase{TEntity, TKey}.GetAsync"/>
+        /// await Entities.ApplyQueryParameters(Request.Query).ToListAsync()
+        /// </code>
+        /// </example>
+        /// <typeparam name="TEntity">The entity type handled by the IQueryable</typeparam>
+        /// <param name="queryable">The queryable to filter</param>
+        /// <param name="queryParameters">The request parameters</param>
         public static IQueryable<TEntity> ApplyQueryParameters<TEntity>(this IQueryable<TEntity> queryable, IQueryCollection queryParameters)
             where TEntity : class
         {

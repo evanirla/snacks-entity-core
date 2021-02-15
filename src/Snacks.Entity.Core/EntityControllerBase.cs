@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    /// <summary>
-    /// Handles GET, POST, PATCH, and DELETE web requests for a specific entity.
-    /// </summary>
-    /// <typeparam name="TEntity">The entity type for the controller</typeparam>
-    /// <typeparam name="TKey">A primitive type that matches the key type of the entity.</typeparam>
+    /// <inheritdoc/>
     public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase, IEntityController<TEntity, TKey>
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
+        /// <summary>
+        /// Provides CRUD operations for <typeparamref name="TEntity"/>
+        /// </summary>
         protected IEntityService<TEntity> Service { get; private set; }
 
         public EntityControllerBase(
@@ -27,11 +26,7 @@ namespace Snacks.Entity.Core
             Service = entityService;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">The identifier of </param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
@@ -45,6 +40,7 @@ namespace Snacks.Entity.Core
             return model;
         }
 
+        /// <inheritdoc/>
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
@@ -65,6 +61,7 @@ namespace Snacks.Entity.Core
             return models;
         }
 
+        /// <inheritdoc/>
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
         {
@@ -80,6 +77,7 @@ namespace Snacks.Entity.Core
             return Ok();
         }
 
+        /// <inheritdoc/>
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
@@ -88,6 +86,7 @@ namespace Snacks.Entity.Core
             return newModel;
         }
 
+        /// <inheritdoc/>
         [HttpPatch("{id}")]
         public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
         {
@@ -120,6 +119,9 @@ namespace Snacks.Entity.Core
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         new protected TEntityService Service => (TEntityService)base.Service;
 
         public EntityControllerBase(
