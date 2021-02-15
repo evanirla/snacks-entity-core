@@ -1,13 +1,27 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Snacks.Entity.Core.Extensions
 {
-    public static class ServiceCollectionExtensions
+    /// <summary>
+    /// Extensions to simplify registering services
+    /// </summary>
+    public static class IServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds all implementations of <see cref="IEntityService{TEntity}"/> to the service collection.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be called within the <c>ConfigureServices</c> method in <c>Startup.cs</c>
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// services.AddEntityServices();
+        /// </code>
+        /// </example>
+        /// <param name="services">The collection of services</param>
+        /// <returns>The service collection so calls can be chained</returns>
         public static IServiceCollection AddEntityServices(this IServiceCollection services)
         {
             Type[] serviceTypes = AppDomain.CurrentDomain.GetAssemblies()

@@ -7,23 +7,19 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Snacks.Entity.Core
 {
-    /// <summary>
-    /// Wraps the given DbContext into an entity-specific service for data retrieval and manipulation.
-    /// The DbContext and Entity DbSet can be accessed by using AccessDbContext or AccessEntities.
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TDbContext"></typeparam>
+    /// <inheritdoc cref="IEntityService{TEntity, TDbContext}"/>
     public abstract class EntityServiceBase<TEntity, TDbContext> : IEntityService<TEntity, TDbContext>
         where TEntity : class
         where TDbContext : DbContext
     {
-        protected IServiceScopeFactory _scopeFactory;
+        private readonly IServiceScopeFactory _scopeFactory;
 
         public EntityServiceBase(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
         }
 
+        /// <inheritdoc/>
         public void AccessDbContext(Action<TDbContext> dbContextAction)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -32,6 +28,7 @@ namespace Snacks.Entity.Core
             dbContextAction.Invoke(dbContext);
         }
 
+        /// <inheritdoc/>
         public async Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -40,6 +37,7 @@ namespace Snacks.Entity.Core
             await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public void AccessEntities(Action<DbSet<TEntity>> dbSetAction)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -48,6 +46,7 @@ namespace Snacks.Entity.Core
             dbSetAction.Invoke(dbContext.Set<TEntity>());
         }
 
+        /// <inheritdoc/>
         public async Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -56,6 +55,7 @@ namespace Snacks.Entity.Core
             await dbSetFunc.Invoke(dbContext.Set<TEntity>()).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public virtual async Task<TEntity> CreateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -66,6 +66,7 @@ namespace Snacks.Entity.Core
             return entry.Entity;
         }
 
+        /// <inheritdoc/>
         public virtual async Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -75,6 +76,7 @@ namespace Snacks.Entity.Core
             await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public virtual async Task<TEntity> FindAsync(params object[] keyValues)
         {
             using var scope = _scopeFactory.CreateScope();
@@ -83,6 +85,7 @@ namespace Snacks.Entity.Core
             return await dbContext.FindAsync<TEntity>(keyValues).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public virtual async Task<TEntity> UpdateAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             using var scope = _scopeFactory.CreateScope();

@@ -22,5 +22,20 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
-        PROJECT_FILE_PATH: Snacks.Entity.Core/Snacks.Entity.Core.csproj
+        PROJECT_FILE_PATH: src/Snacks.Entity.Core/Snacks.Entity.Core.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: src/Snacks.Entity.Authorization/Snacks.Entity.Authorization.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: src/Snacks.Entity.Caching/Snacks.Entity.Caching.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2.2.0
+      with:
+        # Build directory to deploy
+        build_dir: Documentation/_site

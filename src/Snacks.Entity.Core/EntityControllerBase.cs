@@ -9,23 +9,24 @@ using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core
 {
-    /// <summary>
-    /// Handles GET, POST, PATCH, and DELETE web requests for a specific entity.
-    /// </summary>
-    /// <typeparam name="TEntity">The entity type for the controller</typeparam>
-    /// <typeparam name="TKey">A primitive type that matches the key type of the entity.</typeparam>
+    /// <inheritdoc/>
     public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase, IEntityController<TEntity, TKey>
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
+        /// <summary>
+        /// Provides CRUD operations for <typeparamref name="TEntity"/>
+        /// </summary>
         protected IEntityService<TEntity> Service { get; private set; }
 
-        public EntityControllerBase(IEntityService<TEntity> entityService)
+        public EntityControllerBase(
+            IEntityService<TEntity> entityService)
         {
             Service = entityService;
         }
 
+        /// <inheritdoc/>
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
@@ -39,33 +40,28 @@ namespace Snacks.Entity.Core
             return model;
         }
 
+        /// <inheritdoc/>
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
-            if (Request.Query.Count == 0)
+            List<TEntity> models = default;
+
+            await Service.AccessEntitiesAsync(async Entities =>
             {
-                List<TEntity> entities = default;
-
-                await Service.AccessEntitiesAsync(async Entities =>
+                if (Request.Query.Count == 0)
                 {
-                    entities = await Entities.ToListAsync();
-                });
-
-                return entities;
-            }
-            else
-            {
-                List<TEntity> entities = default;
-
-                await Service.AccessEntitiesAsync(async Entities =>
+                    models = await Entities.ToListAsync().ConfigureAwait(false);
+                }
+                else
                 {
-                    entities = await Entities.ApplyQueryParameters(Request.Query).ToListAsync();
-                });
+                    models = await Entities.ApplyQueryParameters(Request.Query).ToListAsync().ConfigureAwait(false);
+                }
+            });
 
-                return entities;
-            }
+            return models;
         }
 
+        /// <inheritdoc/>
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
         {
@@ -81,12 +77,16 @@ namespace Snacks.Entity.Core
             return Ok();
         }
 
+        /// <inheritdoc/>
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
-            return await Service.CreateAsync(model).ConfigureAwait(false);
+            TEntity newModel = await Service.CreateAsync(model).ConfigureAwait(false);
+
+            return newModel;
         }
 
+        /// <inheritdoc/>
         [HttpPatch("{id}")]
         public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
         {
@@ -108,20 +108,24 @@ namespace Snacks.Entity.Core
                 }
             }
 
-            await Service.UpdateAsync(existingModel);
+            await Service.UpdateAsync(existingModel).ConfigureAwait(false);
 
             return Ok();
         }
     }
 
-    /// <typeparam name="TEntityService"></typeparam>
+    /// <inheritdoc/>
     public abstract class EntityControllerBase<TEntity, TKey, TEntityService> : EntityControllerBase<TEntity, TKey>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         new protected TEntityService Service => (TEntityService)base.Service;
 
-        public EntityControllerBase(TEntityService entityService) : base(entityService)
+        public EntityControllerBase(
+            TEntityService entityService) : base(entityService)
         {
             
         }
