@@ -1,0 +1,488 @@
+{
+  "homepages": [],
+  "source_base_path": "/home/runner/work/snacks-entity-core/snacks-entity-core/Documentation",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html",
+          "hash": "EfLgeuOS455pxhpStoV1ww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html",
+          "hash": "FiKNwMeslPTjMkA8JG+CKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.html",
+          "hash": "r2sSyjvH3Lc5M1PIJ6gi3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.html",
+          "hash": "8or0SmwUvOxCkGi9ifUffg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.html",
+          "hash": "Mthzxfy1XS4jLjg3oByAgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.html",
+          "hash": "uLeolTmAwiYBmzIgM2bukA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Attributes.html",
+          "hash": "YdbwbcUGz/MNPMbNHocOqA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html",
+          "hash": "vnHhE7dHaLWnsjOgjjJ/cw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.Operations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.Operations.html",
+          "hash": "4RTgXV2ubxiWv8Y93tTiqA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.SecuredCachedEntityControllerBase-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.SecuredCachedEntityControllerBase-2.html",
+          "hash": "359yEJXvztOxfIYAGE4y5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.SecuredCachedEntityControllerBase-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.SecuredCachedEntityControllerBase-3.html",
+          "hash": "v9IpcMT8gopbqbUOBa23IQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html",
+          "hash": "RJ7gS72FAlHOna/hhHyqAQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.SecuredEntityControllerBase-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.SecuredEntityControllerBase-3.html",
+          "hash": "8fsNZqj/KUVLFmnkcz8K5A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.SecuredGlobalCacheService-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.SecuredGlobalCacheService-1.html",
+          "hash": "icMQSXlXbjVtRX0AyFfd/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Authorization.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Authorization.html",
+          "hash": "W0Ep1d33NyHLMmY1jF3Ivw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.CachedEntityControllerBase-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.CachedEntityControllerBase-2.html",
+          "hash": "EZ/YZb1ajqGrMsWxVf9yeA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.CachedEntityControllerBase-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.CachedEntityControllerBase-3.html",
+          "hash": "LLejFibvDRVQQgZI+Eqo1Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.EntityCacheServiceBase-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.EntityCacheServiceBase-1.html",
+          "hash": "oEwSrnI+6IOJmmVJ9EZG6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.GlobalCacheService-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.GlobalCacheService-1.html",
+          "hash": "N6DkIeA/QIzcVS36dmJ0nQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.IEntityCacheService-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.IEntityCacheService-1.html",
+          "hash": "7F5tcLkEZ4hSJRrIzRjZHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.UserCacheService-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.UserCacheService-1.html",
+          "hash": "oyQbkHLHg52Qv2YRWWOb4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Caching.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Caching.html",
+          "hash": "pvTdw9J9I+gSkGLwj6GlTQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.EntityControllerBase-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.EntityControllerBase-2.html",
+          "hash": "GlaVBXVT5Huumfa2gqZkeA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.EntityControllerBase-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.EntityControllerBase-3.html",
+          "hash": "+Jvpv88xVqUkqEh54rWwAA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.EntityServiceBase-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.EntityServiceBase-2.html",
+          "hash": "++j1a+797i/ItS8D1m4AIg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.Extensions.IQueryableExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.Extensions.IQueryableExtensions.html",
+          "hash": "Ai2c0zgCxmpGJ8DNTU3SkQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.html",
+          "hash": "hWw94Vs3Mwzni8eAA1I6vg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.Extensions.html",
+          "hash": "FFs2f16A5uVwtDrkRX55CA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.IEntityController-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.IEntityController-2.html",
+          "hash": "gAnLbwys8qT90HP1vxBY6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.IEntityController-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.IEntityController-3.html",
+          "hash": "3wzBX5tNKu/7Z49gfO3Ysg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.IEntityService-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.IEntityService-1.html",
+          "hash": "hBKIsO3gq0/iDpl2HKoteA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.IEntityService-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.IEntityService-2.html",
+          "hash": "GoKq9P6RjtXrwoKGqE58eA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Snacks.Entity.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Snacks.Entity.Core.html",
+          "hash": "slxSm4yFscWK0XTf0iLxkw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "u4MkVaThKTJTvmqK/nZbng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "QphxFhUiAcD6pebQeLS+Hw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "uPFo8KEMnL7JO0FCwdsb5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 33,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
