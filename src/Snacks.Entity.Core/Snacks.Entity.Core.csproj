@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/evanirla/snacks-entity-core</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>ef-core, dot-net-core</PackageTags>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
