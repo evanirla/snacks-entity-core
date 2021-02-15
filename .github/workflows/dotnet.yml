@@ -22,6 +22,11 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
+        PROJECT_FILE_PATH: Snacks.Entity.Core/Snacks.Entity.Core.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
         PROJECT_FILE_PATH: Snacks.Entity.Authorization/Snacks.Entity.Authorization.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish
@@ -29,9 +34,3 @@ jobs:
       with:
         PROJECT_FILE_PATH: Snacks.Entity.Caching/Snacks.Entity.Caching.csproj
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PROJECT_FILE_PATH: Snacks.Entity.Core/Snacks.Entity.Core.csproj
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    
