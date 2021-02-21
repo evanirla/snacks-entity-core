@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Snacks.Entity.Core.Tests.Server.Models
 {
@@ -8,6 +10,11 @@ namespace Snacks.Entity.Core.Tests.Server.Models
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
+        [JsonIgnore]
         public CustomerModel Customer { get; set; }
+        [JsonIgnore]
+        public IList<CartItemModel> Items { get; set; }
+
+        public decimal Total { get; set; }
     }
 }
