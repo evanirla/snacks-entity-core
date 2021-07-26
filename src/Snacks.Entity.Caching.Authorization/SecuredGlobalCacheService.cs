@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
-using Snacks.Entity.Caching;
-using System;
+using Snacks.Entity.Authorization;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Authorization
+namespace Snacks.Entity.Caching.Authorization
 {
     class EntityValue<TEntity, TValue>
     {

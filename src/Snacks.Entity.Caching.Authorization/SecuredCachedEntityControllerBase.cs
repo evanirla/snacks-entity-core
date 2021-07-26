@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using Snacks.Entity.Caching;
+using Snacks.Entity.Authorization;
 using Snacks.Entity.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Snacks.Entity.Authorization
+namespace Snacks.Entity.Caching.Authorization
 {
     public class SecuredCachedEntityControllerBase<TEntity, TKey> : CachedEntityControllerBase<TEntity, TKey>
         where TEntity : class
