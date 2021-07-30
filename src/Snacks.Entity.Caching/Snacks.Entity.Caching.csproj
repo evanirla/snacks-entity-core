@@ -1,32 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Shared/base.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Caching extensions for the Snacks.Entity.Core package</Description>
-    <Copyright>2020 - Evan Irla</Copyright>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/evanirla/snacks-entity-caching</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/evanirla/snacks-entity-caching</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
     <PackageTags>ef-core, caching</PackageTags>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.11" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.11" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
