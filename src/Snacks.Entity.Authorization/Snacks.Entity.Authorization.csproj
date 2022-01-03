@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snacks.Entity.Caching\Snacks.Entity.Caching.csproj" />
     <ProjectReference Include="..\Snacks.Entity.Core\Snacks.Entity.Core.csproj" />
   </ItemGroup>
 

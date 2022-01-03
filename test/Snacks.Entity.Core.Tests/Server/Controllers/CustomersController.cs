@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Snacks.Entity.Core.Tests.Server.Models;
-using Snacks.Entity.Core.Tests.Server.Services;
+using System;
 
 namespace Snacks.Entity.Core.Tests.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : EntityControllerBase<CustomerModel, int, CustomerService>
+    public class CustomersController : EntityControllerBase<CustomerModel>
     {
-        public CustomersController(
-            IEntityService<CustomerModel> customerService) : base((CustomerService)customerService)
+        public CustomersController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             
         }

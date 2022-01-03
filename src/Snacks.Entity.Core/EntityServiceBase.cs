@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Snacks.Entity.Core
 {
@@ -77,12 +78,15 @@ namespace Snacks.Entity.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
+        public virtual async Task<TEntity> FindAsync(object key)
         {
             using var scope = _scopeFactory.CreateScope();
             var dbContext = GetDbContext(scope);
 
-            return await dbContext.FindAsync<TEntity>(keyValues).ConfigureAwait(false);
+            var primaryKey = dbContext.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey();
+            var property = primaryKey.Properties.Single();
+
+            return await dbContext.FindAsync<TEntity>(Convert.ChangeType(key, property.ClrType)).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

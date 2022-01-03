@@ -10,19 +10,23 @@ namespace Snacks.Entity.Core.Tests
     {
         public void Configure(IApplicationBuilder app)
         {
-            app.UseRouting();
-            app.UseEndpoints(options => { options.MapDefaultControllerRoute(); });
+            app
+                .UseRouting()
+                .UseEndpoints(options => { options.MapDefaultControllerRoute(); });
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SnacksDbContext>(options => 
+            services.AddDbContext<GlobalDbContext>(options => 
             {
                 options.UseInMemoryDatabase("SnacksDb");
             });
 
-            services.AddEntityServices();
-            services.AddControllers();
+            services
+                .AddDistributedMemoryCache()
+                .AddEntityServices()
+                .AddControllers();
+            
             services.AddRouting(options =>
             {
                 options.LowercaseUrls = true;

@@ -16,10 +16,11 @@ namespace Snacks.Entity.Core
         where TEntity : class
     {
         /// <summary>
-        /// Asynchronously return the entity with the given key values.
+        /// Asynchronously return the entity with the given key. Models with composite keys
+        /// are not supported.
         /// </summary>
-        /// <param name="keyValues">The key values that make up the primary key</param>
-        Task<TEntity> FindAsync(params object[] keyValues);
+        /// <param name="key">The key value of the target entity</param>
+        Task<TEntity> FindAsync(object key);
 
         /// <summary>
         /// Asynchronously create the given <typeparamref name="TEntity"/> and save the changes to the database.

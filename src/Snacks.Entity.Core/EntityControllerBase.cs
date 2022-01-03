@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Snacks.Entity.Core.Extensions;
 using System;
 using System.Collections.Generic;
@@ -10,32 +13,52 @@ using System.Threading.Tasks;
 namespace Snacks.Entity.Core
 {
     /// <inheritdoc/>
-    public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase, IEntityController<TEntity, TKey>
+    public abstract class EntityControllerBase<TEntity> : ControllerBase, IEntityController<TEntity>
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
+
+        protected ILogger<EntityControllerBase<TEntity>> Logger { get; private set; }
 
         /// <summary>
         /// Provides CRUD operations for <typeparamref name="TEntity"/>
         /// </summary>
         protected IEntityService<TEntity> Service { get; private set; }
 
+        /// <summary>
+        /// Provides a simple interface for caching action results
+        /// </summary>
+        protected DistributedCacheHelper<EntityControllerBase<TEntity>> Cache { get; private set; }
+
         public EntityControllerBase(
-            IEntityService<TEntity> entityService)
+            IServiceProvider serviceProvider)
         {
-            Service = entityService;
+            Cache = new DistributedCacheHelper<EntityControllerBase<TEntity>>(
+                serviceProvider.GetService<IDistributedCache>()
+            );
+            Logger = serviceProvider.GetRequiredService<ILogger<EntityControllerBase<TEntity>>>();
+            Service = serviceProvider.GetRequiredService<IEntityService<TEntity>>();
         }
 
         /// <inheritdoc/>
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
+        public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] string id)
         {
-            TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
+            TEntity model = await Cache.GetFromRequestAsync<TEntity>(Request);
+
+            if (model != null)
+            {
+                return model;
+            }
+
+            model = await Service.FindAsync(id).ConfigureAwait(false);
 
             if (model == null)
             {
                 return NotFound();
             }
+
+            await Cache.AddRequestAsync(Request, model);
 
             return model;
         }
@@ -44,7 +67,12 @@ namespace Snacks.Entity.Core
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
-            List<TEntity> models = default;
+            List<TEntity> models = await Cache.GetFromRequestAsync<List<TEntity>>(Request);
+
+            if (models != null)
+            {
+                return models;
+            }
 
             await Service.AccessEntitiesAsync(async Entities =>
             {
@@ -58,12 +86,14 @@ namespace Snacks.Entity.Core
                 }
             });
 
+            await Cache.AddRequestAsync(Request, models);
+
             return models;
         }
 
         /// <inheritdoc/>
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
+        public virtual async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
             TEntity model = await Service.FindAsync(id).ConfigureAwait(false);
 
@@ -74,6 +104,8 @@ namespace Snacks.Entity.Core
 
             await Service.DeleteAsync(model).ConfigureAwait(false);
 
+            await Cache.PurgeAsync();
+
             return Ok();
         }
 
@@ -83,12 +115,14 @@ namespace Snacks.Entity.Core
         {
             TEntity newModel = await Service.CreateAsync(model).ConfigureAwait(false);
 
+            await Cache.PurgeAsync();
+
             return newModel;
         }
 
         /// <inheritdoc/>
         [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
+        public virtual async Task<IActionResult> PatchAsync([FromRoute] string id, [FromBody] object data)
         {
             TEntity existingModel = await Service.FindAsync(id).ConfigureAwait(false);
 
@@ -110,22 +144,21 @@ namespace Snacks.Entity.Core
 
             await Service.UpdateAsync(existingModel).ConfigureAwait(false);
 
+            await Cache.PurgeAsync();
+
             return Ok();
         }
     }
 
     /// <inheritdoc/>
-    public abstract class EntityControllerBase<TEntity, TKey, TEntityService> : EntityControllerBase<TEntity, TKey>
+    public abstract class EntityControllerBase<TEntity, TEntityService> : EntityControllerBase<TEntity>, IEntityController<TEntity, TEntityService>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
-        /// <summary>
-        /// 
-        /// </summary>
         new protected TEntityService Service => (TEntityService)base.Service;
 
         public EntityControllerBase(
-            TEntityService entityService) : base(entityService)
+            IServiceProvider serviceProvider) : base(serviceProvider)
         {
             
         }
