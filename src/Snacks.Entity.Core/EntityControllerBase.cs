@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Snacks.Entity.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -17,6 +19,8 @@ namespace Snacks.Entity.Core
         where TEntity : class
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
+        
+        private IServiceProvider _serviceProvider; 
 
         protected ILogger<EntityControllerBase<TEntity>> Logger { get; private set; }
 
@@ -33,6 +37,7 @@ namespace Snacks.Entity.Core
         public EntityControllerBase(
             IServiceProvider serviceProvider)
         {
+            _serviceProvider = serviceProvider;
             Cache = new DistributedCacheHelper<EntityControllerBase<TEntity>>(
                 serviceProvider.GetService<IDistributedCache>()
             );
@@ -147,6 +152,25 @@ namespace Snacks.Entity.Core
             await Cache.PurgeAsync();
 
             return Ok();
+        }
+
+        protected async Task<ActionResult<TRelatedProperty>> GetRelatedAsync<TRelatedProperty>(HttpRequest request, Expression<Func<TEntity, TRelatedProperty>> includeFunc)
+        {
+            var result = await GetAsync(request.RouteValues["id"] as string);
+
+            if (result.Value != null)
+            {
+                var entity = result.Value;
+
+                await Service.AccessEntitiesAsync(async dbSet =>
+                {
+                    await dbSet.Where(x => x == entity).Include(includeFunc).LoadAsync();
+                    entity = await dbSet.FindAsync(request.RouteValues["id"]);
+                    return;
+                });
+            }
+
+            return default;
         }
     }
 

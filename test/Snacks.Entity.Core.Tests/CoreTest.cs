@@ -13,24 +13,13 @@ namespace Snacks.Entity.Core.Tests
     [Collection("Core Collection")]
     public class CoreTest : TestBase
     {
-        const int CUSTOMER_COUNT = 1000;
+        const int CUSTOMER_COUNT = 100;
         const int ITEM_COUNT = 5;
 
         private bool testDataCreated;
 
         [Fact(DisplayName = "Create Test Data")]
         public async Task CreateTestDataAsync()
-        {
-            using (HttpClient client = GetClient())
-            {
-                await Task.WhenAll(CreateItemsAsync(client), CreateCustomersAsync(client));
-                await CreateCartsAsync(client);
-                testDataCreated = true;
-            }
-        }
-
-        [Fact(DisplayName = "Update Test Data")]
-        public async Task UpdateTestDataAsync()
         {
             using (HttpClient client = GetClient())
             {
@@ -54,6 +43,17 @@ namespace Snacks.Entity.Core.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 List<CustomerModel> customers = await response.Content.ReadFromJsonAsync<List<CustomerModel>>();
                 Assert.Single(customers);
+
+                response = await client.GetAsync("customers");
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                customers = await response.Content.ReadFromJsonAsync<List<CustomerModel>>();
+                foreach (CustomerModel customer in customers)
+                {
+                    response = await client.GetAsync($"customers/{customer.Id}/carts");
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    List<CartModel> carts = await response.Content.ReadFromJsonAsync<List<CartModel>>();
+                    Assert.Single(carts);
+                }
             }
         }
 
