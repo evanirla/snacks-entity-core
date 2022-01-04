@@ -13,7 +13,7 @@ namespace Snacks.Entity.Core.Tests.Server.Models
         [JsonIgnore]
         public CustomerModel Customer { get; set; }
         [JsonIgnore]
-        public IList<CartItemModel> Items { get; set; }
+        public ICollection<CartItemModel> Items { get; set; }
 
         public decimal Total { get; set; }
     }

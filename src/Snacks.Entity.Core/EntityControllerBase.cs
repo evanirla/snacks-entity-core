@@ -154,20 +154,47 @@ namespace Snacks.Entity.Core
             return Ok();
         }
 
-        protected async Task<ActionResult<TRelatedProperty>> GetRelatedAsync<TRelatedProperty>(HttpRequest request, Expression<Func<TEntity, TRelatedProperty>> includeFunc)
+        protected async Task<ActionResult<IList<object>>> GetRelatedAsync<TRelatedProperty>(string id, IQueryCollection query, Expression<Func<TEntity, TRelatedProperty>> relatedExp) where TRelatedProperty : IEnumerable<object>
         {
-            var result = await GetAsync(request.RouteValues["id"] as string);
+            var result = await GetAsync(id);
+            var entity = result.Value;
+            List<object> relatedEntities = new List<object>();
 
-            if (result.Value != null)
+            if (entity != null && relatedExp.Body is MemberExpression)
             {
-                var entity = result.Value;
+                MemberExpression member = relatedExp.Body as MemberExpression;
 
-                await Service.AccessEntitiesAsync(async dbSet =>
+                if (member.Member is PropertyInfo)
                 {
-                    await dbSet.Where(x => x == entity).Include(includeFunc).LoadAsync();
-                    entity = await dbSet.FindAsync(request.RouteValues["id"]);
-                    return;
-                });
+                    PropertyInfo property = member.Member as PropertyInfo;
+
+                    MethodInfo asQueryable = typeof(Queryable).GetMethods().FirstOrDefault(x => x.Name == nameof(Queryable.AsQueryable));
+                    asQueryable = asQueryable.MakeGenericMethod(new [] { property.PropertyType.GenericTypeArguments[0] });
+
+                    MethodInfo applyQueryParams = typeof(IQueryableExtensions).GetMethod(nameof(IQueryableExtensions.ApplyQueryParameters));
+                    applyQueryParams = applyQueryParams.MakeGenericMethod(new [] { property.PropertyType.GenericTypeArguments[0] });
+
+                    MethodCallExpression queryParamExpression = Expression.Call(
+                        null,
+                        applyQueryParams,
+                        Expression.Call(
+                            null,
+                            asQueryable,
+                            Expression.Property(
+                                Expression.Parameter(typeof(TEntity)),
+                                property
+                            ),
+                        Expression.Constant(query)));
+
+                    await Service.AccessEntitiesAsync(async dbSet =>
+                    {
+                        dbSet.Include(queryParamExpression as Expression<Func<TEntity, TRelatedProperty>>);
+                        var loadedEntities = await dbSet.Include(relatedExp).Where(x => x == entity).ToListAsync();
+                        relatedEntities = loadedEntities.Select(relatedExp.Compile()).SelectMany(x => x).ToList();
+                    });
+
+                    return relatedEntities;
+                }
             }
 
             return default;

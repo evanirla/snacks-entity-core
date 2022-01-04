@@ -13,7 +13,7 @@ namespace Snacks.Entity.Core.Tests
     [Collection("Core Collection")]
     public class CoreTest : TestBase
     {
-        const int CUSTOMER_COUNT = 100;
+        const int CUSTOMER_COUNT = 10;
         const int ITEM_COUNT = 5;
 
         private bool testDataCreated;

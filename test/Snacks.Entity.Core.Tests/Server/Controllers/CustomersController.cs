@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Snacks.Entity.Core.Extensions;
 using Snacks.Entity.Core.Tests.Server.Models;
 using Snacks.Entity.Core.Tests.Server.Services;
 using System;
@@ -20,6 +18,7 @@ namespace Snacks.Entity.Core.Tests.Server.Controllers
         }
 
         [HttpGet("{id}/carts")]
-        public async Task<ActionResult<IList<CartModel>>> GetCartsAsync([FromRoute] string id) => await GetRelatedAsync(Request, customer => customer.Carts);
+        public async Task<ActionResult<IList<object>>> GetCartsAsync([FromRoute] string id) =>
+            await GetRelatedAsync(id, Request.Query, customer => customer.Carts);
     }
 }
