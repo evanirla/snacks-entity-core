@@ -12,6 +12,7 @@ namespace Snacks.Entity.Core.Tests.Server.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<CartModel> Carts { get; set; }
+        
+        public List<CartModel> Carts { get; set; }
     }
 }

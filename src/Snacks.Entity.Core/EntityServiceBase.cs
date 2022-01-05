@@ -30,12 +30,30 @@ namespace Snacks.Entity.Core
         }
 
         /// <inheritdoc/>
+        public TReturn AccessDbContext<TReturn>(Func<TDbContext, TReturn> dbContextFunc)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            return dbContextFunc.Invoke(dbContext);
+        }
+
+        /// <inheritdoc/>
         public async Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc)
         {
             using var scope = _scopeFactory.CreateScope();
             var dbContext = GetDbContext(scope);
 
             await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        public async Task<TReturn> AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>> dbContextFunc)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            return await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -48,12 +66,30 @@ namespace Snacks.Entity.Core
         }
 
         /// <inheritdoc/>
+        public TReturn AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn> dbSetFunc)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            return dbSetFunc.Invoke(dbContext.Set<TEntity>());
+        }
+
+        /// <inheritdoc/>
         public async Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc)
         {
             using var scope = _scopeFactory.CreateScope();
             var dbContext = GetDbContext(scope);
 
             await dbSetFunc.Invoke(dbContext.Set<TEntity>()).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        public async Task<TReturn> AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>> dbSetFunc)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = GetDbContext(scope);
+
+            return await dbSetFunc.Invoke(dbContext.Set<TEntity>()).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

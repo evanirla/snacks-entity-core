@@ -3,7 +3,6 @@ using Snacks.Entity.Core.Tests.Server.Models;
 using Snacks.Entity.Core.Tests.Server.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Core.Tests.Server.Controllers
@@ -18,7 +17,7 @@ namespace Snacks.Entity.Core.Tests.Server.Controllers
         }
 
         [HttpGet("{id}/carts")]
-        public async Task<ActionResult<IList<object>>> GetCartsAsync([FromRoute] string id) =>
+        public async Task<ActionResult<IEnumerable<CartModel>>> GetCartsAsync([FromRoute] string id) =>
             await GetRelatedAsync(id, Request.Query, customer => customer.Carts);
     }
 }

@@ -49,7 +49,7 @@ namespace Snacks.Entity.Core.Tests
                 customers = await response.Content.ReadFromJsonAsync<List<CustomerModel>>();
                 foreach (CustomerModel customer in customers)
                 {
-                    response = await client.GetAsync($"customers/{customer.Id}/carts");
+                    response = await client.GetAsync($"customers/{customer.Id}/carts?total[gte]=-1");
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                     List<CartModel> carts = await response.Content.ReadFromJsonAsync<List<CartModel>>();
                     Assert.Single(carts);

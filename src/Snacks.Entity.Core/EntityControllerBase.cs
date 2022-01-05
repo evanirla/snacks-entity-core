@@ -154,47 +154,40 @@ namespace Snacks.Entity.Core
             return Ok();
         }
 
-        protected async Task<ActionResult<IList<object>>> GetRelatedAsync<TRelatedProperty>(string id, IQueryCollection query, Expression<Func<TEntity, TRelatedProperty>> relatedExp) where TRelatedProperty : IEnumerable<object>
+        protected async Task<ActionResult<IEnumerable<TRelatedEntity>>> GetRelatedAsync<TRelatedEntity>(string id, IQueryCollection query, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>> relatedExp)
         {
             var result = await GetAsync(id);
             var entity = result.Value;
-            List<object> relatedEntities = new List<object>();
 
-            if (entity != null && relatedExp.Body is MemberExpression)
+            var relatedEntityType = ((relatedExp.Body as MemberExpression).Member as PropertyInfo).PropertyType.GenericTypeArguments[0];
+
+            MethodInfo filterExpFromQuery = typeof(IEnumerableExtensions).GetMethod(nameof(IEnumerableExtensions.FilterExpressionsFromQueryParameters));
+            filterExpFromQuery = filterExpFromQuery.MakeGenericMethod(relatedEntityType);
+            var filterExpressions = filterExpFromQuery.Invoke(null, new [] { query }) as IEnumerable<LambdaExpression>;
+
+            var whereMethod = typeof(Enumerable).GetMethods().FirstOrDefault(x => x.Name == nameof(Enumerable.Where));
+            whereMethod = whereMethod.MakeGenericMethod(relatedEntityType);
+
+            LambdaExpression includeExpression = relatedExp;
+
+            foreach (LambdaExpression expression in filterExpressions)
             {
-                MemberExpression member = relatedExp.Body as MemberExpression;
+                includeExpression = Expression.Lambda(
+                    Expression.Call(null, whereMethod, relatedExp.Body, expression),
+                    relatedExp.Parameters[0]
+                );
+            }
 
-                if (member.Member is PropertyInfo)
+            if (entity != null)
+            {
+                return await Service.AccessEntitiesAsync(async dbSet =>
                 {
-                    PropertyInfo property = member.Member as PropertyInfo;
-
-                    MethodInfo asQueryable = typeof(Queryable).GetMethods().FirstOrDefault(x => x.Name == nameof(Queryable.AsQueryable));
-                    asQueryable = asQueryable.MakeGenericMethod(new [] { property.PropertyType.GenericTypeArguments[0] });
-
-                    MethodInfo applyQueryParams = typeof(IQueryableExtensions).GetMethod(nameof(IQueryableExtensions.ApplyQueryParameters));
-                    applyQueryParams = applyQueryParams.MakeGenericMethod(new [] { property.PropertyType.GenericTypeArguments[0] });
-
-                    MethodCallExpression queryParamExpression = Expression.Call(
-                        null,
-                        applyQueryParams,
-                        Expression.Call(
-                            null,
-                            asQueryable,
-                            Expression.Property(
-                                Expression.Parameter(typeof(TEntity)),
-                                property
-                            ),
-                        Expression.Constant(query)));
-
-                    await Service.AccessEntitiesAsync(async dbSet =>
-                    {
-                        dbSet.Include(queryParamExpression as Expression<Func<TEntity, TRelatedProperty>>);
-                        var loadedEntities = await dbSet.Include(relatedExp).Where(x => x == entity).ToListAsync();
-                        relatedEntities = loadedEntities.Select(relatedExp.Compile()).SelectMany(x => x).ToList();
-                    });
-
-                    return relatedEntities;
-                }
+                    var loadedEntities = await dbSet
+                        .Where(x => x == entity)
+                        .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)includeExpression)
+                        .ToListAsync();
+                    return loadedEntities.SelectMany(relatedExp.Compile()).ToList();
+                });
             }
 
             return default;
