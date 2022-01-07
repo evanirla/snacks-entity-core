@@ -156,12 +156,13 @@ namespace Snacks.Entity.Core
         }
 
         protected async Task<ActionResult<IEnumerable<TRelatedEntity>>> GetRelatedAsync<TRelatedEntity>(string id, IQueryCollection query, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>> relatedExp)
+            where TRelatedEntity : class
         {
             var result = await GetAsync(id);
 
-            if (!(result is OkObjectResult))
+            if (result.Value == null)
             {
-                return result.Result;
+                return result.Result ?? BadRequest();
             }
 
             var entity = result.Value;
