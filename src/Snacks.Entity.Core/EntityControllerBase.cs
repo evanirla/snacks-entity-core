@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Snacks.Entity.Core.Extensions;
+using Snacks.Entity.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,26 +158,17 @@ namespace Snacks.Entity.Core
         protected async Task<ActionResult<IEnumerable<TRelatedEntity>>> GetRelatedAsync<TRelatedEntity>(string id, IQueryCollection query, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>> relatedExp)
         {
             var result = await GetAsync(id);
+
+            if (!(result is OkObjectResult))
+            {
+                return result.Result;
+            }
+
             var entity = result.Value;
 
-            var relatedEntityType = ((relatedExp.Body as MemberExpression).Member as PropertyInfo).PropertyType.GenericTypeArguments[0];
-
-            MethodInfo filterExpFromQuery = typeof(IEnumerableExtensions).GetMethod(nameof(IEnumerableExtensions.FilterExpressionsFromQueryParameters));
-            filterExpFromQuery = filterExpFromQuery.MakeGenericMethod(relatedEntityType);
-            var filterExpressions = filterExpFromQuery.Invoke(null, new [] { query }) as IEnumerable<LambdaExpression>;
-
-            var whereMethod = typeof(Enumerable).GetMethods().FirstOrDefault(x => x.Name == nameof(Enumerable.Where));
-            whereMethod = whereMethod.MakeGenericMethod(relatedEntityType);
-
-            LambdaExpression includeExpression = relatedExp;
-
-            foreach (LambdaExpression expression in filterExpressions)
-            {
-                includeExpression = Expression.Lambda(
-                    Expression.Call(null, whereMethod, relatedExp.Body, expression),
-                    relatedExp.Parameters[0]
-                );
-            }
+            var relatedEntityType = typeof(TRelatedEntity);
+            var queryableParameters = QueryableParameters.Build(query);
+            var completeExpression = queryableParameters.ApplyLinqExpressions<TRelatedEntity, IEnumerable<TRelatedEntity>>(relatedExp);
 
             if (entity != null)
             {
@@ -184,7 +176,7 @@ namespace Snacks.Entity.Core
                 {
                     var loadedEntities = await dbSet
                         .Where(x => x == entity)
-                        .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)includeExpression)
+                        .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)completeExpression)
                         .ToListAsync();
                     return loadedEntities.SelectMany(relatedExp.Compile()).ToList();
                 });
