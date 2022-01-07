@@ -5,7 +5,7 @@ using System.Linq;
 namespace Snacks.Entity.Core.Extensions
 {
     /// <summary>
-    /// Extensions to simplify registering services
+    /// Extensions for <see cref="IServiceCollection"/> to simplify service registration
     /// </summary>
     public static class IServiceCollectionExtensions
     {

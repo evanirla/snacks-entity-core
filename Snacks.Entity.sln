@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snacks.Entity.Core", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snacks.Entity.Authorization", "src\Snacks.Entity.Authorization\Snacks.Entity.Authorization.csproj", "{3C09F15D-50AD-4D2F-9AB7-881FDCA16E9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snacks.Entity.Caching", "src\Snacks.Entity.Caching\Snacks.Entity.Caching.csproj", "{AE5959BB-2F97-45B8-B1ED-0E00055101E8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Documentation", "Documentation\Documentation.csproj", "{E2F7863E-15DD-4DED-83FF-52E73592964C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FC140EEE-7513-421C-8A2B-1D2072C354B1}"
@@ -22,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D38FC2A5-3
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snacks.Entity.Core.Tests", "test\Snacks.Entity.Core.Tests\Snacks.Entity.Core.Tests.csproj", "{9E33582E-362D-4E04-B7DF-F350BA27D3E6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snacks.Entity.Caching.Authorization", "src\Snacks.Entity.Caching.Authorization\Snacks.Entity.Caching.Authorization.csproj", "{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +35,6 @@ Global
 		{3C09F15D-50AD-4D2F-9AB7-881FDCA16E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C09F15D-50AD-4D2F-9AB7-881FDCA16E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C09F15D-50AD-4D2F-9AB7-881FDCA16E9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE5959BB-2F97-45B8-B1ED-0E00055101E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE5959BB-2F97-45B8-B1ED-0E00055101E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE5959BB-2F97-45B8-B1ED-0E00055101E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE5959BB-2F97-45B8-B1ED-0E00055101E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2F7863E-15DD-4DED-83FF-52E73592964C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2F7863E-15DD-4DED-83FF-52E73592964C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2F7863E-15DD-4DED-83FF-52E73592964C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,10 +43,6 @@ Global
 		{9E33582E-362D-4E04-B7DF-F350BA27D3E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E33582E-362D-4E04-B7DF-F350BA27D3E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E33582E-362D-4E04-B7DF-F350BA27D3E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,9 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{24B2CF1A-0177-4BAC-B408-0E3CC0564246} = {FC140EEE-7513-421C-8A2B-1D2072C354B1}
 		{3C09F15D-50AD-4D2F-9AB7-881FDCA16E9A} = {FC140EEE-7513-421C-8A2B-1D2072C354B1}
-		{AE5959BB-2F97-45B8-B1ED-0E00055101E8} = {FC140EEE-7513-421C-8A2B-1D2072C354B1}
 		{9E33582E-362D-4E04-B7DF-F350BA27D3E6} = {D38FC2A5-38C1-4132-BF97-8CF3B8075A03}
-		{93AC83BC-E68F-4ADF-8A1E-525E5F67BDE4} = {FC140EEE-7513-421C-8A2B-1D2072C354B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74F9FFB6-631D-4D91-881E-EC65074C53E9}

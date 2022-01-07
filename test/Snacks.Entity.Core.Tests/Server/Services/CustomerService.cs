@@ -4,7 +4,7 @@ using Snacks.Entity.Core.Tests.Server.Models;
 
 namespace Snacks.Entity.Core.Tests.Server.Services
 {
-    public class CustomerService : EntityServiceBase<CustomerModel, SnacksDbContext>
+    public class CustomerService : EntityServiceBase<CustomerModel, GlobalDbContext>
     {
         public CustomerService(
             IServiceScopeFactory scopeFactory) : base(scopeFactory)

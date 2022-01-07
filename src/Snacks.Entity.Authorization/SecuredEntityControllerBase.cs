@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Snacks.Entity.Authorization
 {
-    public abstract class SecuredEntityControllerBase<TEntity, TKey> : EntityControllerBase<TEntity, TKey>
+    public abstract class SecuredEntityControllerBase<TEntity> : EntityControllerBase<TEntity>
         where TEntity : class
     {
-        protected readonly IAuthorizationService _authorizationService;
+        protected readonly IAuthorizationService AuthorizationService;
 
         public SecuredEntityControllerBase(
-            IEntityService<TEntity> entityService,
-            IAuthorizationService authorizationService) : base(entityService)
+            IServiceProvider serviceProvider
+        ) : base(serviceProvider)
         {
-            _authorizationService = authorizationService;
+            AuthorizationService = serviceProvider.GetRequiredService<IAuthorizationService>();
         }
 
         public override async Task<ActionResult<IList<TEntity>>> GetAsync()
@@ -30,7 +32,7 @@ namespace Snacks.Entity.Authorization
             foreach (TEntity entity in result.Value)
             {
                 AuthorizationResult authorizationResult = 
-                    await _authorizationService.AuthorizeAsync(User, entity, Operations.Read);
+                    await AuthorizationService.AuthorizeAsync(User, entity, Operations.Read);
 
                 if (!authorizationResult.Succeeded)
                 {
@@ -41,7 +43,7 @@ namespace Snacks.Entity.Authorization
             return result;
         }
 
-        public override async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
+        public override async Task<ActionResult<TEntity>> GetAsync([FromRoute] string id)
         {
             ActionResult<TEntity> result = await base.GetAsync(id);
 
@@ -51,7 +53,7 @@ namespace Snacks.Entity.Authorization
             }
 
             AuthorizationResult authorizationResult =
-                await _authorizationService.AuthorizeAsync(User, result.Value, Operations.Read);
+                await AuthorizationService.AuthorizeAsync(User, result.Value, Operations.Read);
 
             if (!authorizationResult.Succeeded)
             {
@@ -71,7 +73,7 @@ namespace Snacks.Entity.Authorization
             }
 
             AuthorizationResult authorizationResult =
-                await _authorizationService.AuthorizeAsync(User, result.Value, Operations.Create);
+                await AuthorizationService.AuthorizeAsync(User, result.Value, Operations.Create);
 
             if (!authorizationResult.Succeeded)
             {
@@ -81,12 +83,12 @@ namespace Snacks.Entity.Authorization
             return result;
         }
 
-        public override async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
+        public override async Task<IActionResult> PatchAsync([FromRoute] string id, [FromBody] object data)
         {
             TEntity entity = await Service.FindAsync(id);
 
             AuthorizationResult authorizationResult =
-                await _authorizationService.AuthorizeAsync(User, entity, Operations.Update);
+                await AuthorizationService.AuthorizeAsync(User, entity, Operations.Update);
 
             if (!authorizationResult.Succeeded)
             {
@@ -96,12 +98,12 @@ namespace Snacks.Entity.Authorization
             return await base.PatchAsync(id, data);
         }
 
-        public override async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
+        public override async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
             TEntity entity = await Service.FindAsync(id);
 
             AuthorizationResult authorizationResult =
-                await _authorizationService.AuthorizeAsync(User, entity, Operations.Delete);
+                await AuthorizationService.AuthorizeAsync(User, entity, Operations.Delete);
 
             if (!authorizationResult.Succeeded)
             {
@@ -112,15 +114,14 @@ namespace Snacks.Entity.Authorization
         }
     }
 
-    public abstract class SecuredEntityControllerBase<TEntity, TKey, TEntityService> : SecuredEntityControllerBase<TEntity, TKey>, IEntityController<TEntity, TKey, TEntityService>
+    public abstract class SecuredEntityControllerBase<TEntity, TEntityService> : SecuredEntityControllerBase<TEntity>, IEntityController<TEntity, TEntityService>
         where TEntity : class
         where TEntityService : IEntityService<TEntity>
     {
         new protected TEntityService Service => (TEntityService)base.Service;
 
         public SecuredEntityControllerBase(
-            TEntityService entityService,
-            IAuthorizationService authorizationService) : base(entityService, authorizationService)
+            IServiceProvider serviceProvider) : base(serviceProvider)
         {
             
         }

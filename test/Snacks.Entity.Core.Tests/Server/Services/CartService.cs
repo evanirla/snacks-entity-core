@@ -4,7 +4,7 @@ using Snacks.Entity.Core.Tests.Server.Models;
 
 namespace Snacks.Entity.Core.Tests.Server.Services
 {
-    public class CartService : EntityServiceBase<CartModel, SnacksDbContext>
+    public class CartService : EntityServiceBase<CartModel, GlobalDbContext>
     {
         public CartService(
             IServiceScopeFactory scopeFactory) : base(scopeFactory)

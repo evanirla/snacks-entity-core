@@ -31,18 +31,6 @@ jobs:
         PROJECT_FILE_PATH: src/Snacks.Entity.Authorization/Snacks.Entity.Authorization.csproj
         VERSION_FILE_PATH: src/Shared/base.props
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PROJECT_FILE_PATH: src/Snacks.Entity.Caching/Snacks.Entity.Caching.csproj
-        VERSION_FILE_PATH: src/Shared/base.props
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-    - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PROJECT_FILE_PATH: src/Snacks.Entity.Caching.Authorization/Snacks.Entity.Caching.Authorization.csproj
-        VERSION_FILE_PATH: src/Shared/base.props
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2.2.0
       with:

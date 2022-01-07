@@ -16,10 +16,11 @@ namespace Snacks.Entity.Core
         where TEntity : class
     {
         /// <summary>
-        /// Asynchronously return the entity with the given key values.
+        /// Asynchronously return the entity with the given key. Models with composite keys
+        /// are not supported.
         /// </summary>
-        /// <param name="keyValues">The key values that make up the primary key</param>
-        Task<TEntity> FindAsync(params object[] keyValues);
+        /// <param name="key">The key value of the target entity</param>
+        Task<TEntity> FindAsync(object key);
 
         /// <summary>
         /// Asynchronously create the given <typeparamref name="TEntity"/> and save the changes to the database.
@@ -55,6 +56,8 @@ namespace Snacks.Entity.Core
         /// <param name="dbSetAction">An action to perform against the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/></param>
         void AccessEntities(Action<DbSet<TEntity>> dbSetAction);
 
+        TReturn AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn> dbSetFunc);
+
         /// <summary>
         /// Provide asynchronous read access to the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/>.
         /// </summary>
@@ -70,6 +73,8 @@ namespace Snacks.Entity.Core
         /// </remarks>
         /// <param name="dbSetFunc">An asynchronous action to perform against the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/></param>
         Task AccessEntitiesAsync(Func<DbSet<TEntity>, Task> dbSetFunc);
+
+        Task<TReturn> AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>> dbSetFunc);
     }
 
     /// <summary>
@@ -98,6 +103,8 @@ namespace Snacks.Entity.Core
         /// <param name="dbContextAction">An action to perform against a scoped instance of <typeparamref name="TDbContext"/></param>
         void AccessDbContext(Action<TDbContext> dbContextAction);
 
+        TReturn AccessDbContext<TReturn>(Func<TDbContext, TReturn> dbContextFunc);
+
         /// <summary>
         /// Provide asynchronous read/update access to a scoped instance of <typeparamref name="TDbContext"/>.
         /// </summary>
@@ -114,5 +121,7 @@ namespace Snacks.Entity.Core
         /// </remarks>
         /// <param name="dbContextAction">An asynchronous action to perform against a scoped instance of <typeparamref name="TDbContext"/></param>
         Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc);
+
+        Task<TReturn> AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>> dbContextFunc);
     }
 }
