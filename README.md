@@ -27,7 +27,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core;
 
-public class StudentController : EntityControllerBase<StudentModel, int, StudentService>
+public class StudentController : EntityControllerBase<StudentModel>
 {
     public StudentController(
         IServiceProvider serviceProvider) : base(serviceProvider) { }
@@ -53,4 +53,4 @@ Your application should now allow you to query data RESTfully like `api/students
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/) © Evan Irla
+[MIT](https://choosealicense.com/licenses/mit/) © Irla Software Solutions
