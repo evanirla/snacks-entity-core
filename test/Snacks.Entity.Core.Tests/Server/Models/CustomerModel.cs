@@ -10,8 +10,7 @@ namespace Snacks.Entity.Core.Tests.Server.Models
 
         [Required]
         public string Name { get; set; }
-
-        [JsonIgnore]
-        public IList<CartModel> Carts { get; set; }
+        
+        public List<CartModel> Carts { get; set; }
     }
 }

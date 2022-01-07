@@ -12,7 +12,10 @@ namespace Snacks.Entity.Core.Tests
         {
             app
                 .UseRouting()
-                .UseEndpoints(options => { options.MapDefaultControllerRoute(); });
+                .UseEndpoints(options =>
+                {
+                    options.MapDefaultControllerRoute();
+                });
         }
 
         public void ConfigureServices(IServiceCollection services)

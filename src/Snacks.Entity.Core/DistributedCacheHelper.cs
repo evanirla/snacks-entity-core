@@ -23,6 +23,7 @@ namespace Snacks.Entity.Core
             _jsonSerializerOptions = jsonSerializerOptions;
         }
 
+        /// <inheritdoc/>
         public async Task AddRequestAsync<TValue>(HttpRequest httpRequest, TValue value, DistributedCacheEntryOptions options = null)
         {
             if (_distributedCache == null)
@@ -35,7 +36,8 @@ namespace Snacks.Entity.Core
             await AddCacheKeyAsync(cacheKey).ConfigureAwait(false);
         }
 
-        public virtual async Task<TValue> GetFromRequestAsync<TValue>(HttpRequest httpRequest)
+        /// <inheritdoc/>
+        public async Task<TValue> GetFromRequestAsync<TValue>(HttpRequest httpRequest)
         {
             if (_distributedCache == null)
             {
@@ -46,6 +48,7 @@ namespace Snacks.Entity.Core
             return await ReadFromCacheAsync<TValue>(cacheKey).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public async Task PurgeAsync()
         {
             if (_distributedCache == null)
