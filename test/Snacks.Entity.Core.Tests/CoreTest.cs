@@ -53,6 +53,9 @@ namespace Snacks.Entity.Core.Tests
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                     List<CartModel> carts = await response.Content.ReadFromJsonAsync<List<CartModel>>();
                     Assert.Single(carts);
+                    response = await client.GetAsync($"carts/{carts.First().Id}/items?quantity=2");
+                    List<CartItemModel> cartItems = await response.Content.ReadFromJsonAsync<List<CartItemModel>>();
+                    Assert.Single(cartItems);
                 }
             }
         }
@@ -92,7 +95,7 @@ namespace Snacks.Entity.Core.Tests
 
         private async Task CreateCartsAsync(HttpClient client)
         {
-            HttpResponseMessage getCustomersResponse = await client.GetAsync("customers");
+            HttpResponseMessage getCustomersResponse = await client.GetAsync("customers?orderby[desc]=name");
             Assert.Equal(HttpStatusCode.OK, getCustomersResponse.StatusCode);
 
             List<CustomerModel> customers = await GetAllCustomersAsync(client);
@@ -104,7 +107,7 @@ namespace Snacks.Entity.Core.Tests
                 tasks.Add(client.PostAsJsonAsync("carts", new CartModel
                 {
                     CustomerId = customer.Id,
-                    Items = items.Select(x => new CartItemModel { ItemId = x.Id }).ToList()
+                    Items = items.Select(x => new CartItemModel { ItemId = x.Id, Quantity = x.Id }).ToList()
                 }));
             }
 

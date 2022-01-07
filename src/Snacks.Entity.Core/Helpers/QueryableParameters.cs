@@ -237,13 +237,13 @@ namespace Snacks.Entity.Core.Helpers
 
             foreach (KeyValuePair<string, StringValues> param in queryParameters)
             {
-                if (param.Key == LIMIT)
+                if (param.Key.Equals(LIMIT, StringComparison.InvariantCultureIgnoreCase))
                 {
                     int.TryParse(param.Value, out int value);
                     queryableParameters.Limit = value;
                     continue;
                 }
-                else if (param.Key == OFFSET)
+                else if (param.Key.Equals(OFFSET, StringComparison.InvariantCultureIgnoreCase))
                 {
                     int.TryParse(param.Value, out int value);
                     queryableParameters.Offset = value;
@@ -257,7 +257,7 @@ namespace Snacks.Entity.Core.Helpers
                     string key = paramMatch.Groups[1].Value;
                     string @operator = paramMatch.Groups[2].Value;
 
-                    if (key == ORDERBY)
+                    if (key.Equals(ORDERBY, StringComparison.InvariantCultureIgnoreCase))
                     {
                         queryableParameters.Orders.Add(new Order
                         {
@@ -277,7 +277,7 @@ namespace Snacks.Entity.Core.Helpers
                 }
                 else
                 {
-                    if (param.Key == ORDERBY)
+                    if (param.Key.Equals(ORDERBY, StringComparison.InvariantCultureIgnoreCase))
                     {
                         queryableParameters.Orders.Add(new Order
                         {

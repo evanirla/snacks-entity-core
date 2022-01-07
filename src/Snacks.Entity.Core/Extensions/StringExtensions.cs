@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Snacks.Entity.Core
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         public static object ConvertToPropertyType(this string value, PropertyInfo property)
         {
