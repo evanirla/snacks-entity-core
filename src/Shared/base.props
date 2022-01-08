@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/evanirla/snacks-entity-core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/evanirla/snacks-entity-core</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
