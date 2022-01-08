@@ -1,0 +1,1281 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: Snacks.Entity.Authorization
+  name: Snacks.Entity.Authorization
+  href: api/Snacks.Entity.Authorization.html
+  commentId: N:Snacks.Entity.Authorization
+  fullName: Snacks.Entity.Authorization
+  nameWithType: Snacks.Entity.Authorization
+- uid: Snacks.Entity.Authorization.Attributes
+  name: Snacks.Entity.Authorization.Attributes
+  href: api/Snacks.Entity.Authorization.Attributes.html
+  commentId: N:Snacks.Entity.Authorization.Attributes
+  fullName: Snacks.Entity.Authorization.Attributes
+  nameWithType: Snacks.Entity.Authorization.Attributes
+- uid: Snacks.Entity.Authorization.Attributes.PolicyAttribute
+  name: PolicyAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.PolicyAttribute
+  fullName: Snacks.Entity.Authorization.Attributes.PolicyAttribute
+  nameWithType: PolicyAttribute
+- uid: Snacks.Entity.Authorization.Attributes.PolicyAttribute.#ctor(System.String)
+  name: PolicyAttribute(String)
+  href: api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html#Snacks_Entity_Authorization_Attributes_PolicyAttribute__ctor_System_String_
+  commentId: M:Snacks.Entity.Authorization.Attributes.PolicyAttribute.#ctor(System.String)
+  fullName: Snacks.Entity.Authorization.Attributes.PolicyAttribute.PolicyAttribute(System.String)
+  nameWithType: PolicyAttribute.PolicyAttribute(String)
+- uid: Snacks.Entity.Authorization.Attributes.PolicyAttribute.#ctor*
+  name: PolicyAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html#Snacks_Entity_Authorization_Attributes_PolicyAttribute__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.PolicyAttribute.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.PolicyAttribute.PolicyAttribute
+  nameWithType: PolicyAttribute.PolicyAttribute
+- uid: Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name
+  name: Name
+  href: api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html#Snacks_Entity_Authorization_Attributes_PolicyAttribute_Name
+  commentId: P:Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name
+  fullName: Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name
+  nameWithType: PolicyAttribute.Name
+- uid: Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name*
+  name: Name
+  href: api/Snacks.Entity.Authorization.Attributes.PolicyAttribute.html#Snacks_Entity_Authorization_Attributes_PolicyAttribute_Name_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.PolicyAttribute.Name
+  nameWithType: PolicyAttribute.Name
+- uid: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase
+  name: RestrictAttributeBase
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.RestrictAttributeBase
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase
+  nameWithType: RestrictAttributeBase
+- uid: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.#ctor(System.String[])
+  name: RestrictAttributeBase(String[])
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html#Snacks_Entity_Authorization_Attributes_RestrictAttributeBase__ctor_System_String___
+  commentId: M:Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.#ctor(System.String[])
+  name.vb: RestrictAttributeBase(String())
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.RestrictAttributeBase(System.String[])
+  fullName.vb: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.RestrictAttributeBase(System.String())
+  nameWithType: RestrictAttributeBase.RestrictAttributeBase(String[])
+  nameWithType.vb: RestrictAttributeBase.RestrictAttributeBase(String())
+- uid: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.#ctor*
+  name: RestrictAttributeBase
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html#Snacks_Entity_Authorization_Attributes_RestrictAttributeBase__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.RestrictAttributeBase
+  nameWithType: RestrictAttributeBase.RestrictAttributeBase
+- uid: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles
+  name: Roles
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html#Snacks_Entity_Authorization_Attributes_RestrictAttributeBase_Roles
+  commentId: P:Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles
+  nameWithType: RestrictAttributeBase.Roles
+- uid: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles*
+  name: Roles
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html#Snacks_Entity_Authorization_Attributes_RestrictAttributeBase_Roles_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.Roles
+  nameWithType: RestrictAttributeBase.Roles
+- uid: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute
+  name: RestrictCreateAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute
+  nameWithType: RestrictCreateAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.#ctor(System.String[])
+  name: RestrictCreateAttribute(String[])
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictCreateAttribute__ctor_System_String___
+  commentId: M:Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.#ctor(System.String[])
+  name.vb: RestrictCreateAttribute(String())
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.RestrictCreateAttribute(System.String[])
+  fullName.vb: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.RestrictCreateAttribute(System.String())
+  nameWithType: RestrictCreateAttribute.RestrictCreateAttribute(String[])
+  nameWithType.vb: RestrictCreateAttribute.RestrictCreateAttribute(String())
+- uid: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.#ctor*
+  name: RestrictCreateAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictCreateAttribute__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.RestrictCreateAttribute
+  nameWithType: RestrictCreateAttribute.RestrictCreateAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute
+  name: RestrictDeleteAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute
+  nameWithType: RestrictDeleteAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.#ctor(System.String[])
+  name: RestrictDeleteAttribute(String[])
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictDeleteAttribute__ctor_System_String___
+  commentId: M:Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.#ctor(System.String[])
+  name.vb: RestrictDeleteAttribute(String())
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.RestrictDeleteAttribute(System.String[])
+  fullName.vb: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.RestrictDeleteAttribute(System.String())
+  nameWithType: RestrictDeleteAttribute.RestrictDeleteAttribute(String[])
+  nameWithType.vb: RestrictDeleteAttribute.RestrictDeleteAttribute(String())
+- uid: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.#ctor*
+  name: RestrictDeleteAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictDeleteAttribute__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.RestrictDeleteAttribute
+  nameWithType: RestrictDeleteAttribute.RestrictDeleteAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute
+  name: RestrictReadAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.RestrictReadAttribute
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute
+  nameWithType: RestrictReadAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.#ctor(System.String[])
+  name: RestrictReadAttribute(String[])
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictReadAttribute__ctor_System_String___
+  commentId: M:Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.#ctor(System.String[])
+  name.vb: RestrictReadAttribute(String())
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.RestrictReadAttribute(System.String[])
+  fullName.vb: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.RestrictReadAttribute(System.String())
+  nameWithType: RestrictReadAttribute.RestrictReadAttribute(String[])
+  nameWithType.vb: RestrictReadAttribute.RestrictReadAttribute(String())
+- uid: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.#ctor*
+  name: RestrictReadAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictReadAttribute__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.RestrictReadAttribute
+  nameWithType: RestrictReadAttribute.RestrictReadAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute
+  name: RestrictUpdateAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.html
+  commentId: T:Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute
+  nameWithType: RestrictUpdateAttribute
+- uid: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.#ctor(System.String[])
+  name: RestrictUpdateAttribute(String[])
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictUpdateAttribute__ctor_System_String___
+  commentId: M:Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.#ctor(System.String[])
+  name.vb: RestrictUpdateAttribute(String())
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.RestrictUpdateAttribute(System.String[])
+  fullName.vb: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.RestrictUpdateAttribute(System.String())
+  nameWithType: RestrictUpdateAttribute.RestrictUpdateAttribute(String[])
+  nameWithType.vb: RestrictUpdateAttribute.RestrictUpdateAttribute(String())
+- uid: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.#ctor*
+  name: RestrictUpdateAttribute
+  href: api/Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.html#Snacks_Entity_Authorization_Attributes_RestrictUpdateAttribute__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.RestrictUpdateAttribute
+  nameWithType: RestrictUpdateAttribute.RestrictUpdateAttribute
+- uid: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1
+  name: EntityAuthorizationHandlerBase<TEntity>
+  href: api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html
+  commentId: T:Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1
+  name.vb: EntityAuthorizationHandlerBase(Of TEntity)
+  fullName: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase<TEntity>
+  fullName.vb: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase(Of TEntity)
+  nameWithType: EntityAuthorizationHandlerBase<TEntity>
+  nameWithType.vb: EntityAuthorizationHandlerBase(Of TEntity)
+- uid: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.#ctor
+  name: EntityAuthorizationHandlerBase()
+  href: api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html#Snacks_Entity_Authorization_EntityAuthorizationHandlerBase_1__ctor
+  commentId: M:Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.#ctor
+  fullName: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase<TEntity>.EntityAuthorizationHandlerBase()
+  fullName.vb: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase(Of TEntity).EntityAuthorizationHandlerBase()
+  nameWithType: EntityAuthorizationHandlerBase<TEntity>.EntityAuthorizationHandlerBase()
+  nameWithType.vb: EntityAuthorizationHandlerBase(Of TEntity).EntityAuthorizationHandlerBase()
+- uid: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.#ctor*
+  name: EntityAuthorizationHandlerBase
+  href: api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html#Snacks_Entity_Authorization_EntityAuthorizationHandlerBase_1__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase<TEntity>.EntityAuthorizationHandlerBase
+  fullName.vb: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase(Of TEntity).EntityAuthorizationHandlerBase
+  nameWithType: EntityAuthorizationHandlerBase<TEntity>.EntityAuthorizationHandlerBase
+  nameWithType.vb: EntityAuthorizationHandlerBase(Of TEntity).EntityAuthorizationHandlerBase
+- uid: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Microsoft.AspNetCore.Authorization.Infrastructure.OperationAuthorizationRequirement,`0)
+  name: HandleRequirementAsync(AuthorizationHandlerContext, OperationAuthorizationRequirement, TEntity)
+  href: api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html#Snacks_Entity_Authorization_EntityAuthorizationHandlerBase_1_HandleRequirementAsync_Microsoft_AspNetCore_Authorization_AuthorizationHandlerContext_Microsoft_AspNetCore_Authorization_Infrastructure_OperationAuthorizationRequirement__0_
+  commentId: M:Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Microsoft.AspNetCore.Authorization.Infrastructure.OperationAuthorizationRequirement,`0)
+  fullName: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase<TEntity>.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext, Microsoft.AspNetCore.Authorization.Infrastructure.OperationAuthorizationRequirement, TEntity)
+  fullName.vb: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase(Of TEntity).HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext, Microsoft.AspNetCore.Authorization.Infrastructure.OperationAuthorizationRequirement, TEntity)
+  nameWithType: EntityAuthorizationHandlerBase<TEntity>.HandleRequirementAsync(AuthorizationHandlerContext, OperationAuthorizationRequirement, TEntity)
+  nameWithType.vb: EntityAuthorizationHandlerBase(Of TEntity).HandleRequirementAsync(AuthorizationHandlerContext, OperationAuthorizationRequirement, TEntity)
+- uid: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.HandleRequirementAsync*
+  name: HandleRequirementAsync
+  href: api/Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html#Snacks_Entity_Authorization_EntityAuthorizationHandlerBase_1_HandleRequirementAsync_
+  commentId: Overload:Snacks.Entity.Authorization.EntityAuthorizationHandlerBase`1.HandleRequirementAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase<TEntity>.HandleRequirementAsync
+  fullName.vb: Snacks.Entity.Authorization.EntityAuthorizationHandlerBase(Of TEntity).HandleRequirementAsync
+  nameWithType: EntityAuthorizationHandlerBase<TEntity>.HandleRequirementAsync
+  nameWithType.vb: EntityAuthorizationHandlerBase(Of TEntity).HandleRequirementAsync
+- uid: Snacks.Entity.Authorization.Operations
+  name: Operations
+  href: api/Snacks.Entity.Authorization.Operations.html
+  commentId: T:Snacks.Entity.Authorization.Operations
+  fullName: Snacks.Entity.Authorization.Operations
+  nameWithType: Operations
+- uid: Snacks.Entity.Authorization.Operations.Create
+  name: Create
+  href: api/Snacks.Entity.Authorization.Operations.html#Snacks_Entity_Authorization_Operations_Create
+  commentId: F:Snacks.Entity.Authorization.Operations.Create
+  fullName: Snacks.Entity.Authorization.Operations.Create
+  nameWithType: Operations.Create
+- uid: Snacks.Entity.Authorization.Operations.Delete
+  name: Delete
+  href: api/Snacks.Entity.Authorization.Operations.html#Snacks_Entity_Authorization_Operations_Delete
+  commentId: F:Snacks.Entity.Authorization.Operations.Delete
+  fullName: Snacks.Entity.Authorization.Operations.Delete
+  nameWithType: Operations.Delete
+- uid: Snacks.Entity.Authorization.Operations.Read
+  name: Read
+  href: api/Snacks.Entity.Authorization.Operations.html#Snacks_Entity_Authorization_Operations_Read
+  commentId: F:Snacks.Entity.Authorization.Operations.Read
+  fullName: Snacks.Entity.Authorization.Operations.Read
+  nameWithType: Operations.Read
+- uid: Snacks.Entity.Authorization.Operations.Update
+  name: Update
+  href: api/Snacks.Entity.Authorization.Operations.html#Snacks_Entity_Authorization_Operations_Update
+  commentId: F:Snacks.Entity.Authorization.Operations.Update
+  fullName: Snacks.Entity.Authorization.Operations.Update
+  nameWithType: Operations.Update
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1
+  name: SecuredEntityControllerBase<TEntity>
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html
+  commentId: T:Snacks.Entity.Authorization.SecuredEntityControllerBase`1
+  name.vb: SecuredEntityControllerBase(Of TEntity)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity)
+  nameWithType: SecuredEntityControllerBase<TEntity>
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.#ctor(IServiceProvider)
+  name: SecuredEntityControllerBase(IServiceProvider)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1__ctor_IServiceProvider_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.#ctor(IServiceProvider)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.SecuredEntityControllerBase(IServiceProvider)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).SecuredEntityControllerBase(IServiceProvider)
+  nameWithType: SecuredEntityControllerBase<TEntity>.SecuredEntityControllerBase(IServiceProvider)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).SecuredEntityControllerBase(IServiceProvider)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.#ctor*
+  name: SecuredEntityControllerBase
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.SecuredEntityControllerBase
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).SecuredEntityControllerBase
+  nameWithType: SecuredEntityControllerBase<TEntity>.SecuredEntityControllerBase
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).SecuredEntityControllerBase
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.AuthorizationService
+  name: AuthorizationService
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_AuthorizationService
+  commentId: F:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.AuthorizationService
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.AuthorizationService
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).AuthorizationService
+  nameWithType: SecuredEntityControllerBase<TEntity>.AuthorizationService
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).AuthorizationService
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.DeleteAsync(System.String)
+  name: DeleteAsync(String)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_DeleteAsync_System_String_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.DeleteAsync(System.String)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.DeleteAsync(System.String)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).DeleteAsync(System.String)
+  nameWithType: SecuredEntityControllerBase<TEntity>.DeleteAsync(String)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).DeleteAsync(String)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.DeleteAsync*
+  name: DeleteAsync
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_DeleteAsync_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.DeleteAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.DeleteAsync
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).DeleteAsync
+  nameWithType: SecuredEntityControllerBase<TEntity>.DeleteAsync
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).DeleteAsync
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync
+  name: GetAsync()
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_GetAsync
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.GetAsync()
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).GetAsync()
+  nameWithType: SecuredEntityControllerBase<TEntity>.GetAsync()
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).GetAsync()
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync(System.String)
+  name: GetAsync(String)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_GetAsync_System_String_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync(System.String)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.GetAsync(System.String)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).GetAsync(System.String)
+  nameWithType: SecuredEntityControllerBase<TEntity>.GetAsync(String)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).GetAsync(String)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync*
+  name: GetAsync
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_GetAsync_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.GetAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.GetAsync
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).GetAsync
+  nameWithType: SecuredEntityControllerBase<TEntity>.GetAsync
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).GetAsync
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PatchAsync(System.String,System.Object)
+  name: PatchAsync(String, Object)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_PatchAsync_System_String_System_Object_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PatchAsync(System.String,System.Object)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.PatchAsync(System.String, System.Object)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).PatchAsync(System.String, System.Object)
+  nameWithType: SecuredEntityControllerBase<TEntity>.PatchAsync(String, Object)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).PatchAsync(String, Object)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PatchAsync*
+  name: PatchAsync
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_PatchAsync_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PatchAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.PatchAsync
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).PatchAsync
+  nameWithType: SecuredEntityControllerBase<TEntity>.PatchAsync
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).PatchAsync
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PostAsync(`0)
+  name: PostAsync(TEntity)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_PostAsync__0_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PostAsync(`0)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.PostAsync(TEntity)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).PostAsync(TEntity)
+  nameWithType: SecuredEntityControllerBase<TEntity>.PostAsync(TEntity)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).PostAsync(TEntity)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PostAsync*
+  name: PostAsync
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_1_PostAsync_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`1.PostAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity>.PostAsync
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity).PostAsync
+  nameWithType: SecuredEntityControllerBase<TEntity>.PostAsync
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity).PostAsync
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`2
+  name: SecuredEntityControllerBase<TEntity, TEntityService>
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html
+  commentId: T:Snacks.Entity.Authorization.SecuredEntityControllerBase`2
+  name.vb: SecuredEntityControllerBase(Of TEntity, TEntityService)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity, TEntityService>
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity, TEntityService)
+  nameWithType: SecuredEntityControllerBase<TEntity, TEntityService>
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity, TEntityService)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`2.#ctor(IServiceProvider)
+  name: SecuredEntityControllerBase(IServiceProvider)
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_2__ctor_IServiceProvider_
+  commentId: M:Snacks.Entity.Authorization.SecuredEntityControllerBase`2.#ctor(IServiceProvider)
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity, TEntityService>.SecuredEntityControllerBase(IServiceProvider)
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity, TEntityService).SecuredEntityControllerBase(IServiceProvider)
+  nameWithType: SecuredEntityControllerBase<TEntity, TEntityService>.SecuredEntityControllerBase(IServiceProvider)
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity, TEntityService).SecuredEntityControllerBase(IServiceProvider)
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`2.#ctor*
+  name: SecuredEntityControllerBase
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_2__ctor_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`2.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity, TEntityService>.SecuredEntityControllerBase
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity, TEntityService).SecuredEntityControllerBase
+  nameWithType: SecuredEntityControllerBase<TEntity, TEntityService>.SecuredEntityControllerBase
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity, TEntityService).SecuredEntityControllerBase
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`2.Service
+  name: Service
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_2_Service
+  commentId: P:Snacks.Entity.Authorization.SecuredEntityControllerBase`2.Service
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity, TEntityService>.Service
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity, TEntityService).Service
+  nameWithType: SecuredEntityControllerBase<TEntity, TEntityService>.Service
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity, TEntityService).Service
+- uid: Snacks.Entity.Authorization.SecuredEntityControllerBase`2.Service*
+  name: Service
+  href: api/Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html#Snacks_Entity_Authorization_SecuredEntityControllerBase_2_Service_
+  commentId: Overload:Snacks.Entity.Authorization.SecuredEntityControllerBase`2.Service
+  isSpec: "True"
+  fullName: Snacks.Entity.Authorization.SecuredEntityControllerBase<TEntity, TEntityService>.Service
+  fullName.vb: Snacks.Entity.Authorization.SecuredEntityControllerBase(Of TEntity, TEntityService).Service
+  nameWithType: SecuredEntityControllerBase<TEntity, TEntityService>.Service
+  nameWithType.vb: SecuredEntityControllerBase(Of TEntity, TEntityService).Service
+- uid: Snacks.Entity.Core
+  name: Snacks.Entity.Core
+  href: api/Snacks.Entity.Core.html
+  commentId: N:Snacks.Entity.Core
+  fullName: Snacks.Entity.Core
+  nameWithType: Snacks.Entity.Core
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1
+  name: DistributedCacheHelper<TController>
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html
+  commentId: T:Snacks.Entity.Core.DistributedCacheHelper`1
+  name.vb: DistributedCacheHelper(Of TController)
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController)
+  nameWithType: DistributedCacheHelper<TController>
+  nameWithType.vb: DistributedCacheHelper(Of TController)
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.#ctor(Microsoft.Extensions.Caching.Distributed.IDistributedCache,JsonSerializerOptions)
+  name: DistributedCacheHelper(IDistributedCache, JsonSerializerOptions)
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1__ctor_Microsoft_Extensions_Caching_Distributed_IDistributedCache_JsonSerializerOptions_
+  commentId: M:Snacks.Entity.Core.DistributedCacheHelper`1.#ctor(Microsoft.Extensions.Caching.Distributed.IDistributedCache,JsonSerializerOptions)
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.DistributedCacheHelper(Microsoft.Extensions.Caching.Distributed.IDistributedCache, JsonSerializerOptions)
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).DistributedCacheHelper(Microsoft.Extensions.Caching.Distributed.IDistributedCache, JsonSerializerOptions)
+  nameWithType: DistributedCacheHelper<TController>.DistributedCacheHelper(IDistributedCache, JsonSerializerOptions)
+  nameWithType.vb: DistributedCacheHelper(Of TController).DistributedCacheHelper(IDistributedCache, JsonSerializerOptions)
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.#ctor*
+  name: DistributedCacheHelper
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1__ctor_
+  commentId: Overload:Snacks.Entity.Core.DistributedCacheHelper`1.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.DistributedCacheHelper
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).DistributedCacheHelper
+  nameWithType: DistributedCacheHelper<TController>.DistributedCacheHelper
+  nameWithType.vb: DistributedCacheHelper(Of TController).DistributedCacheHelper
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.AddRequestAsync*
+  name: AddRequestAsync
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_AddRequestAsync_
+  commentId: Overload:Snacks.Entity.Core.DistributedCacheHelper`1.AddRequestAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.AddRequestAsync
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).AddRequestAsync
+  nameWithType: DistributedCacheHelper<TController>.AddRequestAsync
+  nameWithType.vb: DistributedCacheHelper(Of TController).AddRequestAsync
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.AddRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  name: AddRequestAsync<TValue>(HttpRequest, TValue, DistributedCacheEntryOptions)
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_AddRequestAsync__1_Microsoft_AspNetCore_Http_HttpRequest___0_Microsoft_Extensions_Caching_Distributed_DistributedCacheEntryOptions_
+  commentId: M:Snacks.Entity.Core.DistributedCacheHelper`1.AddRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  name.vb: AddRequestAsync(Of TValue)(HttpRequest, TValue, DistributedCacheEntryOptions)
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.AddRequestAsync<TValue>(Microsoft.AspNetCore.Http.HttpRequest, TValue, Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).AddRequestAsync(Of TValue)(Microsoft.AspNetCore.Http.HttpRequest, TValue, Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  nameWithType: DistributedCacheHelper<TController>.AddRequestAsync<TValue>(HttpRequest, TValue, DistributedCacheEntryOptions)
+  nameWithType.vb: DistributedCacheHelper(Of TController).AddRequestAsync(Of TValue)(HttpRequest, TValue, DistributedCacheEntryOptions)
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.GetFromRequestAsync*
+  name: GetFromRequestAsync
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_GetFromRequestAsync_
+  commentId: Overload:Snacks.Entity.Core.DistributedCacheHelper`1.GetFromRequestAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.GetFromRequestAsync
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).GetFromRequestAsync
+  nameWithType: DistributedCacheHelper<TController>.GetFromRequestAsync
+  nameWithType.vb: DistributedCacheHelper(Of TController).GetFromRequestAsync
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.GetFromRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest)
+  name: GetFromRequestAsync<TValue>(HttpRequest)
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_GetFromRequestAsync__1_Microsoft_AspNetCore_Http_HttpRequest_
+  commentId: M:Snacks.Entity.Core.DistributedCacheHelper`1.GetFromRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest)
+  name.vb: GetFromRequestAsync(Of TValue)(HttpRequest)
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.GetFromRequestAsync<TValue>(Microsoft.AspNetCore.Http.HttpRequest)
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).GetFromRequestAsync(Of TValue)(Microsoft.AspNetCore.Http.HttpRequest)
+  nameWithType: DistributedCacheHelper<TController>.GetFromRequestAsync<TValue>(HttpRequest)
+  nameWithType.vb: DistributedCacheHelper(Of TController).GetFromRequestAsync(Of TValue)(HttpRequest)
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.PurgeAsync
+  name: PurgeAsync()
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_PurgeAsync
+  commentId: M:Snacks.Entity.Core.DistributedCacheHelper`1.PurgeAsync
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.PurgeAsync()
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).PurgeAsync()
+  nameWithType: DistributedCacheHelper<TController>.PurgeAsync()
+  nameWithType.vb: DistributedCacheHelper(Of TController).PurgeAsync()
+- uid: Snacks.Entity.Core.DistributedCacheHelper`1.PurgeAsync*
+  name: PurgeAsync
+  href: api/Snacks.Entity.Core.DistributedCacheHelper-1.html#Snacks_Entity_Core_DistributedCacheHelper_1_PurgeAsync_
+  commentId: Overload:Snacks.Entity.Core.DistributedCacheHelper`1.PurgeAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.DistributedCacheHelper<TController>.PurgeAsync
+  fullName.vb: Snacks.Entity.Core.DistributedCacheHelper(Of TController).PurgeAsync
+  nameWithType: DistributedCacheHelper<TController>.PurgeAsync
+  nameWithType.vb: DistributedCacheHelper(Of TController).PurgeAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1
+  name: EntityControllerBase<TEntity>
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html
+  commentId: T:Snacks.Entity.Core.EntityControllerBase`1
+  name.vb: EntityControllerBase(Of TEntity)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity)
+  nameWithType: EntityControllerBase<TEntity>
+  nameWithType.vb: EntityControllerBase(Of TEntity)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.#ctor(IServiceProvider)
+  name: EntityControllerBase(IServiceProvider)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1__ctor_IServiceProvider_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.#ctor(IServiceProvider)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.EntityControllerBase(IServiceProvider)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).EntityControllerBase(IServiceProvider)
+  nameWithType: EntityControllerBase<TEntity>.EntityControllerBase(IServiceProvider)
+  nameWithType.vb: EntityControllerBase(Of TEntity).EntityControllerBase(IServiceProvider)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.#ctor*
+  name: EntityControllerBase
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1__ctor_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.EntityControllerBase
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).EntityControllerBase
+  nameWithType: EntityControllerBase<TEntity>.EntityControllerBase
+  nameWithType.vb: EntityControllerBase(Of TEntity).EntityControllerBase
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Cache
+  name: Cache
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Cache
+  commentId: P:Snacks.Entity.Core.EntityControllerBase`1.Cache
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Cache
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Cache
+  nameWithType: EntityControllerBase<TEntity>.Cache
+  nameWithType.vb: EntityControllerBase(Of TEntity).Cache
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Cache*
+  name: Cache
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Cache_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.Cache
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Cache
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Cache
+  nameWithType: EntityControllerBase<TEntity>.Cache
+  nameWithType.vb: EntityControllerBase(Of TEntity).Cache
+- uid: Snacks.Entity.Core.EntityControllerBase`1.DeleteAsync(System.String)
+  name: DeleteAsync(String)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_DeleteAsync_System_String_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.DeleteAsync(System.String)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.DeleteAsync(System.String)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).DeleteAsync(System.String)
+  nameWithType: EntityControllerBase<TEntity>.DeleteAsync(String)
+  nameWithType.vb: EntityControllerBase(Of TEntity).DeleteAsync(String)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.DeleteAsync*
+  name: DeleteAsync
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_DeleteAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.DeleteAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.DeleteAsync
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).DeleteAsync
+  nameWithType: EntityControllerBase<TEntity>.DeleteAsync
+  nameWithType.vb: EntityControllerBase(Of TEntity).DeleteAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetAsync
+  name: GetAsync()
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetAsync
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.GetAsync
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetAsync()
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetAsync()
+  nameWithType: EntityControllerBase<TEntity>.GetAsync()
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetAsync()
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetAsync(System.String)
+  name: GetAsync(String)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetAsync_System_String_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.GetAsync(System.String)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetAsync(System.String)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetAsync(System.String)
+  nameWithType: EntityControllerBase<TEntity>.GetAsync(String)
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetAsync(String)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetAsync*
+  name: GetAsync
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.GetAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetAsync
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetAsync
+  nameWithType: EntityControllerBase<TEntity>.GetAsync
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync*
+  name: GetRelatedAsync
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetRelatedAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetRelatedAsync
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetRelatedAsync
+  nameWithType: EntityControllerBase<TEntity>.GetRelatedAsync
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetRelatedAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync``1(System.String,Microsoft.AspNetCore.Http.IQueryCollection,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IEnumerable{``0}}})
+  name: GetRelatedAsync<TRelatedEntity>(String, IQueryCollection, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetRelatedAsync__1_System_String_Microsoft_AspNetCore_Http_IQueryCollection_System_Linq_Expressions_Expression_System_Func__0_System_Collections_Generic_IEnumerable___0____
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync``1(System.String,Microsoft.AspNetCore.Http.IQueryCollection,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IEnumerable{``0}}})
+  name.vb: GetRelatedAsync(Of TRelatedEntity)(String, IQueryCollection, Expression(Of Func(Of TEntity, IEnumerable(Of TRelatedEntity))))
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetRelatedAsync<TRelatedEntity>(System.String, Microsoft.AspNetCore.Http.IQueryCollection, System.Linq.Expressions.Expression<System.Func<TEntity, System.Collections.Generic.IEnumerable<TRelatedEntity>>>)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetRelatedAsync(Of TRelatedEntity)(System.String, Microsoft.AspNetCore.Http.IQueryCollection, System.Linq.Expressions.Expression(Of System.Func(Of TEntity, System.Collections.Generic.IEnumerable(Of TRelatedEntity))))
+  nameWithType: EntityControllerBase<TEntity>.GetRelatedAsync<TRelatedEntity>(String, IQueryCollection, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetRelatedAsync(Of TRelatedEntity)(String, IQueryCollection, Expression(Of Func(Of TEntity, IEnumerable(Of TRelatedEntity))))
+- uid: Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync``2(System.String,Microsoft.AspNetCore.Http.IQueryCollection,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0,``1}})
+  name: GetRelatedAsync<TRelatedEntity, TRelatedEntity2>(String, IQueryCollection, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>, Expression<Func<TRelatedEntity, TRelatedEntity2>>)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_GetRelatedAsync__2_System_String_Microsoft_AspNetCore_Http_IQueryCollection_System_Linq_Expressions_Expression_System_Func__0_System_Collections_Generic_IEnumerable___0____System_Linq_Expressions_Expression_System_Func___0___1___
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.GetRelatedAsync``2(System.String,Microsoft.AspNetCore.Http.IQueryCollection,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0,``1}})
+  name.vb: GetRelatedAsync(Of TRelatedEntity, TRelatedEntity2)(String, IQueryCollection, Expression(Of Func(Of TEntity, IEnumerable(Of TRelatedEntity))), Expression(Of Func(Of TRelatedEntity, TRelatedEntity2)))
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.GetRelatedAsync<TRelatedEntity, TRelatedEntity2>(System.String, Microsoft.AspNetCore.Http.IQueryCollection, System.Linq.Expressions.Expression<System.Func<TEntity, System.Collections.Generic.IEnumerable<TRelatedEntity>>>, System.Linq.Expressions.Expression<System.Func<TRelatedEntity, TRelatedEntity2>>)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).GetRelatedAsync(Of TRelatedEntity, TRelatedEntity2)(System.String, Microsoft.AspNetCore.Http.IQueryCollection, System.Linq.Expressions.Expression(Of System.Func(Of TEntity, System.Collections.Generic.IEnumerable(Of TRelatedEntity))), System.Linq.Expressions.Expression(Of System.Func(Of TRelatedEntity, TRelatedEntity2)))
+  nameWithType: EntityControllerBase<TEntity>.GetRelatedAsync<TRelatedEntity, TRelatedEntity2>(String, IQueryCollection, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>, Expression<Func<TRelatedEntity, TRelatedEntity2>>)
+  nameWithType.vb: EntityControllerBase(Of TEntity).GetRelatedAsync(Of TRelatedEntity, TRelatedEntity2)(String, IQueryCollection, Expression(Of Func(Of TEntity, IEnumerable(Of TRelatedEntity))), Expression(Of Func(Of TRelatedEntity, TRelatedEntity2)))
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Logger
+  name: Logger
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Logger
+  commentId: P:Snacks.Entity.Core.EntityControllerBase`1.Logger
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Logger
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Logger
+  nameWithType: EntityControllerBase<TEntity>.Logger
+  nameWithType.vb: EntityControllerBase(Of TEntity).Logger
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Logger*
+  name: Logger
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Logger_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.Logger
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Logger
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Logger
+  nameWithType: EntityControllerBase<TEntity>.Logger
+  nameWithType.vb: EntityControllerBase(Of TEntity).Logger
+- uid: Snacks.Entity.Core.EntityControllerBase`1.PatchAsync(System.String,System.Object)
+  name: PatchAsync(String, Object)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_PatchAsync_System_String_System_Object_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.PatchAsync(System.String,System.Object)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.PatchAsync(System.String, System.Object)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).PatchAsync(System.String, System.Object)
+  nameWithType: EntityControllerBase<TEntity>.PatchAsync(String, Object)
+  nameWithType.vb: EntityControllerBase(Of TEntity).PatchAsync(String, Object)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.PatchAsync*
+  name: PatchAsync
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_PatchAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.PatchAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.PatchAsync
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).PatchAsync
+  nameWithType: EntityControllerBase<TEntity>.PatchAsync
+  nameWithType.vb: EntityControllerBase(Of TEntity).PatchAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1.PostAsync(`0)
+  name: PostAsync(TEntity)
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_PostAsync__0_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`1.PostAsync(`0)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.PostAsync(TEntity)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).PostAsync(TEntity)
+  nameWithType: EntityControllerBase<TEntity>.PostAsync(TEntity)
+  nameWithType.vb: EntityControllerBase(Of TEntity).PostAsync(TEntity)
+- uid: Snacks.Entity.Core.EntityControllerBase`1.PostAsync*
+  name: PostAsync
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_PostAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.PostAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.PostAsync
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).PostAsync
+  nameWithType: EntityControllerBase<TEntity>.PostAsync
+  nameWithType.vb: EntityControllerBase(Of TEntity).PostAsync
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Service
+  name: Service
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Service
+  commentId: P:Snacks.Entity.Core.EntityControllerBase`1.Service
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Service
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Service
+  nameWithType: EntityControllerBase<TEntity>.Service
+  nameWithType.vb: EntityControllerBase(Of TEntity).Service
+- uid: Snacks.Entity.Core.EntityControllerBase`1.Service*
+  name: Service
+  href: api/Snacks.Entity.Core.EntityControllerBase-1.html#Snacks_Entity_Core_EntityControllerBase_1_Service_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`1.Service
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity>.Service
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity).Service
+  nameWithType: EntityControllerBase<TEntity>.Service
+  nameWithType.vb: EntityControllerBase(Of TEntity).Service
+- uid: Snacks.Entity.Core.EntityControllerBase`2
+  name: EntityControllerBase<TEntity, TEntityService>
+  href: api/Snacks.Entity.Core.EntityControllerBase-2.html
+  commentId: T:Snacks.Entity.Core.EntityControllerBase`2
+  name.vb: EntityControllerBase(Of TEntity, TEntityService)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity, TEntityService>
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity, TEntityService)
+  nameWithType: EntityControllerBase<TEntity, TEntityService>
+  nameWithType.vb: EntityControllerBase(Of TEntity, TEntityService)
+- uid: Snacks.Entity.Core.EntityControllerBase`2.#ctor(IServiceProvider)
+  name: EntityControllerBase(IServiceProvider)
+  href: api/Snacks.Entity.Core.EntityControllerBase-2.html#Snacks_Entity_Core_EntityControllerBase_2__ctor_IServiceProvider_
+  commentId: M:Snacks.Entity.Core.EntityControllerBase`2.#ctor(IServiceProvider)
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity, TEntityService>.EntityControllerBase(IServiceProvider)
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity, TEntityService).EntityControllerBase(IServiceProvider)
+  nameWithType: EntityControllerBase<TEntity, TEntityService>.EntityControllerBase(IServiceProvider)
+  nameWithType.vb: EntityControllerBase(Of TEntity, TEntityService).EntityControllerBase(IServiceProvider)
+- uid: Snacks.Entity.Core.EntityControllerBase`2.#ctor*
+  name: EntityControllerBase
+  href: api/Snacks.Entity.Core.EntityControllerBase-2.html#Snacks_Entity_Core_EntityControllerBase_2__ctor_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`2.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity, TEntityService>.EntityControllerBase
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity, TEntityService).EntityControllerBase
+  nameWithType: EntityControllerBase<TEntity, TEntityService>.EntityControllerBase
+  nameWithType.vb: EntityControllerBase(Of TEntity, TEntityService).EntityControllerBase
+- uid: Snacks.Entity.Core.EntityControllerBase`2.Service
+  name: Service
+  href: api/Snacks.Entity.Core.EntityControllerBase-2.html#Snacks_Entity_Core_EntityControllerBase_2_Service
+  commentId: P:Snacks.Entity.Core.EntityControllerBase`2.Service
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity, TEntityService>.Service
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity, TEntityService).Service
+  nameWithType: EntityControllerBase<TEntity, TEntityService>.Service
+  nameWithType.vb: EntityControllerBase(Of TEntity, TEntityService).Service
+- uid: Snacks.Entity.Core.EntityControllerBase`2.Service*
+  name: Service
+  href: api/Snacks.Entity.Core.EntityControllerBase-2.html#Snacks_Entity_Core_EntityControllerBase_2_Service_
+  commentId: Overload:Snacks.Entity.Core.EntityControllerBase`2.Service
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityControllerBase<TEntity, TEntityService>.Service
+  fullName.vb: Snacks.Entity.Core.EntityControllerBase(Of TEntity, TEntityService).Service
+  nameWithType: EntityControllerBase<TEntity, TEntityService>.Service
+  nameWithType.vb: EntityControllerBase(Of TEntity, TEntityService).Service
+- uid: Snacks.Entity.Core.EntityServiceBase`2
+  name: EntityServiceBase<TEntity, TDbContext>
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html
+  commentId: T:Snacks.Entity.Core.EntityServiceBase`2
+  name.vb: EntityServiceBase(Of TEntity, TDbContext)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.#ctor(IServiceProvider)
+  name: EntityServiceBase(IServiceProvider)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2__ctor_IServiceProvider_
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.#ctor(IServiceProvider)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.EntityServiceBase(IServiceProvider)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).EntityServiceBase(IServiceProvider)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.EntityServiceBase(IServiceProvider)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).EntityServiceBase(IServiceProvider)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.#ctor*
+  name: EntityServiceBase
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2__ctor_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.#ctor
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.EntityServiceBase
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).EntityServiceBase
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.EntityServiceBase
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).EntityServiceBase
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext(System.Action{`1})
+  name: AccessDbContext(Action<TDbContext>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_System_Action__1__
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext(System.Action{`1})
+  name.vb: AccessDbContext(Action(Of TDbContext))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContext(System.Action<TDbContext>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContext(System.Action(Of TDbContext))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContext(Action<TDbContext>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContext(Action(Of TDbContext))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext*
+  name: AccessDbContext
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContext
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContext
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContext
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContext
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext``1(System.Func{`1,``0})
+  name: AccessDbContext<TReturn>(Func<TDbContext, TReturn>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext__1_System_Func__1___0__
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext``1(System.Func{`1,``0})
+  name.vb: AccessDbContext(Of TReturn)(Func(Of TDbContext, TReturn))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContext<TReturn>(System.Func<TDbContext, TReturn>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContext(Of TReturn)(System.Func(Of TDbContext, TReturn))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContext<TReturn>(Func<TDbContext, TReturn>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContext(Of TReturn)(Func(Of TDbContext, TReturn))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync(System.Func{`1,System.Threading.Tasks.Task})
+  name: AccessDbContextAsync(Func<TDbContext, Task>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync(System.Func{`1,System.Threading.Tasks.Task})
+  name.vb: AccessDbContextAsync(Func(Of TDbContext, Task))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync(System.Func<TDbContext, System.Threading.Tasks.Task>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync(System.Func(Of TDbContext, System.Threading.Tasks.Task))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync(Func<TDbContext, Task>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync(Func(Of TDbContext, Task))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync*
+  name: AccessDbContextAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync``1(System.Func{`1,System.Threading.Tasks.Task{``0}})
+  name: AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync__1_System_Func__1_System_Threading_Tasks_Task___0___
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync``1(System.Func{`1,System.Threading.Tasks.Task{``0}})
+  name.vb: AccessDbContextAsync(Of TReturn)(Func(Of TDbContext, Task(Of TReturn)))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync<TReturn>(System.Func<TDbContext, System.Threading.Tasks.Task<TReturn>>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync(Of TReturn)(System.Func(Of TDbContext, System.Threading.Tasks.Task(Of TReturn)))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessDbContextAsync(Of TReturn)(Func(Of TDbContext, Task(Of TReturn)))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntities(System.Action{Microsoft.EntityFrameworkCore.DbSet{`0}})
+  name: AccessEntities(Action<DbSet<TEntity>>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_System_Action_Microsoft_EntityFrameworkCore_DbSet__0___
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessEntities(System.Action{Microsoft.EntityFrameworkCore.DbSet{`0}})
+  name.vb: AccessEntities(Action(Of DbSet(Of TEntity)))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntities(System.Action<Microsoft.EntityFrameworkCore.DbSet<TEntity>>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntities(System.Action(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity)))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntities(Action<DbSet<TEntity>>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntities(Action(Of DbSet(Of TEntity)))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntities*
+  name: AccessEntities
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.AccessEntities
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntities
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntities
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntities
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntities
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntities``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},``0})
+  name: AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntities__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0____0__
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessEntities``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},``0})
+  name.vb: AccessEntities(Of TReturn)(Func(Of DbSet(Of TEntity), TReturn))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntities<TReturn>(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, TReturn>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntities(Of TReturn)(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), TReturn))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntities(Of TReturn)(Func(Of DbSet(Of TEntity), TReturn))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task})
+  name: AccessEntitiesAsync(Func<DbSet<TEntity>, Task>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task__
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task})
+  name.vb: AccessEntitiesAsync(Func(Of DbSet(Of TEntity), Task))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, System.Threading.Tasks.Task>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), System.Threading.Tasks.Task))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync(Func<DbSet<TEntity>, Task>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync(Func(Of DbSet(Of TEntity), Task))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync*
+  name: AccessEntitiesAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync
+- uid: Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task{``0}})
+  name: AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>>)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task___0___
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task{``0}})
+  name.vb: AccessEntitiesAsync(Of TReturn)(Func(Of DbSet(Of TEntity), Task(Of TReturn)))
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync<TReturn>(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, System.Threading.Tasks.Task<TReturn>>)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync(Of TReturn)(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), System.Threading.Tasks.Task(Of TReturn)))
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>>)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).AccessEntitiesAsync(Of TReturn)(Func(Of DbSet(Of TEntity), Task(Of TReturn)))
+- uid: Snacks.Entity.Core.EntityServiceBase`2.CreateAsync(`0,System.Threading.CancellationToken)
+  name: CreateAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_CreateAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.CreateAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.CreateAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).CreateAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.CreateAsync(TEntity, CancellationToken)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).CreateAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.CreateAsync*
+  name: CreateAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_CreateAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.CreateAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.CreateAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).CreateAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.CreateAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).CreateAsync
+- uid: Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync(`0,System.Threading.CancellationToken)
+  name: DeleteAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_DeleteAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.DeleteAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).DeleteAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.DeleteAsync(TEntity, CancellationToken)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).DeleteAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync*
+  name: DeleteAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_DeleteAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.DeleteAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).DeleteAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.DeleteAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).DeleteAsync
+- uid: Snacks.Entity.Core.EntityServiceBase`2.FindAsync(System.Object)
+  name: FindAsync(Object)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_FindAsync_System_Object_
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.FindAsync(System.Object)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.FindAsync(System.Object)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).FindAsync(System.Object)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.FindAsync(Object)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).FindAsync(Object)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.FindAsync*
+  name: FindAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_FindAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.FindAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.FindAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).FindAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.FindAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).FindAsync
+- uid: Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync(`0,System.Threading.CancellationToken)
+  name: UpdateAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_UpdateAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.UpdateAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).UpdateAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.UpdateAsync(TEntity, CancellationToken)
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).UpdateAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync*
+  name: UpdateAsync
+  href: api/Snacks.Entity.Core.EntityServiceBase-2.html#Snacks_Entity_Core_EntityServiceBase_2_UpdateAsync_
+  commentId: Overload:Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.EntityServiceBase<TEntity, TDbContext>.UpdateAsync
+  fullName.vb: Snacks.Entity.Core.EntityServiceBase(Of TEntity, TDbContext).UpdateAsync
+  nameWithType: EntityServiceBase<TEntity, TDbContext>.UpdateAsync
+  nameWithType.vb: EntityServiceBase(Of TEntity, TDbContext).UpdateAsync
+- uid: Snacks.Entity.Core.Extensions
+  name: Snacks.Entity.Core.Extensions
+  href: api/Snacks.Entity.Core.Extensions.html
+  commentId: N:Snacks.Entity.Core.Extensions
+  fullName: Snacks.Entity.Core.Extensions
+  nameWithType: Snacks.Entity.Core.Extensions
+- uid: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions
+  name: IServiceCollectionExtensions
+  href: api/Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.html
+  commentId: T:Snacks.Entity.Core.Extensions.IServiceCollectionExtensions
+  fullName: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions
+  nameWithType: IServiceCollectionExtensions
+- uid: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name: AddEntityServices(IServiceCollection)
+  href: api/Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.html#Snacks_Entity_Core_Extensions_IServiceCollectionExtensions_AddEntityServices_Microsoft_Extensions_DependencyInjection_IServiceCollection_
+  commentId: M:Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  nameWithType: IServiceCollectionExtensions.AddEntityServices(IServiceCollection)
+- uid: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices*
+  name: AddEntityServices
+  href: api/Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.html#Snacks_Entity_Core_Extensions_IServiceCollectionExtensions_AddEntityServices_
+  commentId: Overload:Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.AddEntityServices
+  nameWithType: IServiceCollectionExtensions.AddEntityServices
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1
+  name: IDistributedCacheHelper<TController>
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html
+  commentId: T:Snacks.Entity.Core.IDistributedCacheHelper`1
+  name.vb: IDistributedCacheHelper(Of TController)
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController)
+  nameWithType: IDistributedCacheHelper<TController>
+  nameWithType.vb: IDistributedCacheHelper(Of TController)
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.AddRequestAsync*
+  name: AddRequestAsync
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_AddRequestAsync_
+  commentId: Overload:Snacks.Entity.Core.IDistributedCacheHelper`1.AddRequestAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.AddRequestAsync
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).AddRequestAsync
+  nameWithType: IDistributedCacheHelper<TController>.AddRequestAsync
+  nameWithType.vb: IDistributedCacheHelper(Of TController).AddRequestAsync
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.AddRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  name: AddRequestAsync<TValue>(HttpRequest, TValue, DistributedCacheEntryOptions)
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_AddRequestAsync__1_Microsoft_AspNetCore_Http_HttpRequest___0_Microsoft_Extensions_Caching_Distributed_DistributedCacheEntryOptions_
+  commentId: M:Snacks.Entity.Core.IDistributedCacheHelper`1.AddRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  name.vb: AddRequestAsync(Of TValue)(HttpRequest, TValue, DistributedCacheEntryOptions)
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.AddRequestAsync<TValue>(Microsoft.AspNetCore.Http.HttpRequest, TValue, Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).AddRequestAsync(Of TValue)(Microsoft.AspNetCore.Http.HttpRequest, TValue, Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)
+  nameWithType: IDistributedCacheHelper<TController>.AddRequestAsync<TValue>(HttpRequest, TValue, DistributedCacheEntryOptions)
+  nameWithType.vb: IDistributedCacheHelper(Of TController).AddRequestAsync(Of TValue)(HttpRequest, TValue, DistributedCacheEntryOptions)
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.GetFromRequestAsync*
+  name: GetFromRequestAsync
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_GetFromRequestAsync_
+  commentId: Overload:Snacks.Entity.Core.IDistributedCacheHelper`1.GetFromRequestAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.GetFromRequestAsync
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).GetFromRequestAsync
+  nameWithType: IDistributedCacheHelper<TController>.GetFromRequestAsync
+  nameWithType.vb: IDistributedCacheHelper(Of TController).GetFromRequestAsync
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.GetFromRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest)
+  name: GetFromRequestAsync<TValue>(HttpRequest)
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_GetFromRequestAsync__1_Microsoft_AspNetCore_Http_HttpRequest_
+  commentId: M:Snacks.Entity.Core.IDistributedCacheHelper`1.GetFromRequestAsync``1(Microsoft.AspNetCore.Http.HttpRequest)
+  name.vb: GetFromRequestAsync(Of TValue)(HttpRequest)
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.GetFromRequestAsync<TValue>(Microsoft.AspNetCore.Http.HttpRequest)
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).GetFromRequestAsync(Of TValue)(Microsoft.AspNetCore.Http.HttpRequest)
+  nameWithType: IDistributedCacheHelper<TController>.GetFromRequestAsync<TValue>(HttpRequest)
+  nameWithType.vb: IDistributedCacheHelper(Of TController).GetFromRequestAsync(Of TValue)(HttpRequest)
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.PurgeAsync
+  name: PurgeAsync()
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_PurgeAsync
+  commentId: M:Snacks.Entity.Core.IDistributedCacheHelper`1.PurgeAsync
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.PurgeAsync()
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).PurgeAsync()
+  nameWithType: IDistributedCacheHelper<TController>.PurgeAsync()
+  nameWithType.vb: IDistributedCacheHelper(Of TController).PurgeAsync()
+- uid: Snacks.Entity.Core.IDistributedCacheHelper`1.PurgeAsync*
+  name: PurgeAsync
+  href: api/Snacks.Entity.Core.IDistributedCacheHelper-1.html#Snacks_Entity_Core_IDistributedCacheHelper_1_PurgeAsync_
+  commentId: Overload:Snacks.Entity.Core.IDistributedCacheHelper`1.PurgeAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IDistributedCacheHelper<TController>.PurgeAsync
+  fullName.vb: Snacks.Entity.Core.IDistributedCacheHelper(Of TController).PurgeAsync
+  nameWithType: IDistributedCacheHelper<TController>.PurgeAsync
+  nameWithType.vb: IDistributedCacheHelper(Of TController).PurgeAsync
+- uid: Snacks.Entity.Core.IEntityController`1
+  name: IEntityController<TEntity>
+  href: api/Snacks.Entity.Core.IEntityController-1.html
+  commentId: T:Snacks.Entity.Core.IEntityController`1
+  name.vb: IEntityController(Of TEntity)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity)
+  nameWithType: IEntityController<TEntity>
+  nameWithType.vb: IEntityController(Of TEntity)
+- uid: Snacks.Entity.Core.IEntityController`1.DeleteAsync(System.String)
+  name: DeleteAsync(String)
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_DeleteAsync_System_String_
+  commentId: M:Snacks.Entity.Core.IEntityController`1.DeleteAsync(System.String)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.DeleteAsync(System.String)
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).DeleteAsync(System.String)
+  nameWithType: IEntityController<TEntity>.DeleteAsync(String)
+  nameWithType.vb: IEntityController(Of TEntity).DeleteAsync(String)
+- uid: Snacks.Entity.Core.IEntityController`1.DeleteAsync*
+  name: DeleteAsync
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_DeleteAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityController`1.DeleteAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.DeleteAsync
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).DeleteAsync
+  nameWithType: IEntityController<TEntity>.DeleteAsync
+  nameWithType.vb: IEntityController(Of TEntity).DeleteAsync
+- uid: Snacks.Entity.Core.IEntityController`1.GetAsync
+  name: GetAsync()
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_GetAsync
+  commentId: M:Snacks.Entity.Core.IEntityController`1.GetAsync
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.GetAsync()
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).GetAsync()
+  nameWithType: IEntityController<TEntity>.GetAsync()
+  nameWithType.vb: IEntityController(Of TEntity).GetAsync()
+- uid: Snacks.Entity.Core.IEntityController`1.GetAsync(System.String)
+  name: GetAsync(String)
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_GetAsync_System_String_
+  commentId: M:Snacks.Entity.Core.IEntityController`1.GetAsync(System.String)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.GetAsync(System.String)
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).GetAsync(System.String)
+  nameWithType: IEntityController<TEntity>.GetAsync(String)
+  nameWithType.vb: IEntityController(Of TEntity).GetAsync(String)
+- uid: Snacks.Entity.Core.IEntityController`1.GetAsync*
+  name: GetAsync
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_GetAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityController`1.GetAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.GetAsync
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).GetAsync
+  nameWithType: IEntityController<TEntity>.GetAsync
+  nameWithType.vb: IEntityController(Of TEntity).GetAsync
+- uid: Snacks.Entity.Core.IEntityController`1.PatchAsync(System.String,System.Object)
+  name: PatchAsync(String, Object)
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_PatchAsync_System_String_System_Object_
+  commentId: M:Snacks.Entity.Core.IEntityController`1.PatchAsync(System.String,System.Object)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.PatchAsync(System.String, System.Object)
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).PatchAsync(System.String, System.Object)
+  nameWithType: IEntityController<TEntity>.PatchAsync(String, Object)
+  nameWithType.vb: IEntityController(Of TEntity).PatchAsync(String, Object)
+- uid: Snacks.Entity.Core.IEntityController`1.PatchAsync*
+  name: PatchAsync
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_PatchAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityController`1.PatchAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.PatchAsync
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).PatchAsync
+  nameWithType: IEntityController<TEntity>.PatchAsync
+  nameWithType.vb: IEntityController(Of TEntity).PatchAsync
+- uid: Snacks.Entity.Core.IEntityController`1.PostAsync(`0)
+  name: PostAsync(TEntity)
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_PostAsync__0_
+  commentId: M:Snacks.Entity.Core.IEntityController`1.PostAsync(`0)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.PostAsync(TEntity)
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).PostAsync(TEntity)
+  nameWithType: IEntityController<TEntity>.PostAsync(TEntity)
+  nameWithType.vb: IEntityController(Of TEntity).PostAsync(TEntity)
+- uid: Snacks.Entity.Core.IEntityController`1.PostAsync*
+  name: PostAsync
+  href: api/Snacks.Entity.Core.IEntityController-1.html#Snacks_Entity_Core_IEntityController_1_PostAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityController`1.PostAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityController<TEntity>.PostAsync
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity).PostAsync
+  nameWithType: IEntityController<TEntity>.PostAsync
+  nameWithType.vb: IEntityController(Of TEntity).PostAsync
+- uid: Snacks.Entity.Core.IEntityController`2
+  name: IEntityController<TEntity, TEntityService>
+  href: api/Snacks.Entity.Core.IEntityController-2.html
+  commentId: T:Snacks.Entity.Core.IEntityController`2
+  name.vb: IEntityController(Of TEntity, TEntityService)
+  fullName: Snacks.Entity.Core.IEntityController<TEntity, TEntityService>
+  fullName.vb: Snacks.Entity.Core.IEntityController(Of TEntity, TEntityService)
+  nameWithType: IEntityController<TEntity, TEntityService>
+  nameWithType.vb: IEntityController(Of TEntity, TEntityService)
+- uid: Snacks.Entity.Core.IEntityService`1
+  name: IEntityService<TEntity>
+  href: api/Snacks.Entity.Core.IEntityService-1.html
+  commentId: T:Snacks.Entity.Core.IEntityService`1
+  name.vb: IEntityService(Of TEntity)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity)
+  nameWithType: IEntityService<TEntity>
+  nameWithType.vb: IEntityService(Of TEntity)
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntities(System.Action{Microsoft.EntityFrameworkCore.DbSet{`0}})
+  name: AccessEntities(Action<DbSet<TEntity>>)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntities_System_Action_Microsoft_EntityFrameworkCore_DbSet__0___
+  commentId: M:Snacks.Entity.Core.IEntityService`1.AccessEntities(System.Action{Microsoft.EntityFrameworkCore.DbSet{`0}})
+  name.vb: AccessEntities(Action(Of DbSet(Of TEntity)))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntities(System.Action<Microsoft.EntityFrameworkCore.DbSet<TEntity>>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntities(System.Action(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity)))
+  nameWithType: IEntityService<TEntity>.AccessEntities(Action<DbSet<TEntity>>)
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntities(Action(Of DbSet(Of TEntity)))
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntities*
+  name: AccessEntities
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntities_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.AccessEntities
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntities
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntities
+  nameWithType: IEntityService<TEntity>.AccessEntities
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntities
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntities``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},``0})
+  name: AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn>)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntities__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0____0__
+  commentId: M:Snacks.Entity.Core.IEntityService`1.AccessEntities``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},``0})
+  name.vb: AccessEntities(Of TReturn)(Func(Of DbSet(Of TEntity), TReturn))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntities<TReturn>(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, TReturn>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntities(Of TReturn)(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), TReturn))
+  nameWithType: IEntityService<TEntity>.AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn>)
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntities(Of TReturn)(Func(Of DbSet(Of TEntity), TReturn))
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task})
+  name: AccessEntitiesAsync(Func<DbSet<TEntity>, Task>)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntitiesAsync_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task__
+  commentId: M:Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task})
+  name.vb: AccessEntitiesAsync(Func(Of DbSet(Of TEntity), Task))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntitiesAsync(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, System.Threading.Tasks.Task>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntitiesAsync(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), System.Threading.Tasks.Task))
+  nameWithType: IEntityService<TEntity>.AccessEntitiesAsync(Func<DbSet<TEntity>, Task>)
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntitiesAsync(Func(Of DbSet(Of TEntity), Task))
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync*
+  name: AccessEntitiesAsync
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntitiesAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntitiesAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntitiesAsync
+  nameWithType: IEntityService<TEntity>.AccessEntitiesAsync
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntitiesAsync
+- uid: Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task{``0}})
+  name: AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>>)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_AccessEntitiesAsync__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task___0___
+  commentId: M:Snacks.Entity.Core.IEntityService`1.AccessEntitiesAsync``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task{``0}})
+  name.vb: AccessEntitiesAsync(Of TReturn)(Func(Of DbSet(Of TEntity), Task(Of TReturn)))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.AccessEntitiesAsync<TReturn>(System.Func<Microsoft.EntityFrameworkCore.DbSet<TEntity>, System.Threading.Tasks.Task<TReturn>>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).AccessEntitiesAsync(Of TReturn)(System.Func(Of Microsoft.EntityFrameworkCore.DbSet(Of TEntity), System.Threading.Tasks.Task(Of TReturn)))
+  nameWithType: IEntityService<TEntity>.AccessEntitiesAsync<TReturn>(Func<DbSet<TEntity>, Task<TReturn>>)
+  nameWithType.vb: IEntityService(Of TEntity).AccessEntitiesAsync(Of TReturn)(Func(Of DbSet(Of TEntity), Task(Of TReturn)))
+- uid: Snacks.Entity.Core.IEntityService`1.CreateAsync(`0,System.Threading.CancellationToken)
+  name: CreateAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_CreateAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.IEntityService`1.CreateAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.CreateAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).CreateAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: IEntityService<TEntity>.CreateAsync(TEntity, CancellationToken)
+  nameWithType.vb: IEntityService(Of TEntity).CreateAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.IEntityService`1.CreateAsync*
+  name: CreateAsync
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_CreateAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.CreateAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.CreateAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).CreateAsync
+  nameWithType: IEntityService<TEntity>.CreateAsync
+  nameWithType.vb: IEntityService(Of TEntity).CreateAsync
+- uid: Snacks.Entity.Core.IEntityService`1.DeleteAsync(`0,System.Threading.CancellationToken)
+  name: DeleteAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_DeleteAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.IEntityService`1.DeleteAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.DeleteAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).DeleteAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: IEntityService<TEntity>.DeleteAsync(TEntity, CancellationToken)
+  nameWithType.vb: IEntityService(Of TEntity).DeleteAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.IEntityService`1.DeleteAsync*
+  name: DeleteAsync
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_DeleteAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.DeleteAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.DeleteAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).DeleteAsync
+  nameWithType: IEntityService<TEntity>.DeleteAsync
+  nameWithType.vb: IEntityService(Of TEntity).DeleteAsync
+- uid: Snacks.Entity.Core.IEntityService`1.FindAsync(System.Object)
+  name: FindAsync(Object)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_FindAsync_System_Object_
+  commentId: M:Snacks.Entity.Core.IEntityService`1.FindAsync(System.Object)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.FindAsync(System.Object)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).FindAsync(System.Object)
+  nameWithType: IEntityService<TEntity>.FindAsync(Object)
+  nameWithType.vb: IEntityService(Of TEntity).FindAsync(Object)
+- uid: Snacks.Entity.Core.IEntityService`1.FindAsync*
+  name: FindAsync
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_FindAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.FindAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.FindAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).FindAsync
+  nameWithType: IEntityService<TEntity>.FindAsync
+  nameWithType.vb: IEntityService(Of TEntity).FindAsync
+- uid: Snacks.Entity.Core.IEntityService`1.UpdateAsync(`0,System.Threading.CancellationToken)
+  name: UpdateAsync(TEntity, CancellationToken)
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_UpdateAsync__0_System_Threading_CancellationToken_
+  commentId: M:Snacks.Entity.Core.IEntityService`1.UpdateAsync(`0,System.Threading.CancellationToken)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.UpdateAsync(TEntity, System.Threading.CancellationToken)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).UpdateAsync(TEntity, System.Threading.CancellationToken)
+  nameWithType: IEntityService<TEntity>.UpdateAsync(TEntity, CancellationToken)
+  nameWithType.vb: IEntityService(Of TEntity).UpdateAsync(TEntity, CancellationToken)
+- uid: Snacks.Entity.Core.IEntityService`1.UpdateAsync*
+  name: UpdateAsync
+  href: api/Snacks.Entity.Core.IEntityService-1.html#Snacks_Entity_Core_IEntityService_1_UpdateAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`1.UpdateAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity>.UpdateAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity).UpdateAsync
+  nameWithType: IEntityService<TEntity>.UpdateAsync
+  nameWithType.vb: IEntityService(Of TEntity).UpdateAsync
+- uid: Snacks.Entity.Core.IEntityService`2
+  name: IEntityService<TEntity, TDbContext>
+  href: api/Snacks.Entity.Core.IEntityService-2.html
+  commentId: T:Snacks.Entity.Core.IEntityService`2
+  name.vb: IEntityService(Of TEntity, TDbContext)
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext)
+  nameWithType: IEntityService<TEntity, TDbContext>
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext)
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContext(System.Action{`1})
+  name: AccessDbContext(Action<TDbContext>)
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContext_System_Action__1__
+  commentId: M:Snacks.Entity.Core.IEntityService`2.AccessDbContext(System.Action{`1})
+  name.vb: AccessDbContext(Action(Of TDbContext))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContext(System.Action<TDbContext>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContext(System.Action(Of TDbContext))
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContext(Action<TDbContext>)
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContext(Action(Of TDbContext))
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContext*
+  name: AccessDbContext
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContext_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`2.AccessDbContext
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContext
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContext
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContext
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContext
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContext``1(System.Func{`1,``0})
+  name: AccessDbContext<TReturn>(Func<TDbContext, TReturn>)
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContext__1_System_Func__1___0__
+  commentId: M:Snacks.Entity.Core.IEntityService`2.AccessDbContext``1(System.Func{`1,``0})
+  name.vb: AccessDbContext(Of TReturn)(Func(Of TDbContext, TReturn))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContext<TReturn>(System.Func<TDbContext, TReturn>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContext(Of TReturn)(System.Func(Of TDbContext, TReturn))
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContext<TReturn>(Func<TDbContext, TReturn>)
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContext(Of TReturn)(Func(Of TDbContext, TReturn))
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync(System.Func{`1,System.Threading.Tasks.Task})
+  name: AccessDbContextAsync(Func<TDbContext, Task>)
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__
+  commentId: M:Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync(System.Func{`1,System.Threading.Tasks.Task})
+  name.vb: AccessDbContextAsync(Func(Of TDbContext, Task))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContextAsync(System.Func<TDbContext, System.Threading.Tasks.Task>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContextAsync(System.Func(Of TDbContext, System.Threading.Tasks.Task))
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContextAsync(Func<TDbContext, Task>)
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContextAsync(Func(Of TDbContext, Task))
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync*
+  name: AccessDbContextAsync
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContextAsync_
+  commentId: Overload:Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync
+  isSpec: "True"
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContextAsync
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContextAsync
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContextAsync
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContextAsync
+- uid: Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync``1(System.Func{`1,System.Threading.Tasks.Task{``0}})
+  name: AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>>)
+  href: api/Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContextAsync__1_System_Func__1_System_Threading_Tasks_Task___0___
+  commentId: M:Snacks.Entity.Core.IEntityService`2.AccessDbContextAsync``1(System.Func{`1,System.Threading.Tasks.Task{``0}})
+  name.vb: AccessDbContextAsync(Of TReturn)(Func(Of TDbContext, Task(Of TReturn)))
+  fullName: Snacks.Entity.Core.IEntityService<TEntity, TDbContext>.AccessDbContextAsync<TReturn>(System.Func<TDbContext, System.Threading.Tasks.Task<TReturn>>)
+  fullName.vb: Snacks.Entity.Core.IEntityService(Of TEntity, TDbContext).AccessDbContextAsync(Of TReturn)(System.Func(Of TDbContext, System.Threading.Tasks.Task(Of TReturn)))
+  nameWithType: IEntityService<TEntity, TDbContext>.AccessDbContextAsync<TReturn>(Func<TDbContext, Task<TReturn>>)
+  nameWithType.vb: IEntityService(Of TEntity, TDbContext).AccessDbContextAsync(Of TReturn)(Func(Of TDbContext, Task(Of TReturn)))

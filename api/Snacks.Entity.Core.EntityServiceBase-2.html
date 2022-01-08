@@ -1,0 +1,969 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EntityServiceBase&lt;TEntity, TDbContext&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EntityServiceBase&lt;TEntity, TDbContext&gt;
+   ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="../articles/intro.html" title="Articles">Articles</a>
+                      </li>
+                      <li>
+                          <a href="../api/index.html" title="Api Documentation">Api Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div>
+              <div class="sidefilter">
+                <form class="toc-filter">
+                  <span class="glyphicon glyphicon-filter filter-icon"></span>
+                  <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+                </form>
+              </div>
+              <div class="sidetoc">
+                <div class="toc" id="toc">
+                  
+                  <ul class="nav level1">
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Snacks.Entity.Authorization.html" title="Snacks.Entity.Authorization" class="">Snacks.Entity.Authorization</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.EntityAuthorizationHandlerBase-1.html" title="EntityAuthorizationHandlerBase&lt;TEntity&gt;" class="">EntityAuthorizationHandlerBase&lt;TEntity&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Operations.html" title="Operations" class="">Operations</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.SecuredEntityControllerBase-2.html" title="SecuredEntityControllerBase&lt;TEntity, TEntityService&gt;" class="">SecuredEntityControllerBase&lt;TEntity, TEntityService&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.SecuredEntityControllerBase-1.html" title="SecuredEntityControllerBase&lt;TEntity&gt;" class="">SecuredEntityControllerBase&lt;TEntity&gt;</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Snacks.Entity.Authorization.Attributes.html" title="Snacks.Entity.Authorization.Attributes" class="">Snacks.Entity.Authorization.Attributes</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.PolicyAttribute.html" title="PolicyAttribute" class="">PolicyAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.RestrictAttributeBase.html" title="RestrictAttributeBase" class="">RestrictAttributeBase</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.RestrictCreateAttribute.html" title="RestrictCreateAttribute" class="">RestrictCreateAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.RestrictDeleteAttribute.html" title="RestrictDeleteAttribute" class="">RestrictDeleteAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.RestrictReadAttribute.html" title="RestrictReadAttribute" class="">RestrictReadAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Authorization.Attributes.RestrictUpdateAttribute.html" title="RestrictUpdateAttribute" class="">RestrictUpdateAttribute</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Snacks.Entity.Core.html" title="Snacks.Entity.Core" class="">Snacks.Entity.Core</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Snacks.Entity.Core.DistributedCacheHelper-1.html" title="DistributedCacheHelper&lt;TController&gt;" class="">DistributedCacheHelper&lt;TController&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.EntityControllerBase-2.html" title="EntityControllerBase&lt;TEntity, TEntityService&gt;" class="">EntityControllerBase&lt;TEntity, TEntityService&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.EntityControllerBase-1.html" title="EntityControllerBase&lt;TEntity&gt;" class="">EntityControllerBase&lt;TEntity&gt;</a>
+                          </li>
+                          <li class="active">
+                            <a href="Snacks.Entity.Core.EntityServiceBase-2.html" title="EntityServiceBase&lt;TEntity, TDbContext&gt;" class="active">EntityServiceBase&lt;TEntity, TDbContext&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.IDistributedCacheHelper-1.html" title="IDistributedCacheHelper&lt;TController&gt;" class="">IDistributedCacheHelper&lt;TController&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.IEntityController-2.html" title="IEntityController&lt;TEntity, TEntityService&gt;" class="">IEntityController&lt;TEntity, TEntityService&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.IEntityController-1.html" title="IEntityController&lt;TEntity&gt;" class="">IEntityController&lt;TEntity&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.IEntityService-2.html" title="IEntityService&lt;TEntity, TDbContext&gt;" class="">IEntityService&lt;TEntity, TDbContext&gt;</a>
+                          </li>
+                          <li class="">
+                            <a href="Snacks.Entity.Core.IEntityService-1.html" title="IEntityService&lt;TEntity&gt;" class="">IEntityService&lt;TEntity&gt;</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Snacks.Entity.Core.Extensions.html" title="Snacks.Entity.Core.Extensions" class="">Snacks.Entity.Core.Extensions</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Snacks.Entity.Core.Extensions.IServiceCollectionExtensions.html" title="IServiceCollectionExtensions" class="">IServiceCollectionExtensions</a>
+                          </li>
+                        </ul>  </li>
+                  </ul>        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Snacks.Entity.Core.EntityServiceBase`2">
+  
+  
+  <h1 id="Snacks_Entity_Core_EntityServiceBase_2" data-uid="Snacks.Entity.Core.EntityServiceBase`2" class="text-break">Class EntityServiceBase&lt;TEntity, TDbContext&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides CRUD operations for <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">EntityServiceBase&lt;TEntity, TDbContext&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Snacks.Entity.Core.IEntityService-2.html">IEntityService</a>&lt;TEntity, TDbContext&gt;</div>
+    <div><a class="xref" href="Snacks.Entity.Core.IEntityService-1.html">IEntityService</a>&lt;TEntity&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Snacks.Entity.Core.html">Snacks.Entity.Core</a></h6>
+  <h6><strong>Assembly</strong>: Snacks.Entity.Core.dll</h6>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class EntityServiceBase&lt;TEntity, TDbContext&gt; : IEntityService&lt;TEntity, TDbContext&gt;, IEntityService&lt;TEntity&gt; where TEntity : class where TDbContext : DbContext</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>An entity model type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDbContext</span></td>
+        <td><p>An implementation of <span class="xref">Microsoft.EntityFrameworkCore.DbContext</span> that contains a <span class="xref">Microsoft.EntityFrameworkCore.DbSet`1</span> of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Not intended to be implemented, see <a class="xref" href="Snacks.Entity.Core.IEntityService-2.html">IEntityService&lt;TEntity, TDbContext&gt;</a>.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2__ctor_IServiceProvider_.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.%23ctor(IServiceProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L18">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2__ctor_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.#ctor*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2__ctor_IServiceProvider_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.#ctor(IServiceProvider)">EntityServiceBase(IServiceProvider)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityServiceBase(IServiceProvider serviceProvider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IServiceProvider</span></td>
+        <td><span class="parametername">serviceProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_System_Action__1__.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessDbContext(System.Action%7B%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L24">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_System_Action__1__" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext(System.Action{`1})">AccessDbContext(Action&lt;TDbContext&gt;)</h4>
+  <div class="markdown level1 summary"><p>Provide synchronous read/update access to a scoped instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TDbContext</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AccessDbContext(Action&lt;TDbContext&gt; dbContextAction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;TDbContext&gt;</td>
+        <td><span class="parametername">dbContextAction</span></td>
+        <td><p>An action to perform against a scoped instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TDbContext</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_System_Action__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use this method if you need to perform more than one CRUD operation against a scoped instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TDbContext</code> within the same transaction.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext__1_System_Func__1___0__.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessDbContext%60%601(System.Func%7B%601%2C%60%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L33">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContext__1_System_Func__1___0__" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContext``1(System.Func{`1,``0})">AccessDbContext&lt;TReturn&gt;(Func&lt;TDbContext, TReturn&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TReturn AccessDbContext&lt;TReturn&gt;(Func&lt;TDbContext, TReturn&gt; dbContextFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TDbContext, TReturn&gt;</td>
+        <td><span class="parametername">dbContextFunc</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessDbContextAsync(System.Func%7B%601%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L42">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync(System.Func{`1,System.Threading.Tasks.Task})">AccessDbContextAsync(Func&lt;TDbContext, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>Provide asynchronous read/update access to a scoped instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TDbContext</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task AccessDbContextAsync(Func&lt;TDbContext, Task&gt; dbContextFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TDbContext, <span class="xref">System.Threading.Tasks.Task</span>&gt;</td>
+        <td><span class="parametername">dbContextFunc</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use this method if you need to perform more than one CRUD operation against a scoped instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TDbContext</code> within the same transaction.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync__1_System_Func__1_System_Threading_Tasks_Task___0___.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessDbContextAsync%60%601(System.Func%7B%601%2CSystem.Threading.Tasks.Task%7B%60%600%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L51">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessDbContextAsync__1_System_Func__1_System_Threading_Tasks_Task___0___" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessDbContextAsync``1(System.Func{`1,System.Threading.Tasks.Task{``0}})">AccessDbContextAsync&lt;TReturn&gt;(Func&lt;TDbContext, Task&lt;TReturn&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;TReturn&gt; AccessDbContextAsync&lt;TReturn&gt;(Func&lt;TDbContext, Task&lt;TReturn&gt;&gt; dbContextFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TDbContext, <span class="xref">System.Threading.Tasks.Task</span>&lt;TReturn&gt;&gt;</td>
+        <td><span class="parametername">dbContextFunc</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;TReturn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_System_Action_Microsoft_EntityFrameworkCore_DbSet__0___.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessEntities(System.Action%7BMicrosoft.EntityFrameworkCore.DbSet%7B%600%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L60">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntities*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_System_Action_Microsoft_EntityFrameworkCore_DbSet__0___" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntities(System.Action{Microsoft.EntityFrameworkCore.DbSet{`0}})">AccessEntities(Action&lt;DbSet&lt;TEntity&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Provide synchronous read access to the <span class="xref">Microsoft.EntityFrameworkCore.DbSet`1</span> of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AccessEntities(Action&lt;DbSet&lt;TEntity&gt;&gt; dbSetAction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;<span class="xref">Microsoft.EntityFrameworkCore.DbSet</span>&lt;TEntity&gt;&gt;</td>
+        <td><span class="parametername">dbSetAction</span></td>
+        <td><p>An action to perform against the <span class="xref">Microsoft.EntityFrameworkCore.DbSet`1</span> of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_System_Action_Microsoft_EntityFrameworkCore_DbSet__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If update access is needed, use <a class="xref" href="Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__">AccessDbContextAsync(Func&lt;TDbContext, Task&gt;)</a> instead.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessEntities__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0____0__.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessEntities%60%601(System.Func%7BMicrosoft.EntityFrameworkCore.DbSet%7B%600%7D%2C%60%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L69">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntities_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntities*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntities__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0____0__" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntities``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},``0})">AccessEntities&lt;TReturn&gt;(Func&lt;DbSet&lt;TEntity&gt;, TReturn&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TReturn AccessEntities&lt;TReturn&gt;(Func&lt;DbSet&lt;TEntity&gt;, TReturn&gt; dbSetFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">Microsoft.EntityFrameworkCore.DbSet</span>&lt;TEntity&gt;, TReturn&gt;</td>
+        <td><span class="parametername">dbSetFunc</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessEntitiesAsync(System.Func%7BMicrosoft.EntityFrameworkCore.DbSet%7B%600%7D%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L78">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task__" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task})">AccessEntitiesAsync(Func&lt;DbSet&lt;TEntity&gt;, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>Provide asynchronous read access to the <span class="xref">Microsoft.EntityFrameworkCore.DbSet`1</span> of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task AccessEntitiesAsync(Func&lt;DbSet&lt;TEntity&gt;, Task&gt; dbSetFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">Microsoft.EntityFrameworkCore.DbSet</span>&lt;TEntity&gt;, <span class="xref">System.Threading.Tasks.Task</span>&gt;</td>
+        <td><span class="parametername">dbSetFunc</span></td>
+        <td><p>An asynchronous action to perform against the <span class="xref">Microsoft.EntityFrameworkCore.DbSet`1</span> of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If update access is needed, use <a class="xref" href="Snacks.Entity.Core.IEntityService-2.html#Snacks_Entity_Core_IEntityService_2_AccessDbContextAsync_System_Func__1_System_Threading_Tasks_Task__">AccessDbContextAsync(Func&lt;TDbContext, Task&gt;)</a> instead.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task___0___.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.AccessEntitiesAsync%60%601(System.Func%7BMicrosoft.EntityFrameworkCore.DbSet%7B%600%7D%2CSystem.Threading.Tasks.Task%7B%60%600%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L87">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_AccessEntitiesAsync__1_System_Func_Microsoft_EntityFrameworkCore_DbSet__0__System_Threading_Tasks_Task___0___" data-uid="Snacks.Entity.Core.EntityServiceBase`2.AccessEntitiesAsync``1(System.Func{Microsoft.EntityFrameworkCore.DbSet{`0},System.Threading.Tasks.Task{``0}})">AccessEntitiesAsync&lt;TReturn&gt;(Func&lt;DbSet&lt;TEntity&gt;, Task&lt;TReturn&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;TReturn&gt; AccessEntitiesAsync&lt;TReturn&gt;(Func&lt;DbSet&lt;TEntity&gt;, Task&lt;TReturn&gt;&gt; dbSetFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">Microsoft.EntityFrameworkCore.DbSet</span>&lt;TEntity&gt;, <span class="xref">System.Threading.Tasks.Task</span>&lt;TReturn&gt;&gt;</td>
+        <td><span class="parametername">dbSetFunc</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;TReturn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TReturn</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_CreateAsync__0_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.CreateAsync(%600%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L96">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_CreateAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.CreateAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_CreateAsync__0_System_Threading_CancellationToken_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.CreateAsync(`0,System.Threading.CancellationToken)">CreateAsync(TEntity, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously create the given <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code> and save the changes to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;TEntity&gt; CreateAsync(TEntity model, CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEntity</span></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>An instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;TEntity&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_DeleteAsync__0_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.DeleteAsync(%600%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L107">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_DeleteAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_DeleteAsync__0_System_Threading_CancellationToken_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.DeleteAsync(`0,System.Threading.CancellationToken)">DeleteAsync(TEntity, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously remove the given <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code> and save the changes to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual async Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEntity</span></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>An instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_FindAsync_System_Object_.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.FindAsync(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L117">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_FindAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.FindAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_FindAsync_System_Object_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.FindAsync(System.Object)">FindAsync(Object)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously return the entity with the given key. Models with composite keys
+are not supported.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;TEntity&gt; FindAsync(object key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The key value of the target entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;TEntity&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2_UpdateAsync__0_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602.UpdateAsync(%600%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L129">View Source</a>
+  </span>
+  <a id="Snacks_Entity_Core_EntityServiceBase_2_UpdateAsync_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync*"></a>
+  <h4 id="Snacks_Entity_Core_EntityServiceBase_2_UpdateAsync__0_System_Threading_CancellationToken_" data-uid="Snacks.Entity.Core.EntityServiceBase`2.UpdateAsync(`0,System.Threading.CancellationToken)">UpdateAsync(TEntity, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously update the given <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code> and save the changes to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;TEntity&gt; UpdateAsync(TEntity model, CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEntity</span></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>An instance of <code data-dev-comment-type="typeparamref" class="typeparamref">TEntity</code></p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;TEntity&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Snacks.Entity.Core.IEntityService-2.html">IEntityService&lt;TEntity, TDbContext&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Snacks.Entity.Core.IEntityService-1.html">IEntityService&lt;TEntity&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/evanirla/snacks-entity-core/new/master/apiSpec/new?filename=Snacks_Entity_Core_EntityServiceBase_2.md&amp;value=---%0Auid%3A%20Snacks.Entity.Core.EntityServiceBase%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/evanirla/snacks-entity-core/blob/master/src/Snacks.Entity.Core/EntityServiceBase.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
