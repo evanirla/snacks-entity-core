@@ -65,22 +65,15 @@ namespace Snacks.Entity.Authorization
 
         public override async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
-            ActionResult<TEntity> result = await base.PostAsync(model);
-
-            if (!(result.Result is OkResult))
-            {
-                return result;
-            }
-
             AuthorizationResult authorizationResult =
-                await AuthorizationService.AuthorizeAsync(User, result.Value, Operations.Create);
+                await AuthorizationService.AuthorizeAsync(User, model, Operations.Create);
 
             if (!authorizationResult.Succeeded)
             {
                 return Forbid();
             }
 
-            return result;
+            return await base.PostAsync(model);
         }
 
         public override async Task<IActionResult> PatchAsync([FromRoute] string id, [FromBody] object data)

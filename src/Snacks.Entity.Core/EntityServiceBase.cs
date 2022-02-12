@@ -21,30 +21,12 @@ namespace Snacks.Entity.Core
         }
 
         /// <inheritdoc/>
-        public void AccessDbContext(Action<TDbContext> dbContextAction)
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            dbContextAction.Invoke(dbContext);
-        }
-
-        /// <inheritdoc/>
-        public TReturn AccessDbContext<TReturn>(Func<TDbContext, TReturn> dbContextFunc)
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            return dbContextFunc.Invoke(dbContext);
-        }
-
-        /// <inheritdoc/>
         public async Task AccessDbContextAsync(Func<TDbContext, Task> dbContextFunc)
         {
             using var scope = _serviceProvider.CreateScope();
             var dbContext = GetDbContext(scope);
 
-            await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
+            await dbContextFunc.Invoke(dbContext);
         }
 
         /// <inheritdoc/>
@@ -53,25 +35,7 @@ namespace Snacks.Entity.Core
             using var scope = _serviceProvider.CreateScope();
             var dbContext = GetDbContext(scope);
 
-            return await dbContextFunc.Invoke(dbContext).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc/>
-        public void AccessEntities(Action<DbSet<TEntity>> dbSetAction)
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            dbSetAction.Invoke(dbContext.Set<TEntity>());
-        }
-
-        /// <inheritdoc/>
-        public TReturn AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn> dbSetFunc)
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var dbContext = GetDbContext(scope);
-
-            return dbSetFunc.Invoke(dbContext.Set<TEntity>());
+            return await dbContextFunc.Invoke(dbContext);
         }
 
         /// <inheritdoc/>
@@ -80,7 +44,7 @@ namespace Snacks.Entity.Core
             using var scope = _serviceProvider.CreateScope();
             var dbContext = GetDbContext(scope);
 
-            await dbSetFunc.Invoke(dbContext.Set<TEntity>()).ConfigureAwait(false);
+            await dbSetFunc.Invoke(dbContext.Set<TEntity>());
         }
 
         /// <inheritdoc/>
@@ -89,7 +53,7 @@ namespace Snacks.Entity.Core
             using var scope = _serviceProvider.CreateScope();
             var dbContext = GetDbContext(scope);
 
-            return await dbSetFunc.Invoke(dbContext.Set<TEntity>()).ConfigureAwait(false);
+            return await dbSetFunc.Invoke(dbContext.Set<TEntity>());
         }
 
         /// <inheritdoc/>
@@ -99,7 +63,7 @@ namespace Snacks.Entity.Core
             var dbContext = GetDbContext(scope);
 
             EntityEntry<TEntity> entry = dbContext.Add(model);
-            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync(cancellationToken);
             return entry.Entity;
         }
 
@@ -110,7 +74,7 @@ namespace Snacks.Entity.Core
             var dbContext = GetDbContext(scope);
 
             dbContext.Remove(model);
-            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -122,7 +86,7 @@ namespace Snacks.Entity.Core
             var primaryKey = dbContext.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey();
             var property = primaryKey.Properties.Single();
 
-            return await dbContext.FindAsync<TEntity>(Convert.ChangeType(key, property.ClrType)).ConfigureAwait(false);
+            return await dbContext.FindAsync<TEntity>(Convert.ChangeType(key, property.ClrType));
         }
 
         /// <inheritdoc/>
@@ -132,7 +96,7 @@ namespace Snacks.Entity.Core
             var dbContext = GetDbContext(scope);
 
             EntityEntry<TEntity> entry = dbContext.Update(model);
-            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync(cancellationToken);
             return entry.Entity;
         }
 

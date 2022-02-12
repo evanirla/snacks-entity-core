@@ -9,7 +9,7 @@ namespace Snacks.Entity.Core
     /// Provides CRUD operations for <typeparamref name="TEntity"/>.
     /// </summary>
     /// <remarks>
-    /// Not intended to be implemented, see <see cref="IEntityService{TEntity, TDbContext}"/>.
+    /// Please implement <see cref="IEntityService{TEntity, TDbContext}"/> instead.
     /// </remarks>
     /// <typeparam name="TEntity">An entity model type</typeparam>
     public interface IEntityService<TEntity>
@@ -41,24 +41,6 @@ namespace Snacks.Entity.Core
         Task DeleteAsync(TEntity model, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Provide synchronous read access to the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// entityService.AccessEntities(entities => {
-        ///     entities.Where(e => e.Name == "Entity1").ToList();
-        /// });
-        /// </code>
-        /// </example>
-        /// <remarks>
-        /// If update access is needed, use <see cref="IEntityService{TEntity, TDbContext}.AccessDbContextAsync(Func{TDbContext, Task})"/> instead.
-        /// </remarks>
-        /// <param name="dbSetAction">An action to perform against the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/></param>
-        void AccessEntities(Action<DbSet<TEntity>> dbSetAction);
-
-        TReturn AccessEntities<TReturn>(Func<DbSet<TEntity>, TReturn> dbSetFunc);
-
-        /// <summary>
         /// Provide asynchronous read access to the <see cref="DbSet{}"/> of <typeparamref name="TEntity"/>.
         /// </summary>
         /// <example>
@@ -86,25 +68,6 @@ namespace Snacks.Entity.Core
         where TEntity : class
         where TDbContext : DbContext
     {
-        /// <summary>
-        /// Provide synchronous read/update access to a scoped instance of <typeparamref name="TDbContext"/>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// entityService.AccessDbContext(dbContext => {
-        ///     dbContext.AddRange(entities);
-        ///     dbContext.SaveChanges();
-        /// });
-        /// </code>
-        /// </example>
-        /// <remarks>
-        /// Use this method if you need to perform more than one CRUD operation against a scoped instance of <typeparamref name="TDbContext"/> within the same transaction.
-        /// </remarks>
-        /// <param name="dbContextAction">An action to perform against a scoped instance of <typeparamref name="TDbContext"/></param>
-        void AccessDbContext(Action<TDbContext> dbContextAction);
-
-        TReturn AccessDbContext<TReturn>(Func<TDbContext, TReturn> dbContextFunc);
-
         /// <summary>
         /// Provide asynchronous read/update access to a scoped instance of <typeparamref name="TDbContext"/>.
         /// </summary>
