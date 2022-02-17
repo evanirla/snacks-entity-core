@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Snacks.Entity.Core.Tests.Server.Models
 {
-    public class CustomerModel
+    public class Customer
     {
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
         
-        public List<CartModel> Carts { get; set; }
+        public List<Cart> Carts { get; set; }
     }
 }

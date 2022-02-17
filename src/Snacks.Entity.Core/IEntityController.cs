@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Snacks.Entity.Core
 {
@@ -8,20 +9,21 @@ namespace Snacks.Entity.Core
     /// Handles GET, POST, PATCH, and DELETE requests for <typeparamref name="TEntity"/>s
     /// </summary>
     /// <typeparam name="TEntity">The entity type to handle requests for</typeparam>
-    public interface IEntityController<TEntity>
+    public interface IEntityController<TEntity, TKey, TDbContext>
         where TEntity : class
+        where TDbContext : DbContext
     {
         /// <summary>
         /// Deletes the <typeparamref name="TEntity"/> with the given ID.
         /// </summary>
         /// <param name="id">The ID of the targeted <typeparamref name="TEntity"/></param>
-        Task<IActionResult> DeleteAsync([FromRoute] string id);
+        Task<IActionResult> DeleteAsync([FromRoute] TKey id);
 
         /// <summary>
         /// Return the <typeparamref name="TEntity"/> with the given ID.
         /// </summary>
         /// <param name="id">The ID of the targeted <typeparamref name="TEntity"/></param>
-        Task<ActionResult<TEntity>> GetAsync([FromRoute] string id);
+        Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id);
 
         /// <summary>
         /// Return a list of <typeparamref name="TEntity"/>
@@ -42,18 +44,6 @@ namespace Snacks.Entity.Core
         /// </summary>
         /// <param name="id">The ID of the targeted <typeparamref name="TEntity"/></param>
         /// <param name="data">An object that contains the properties to update.</param>
-        Task<IActionResult> PatchAsync([FromRoute] string id, [FromBody] object data);
-    }
-
-    /// <summary>
-    /// Handles GET, POST, PATCH, and DELETE requests for <typeparamref name="TEntity"/>s
-    /// </summary>
-    /// <typeparam name="TEntity">The entity type to handle requests for</typeparam>
-    /// <typeparam name="TEntityService">The service implementation for the <typeparamref name="TEntity"/></typeparam>
-    public interface IEntityController<TEntity, TEntityService>
-        where TEntity : class
-        where TEntityService : IEntityService<TEntity>
-    {
-        
+        Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data);
     }
 }

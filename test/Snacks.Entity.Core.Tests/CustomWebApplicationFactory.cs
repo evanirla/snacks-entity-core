@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace Snacks.Entity.Core.Tests
 {
-    public class CustomWebApplicationFactory : WebApplicationFactory<TestStartup>
+    public class CustomWebApplicationFactory : WebApplicationFactory<TestStartupBase>
     {
         protected override IHostBuilder CreateHostBuilder()
         {
@@ -17,7 +17,7 @@ namespace Snacks.Entity.Core.Tests
                     builder.UseUrls("http://*:5000; https://*:5001");
                     builder.UseSetting("https_port", "5001");
                     builder.UseEnvironment("Testing");
-                    builder.UseStartup<TestStartup>();
+                    builder.UseStartup<TestStartupBase>();
                 });
         }
 

@@ -32,8 +32,8 @@ namespace Snacks.Entity.Core
             }
 
             string cacheKey = GetCacheKey(httpRequest);
-            await WriteToCacheAsync(cacheKey, value, options).ConfigureAwait(false);
-            await AddCacheKeyAsync(cacheKey).ConfigureAwait(false);
+            await WriteToCacheAsync(cacheKey, value, options);
+            await AddCacheKeyAsync(cacheKey);
         }
 
         /// <inheritdoc/>
@@ -45,7 +45,7 @@ namespace Snacks.Entity.Core
             }
 
             string cacheKey = GetCacheKey(httpRequest);
-            return await ReadFromCacheAsync<TValue>(cacheKey).ConfigureAwait(false);
+            return await ReadFromCacheAsync<TValue>(cacheKey);
         }
 
         /// <inheritdoc/>
@@ -56,12 +56,12 @@ namespace Snacks.Entity.Core
                 return;
             }
 
-            List<string> cacheKeys = await GetCacheKeysAsync().ConfigureAwait(false);
+            List<string> cacheKeys = await GetCacheKeysAsync();
             foreach (string cacheKey in cacheKeys ?? new List<string>())
             {
-                await _distributedCache.RemoveAsync(cacheKey).ConfigureAwait(false);
+                await _distributedCache.RemoveAsync(cacheKey);
             }
-            await _distributedCache.RemoveAsync(typeof(TController).Name).ConfigureAwait(false);
+            await _distributedCache.RemoveAsync(typeof(TController).Name);
         }
 
         private string GetCacheKey(HttpRequest request)
@@ -99,7 +99,7 @@ namespace Snacks.Entity.Core
 
         private async Task AddCacheKeyAsync(string cacheKey)
         {
-            List<string> cacheKeys = await ReadFromCacheAsync<List<string>>(typeof(TController).Name).ConfigureAwait(false);
+            List<string> cacheKeys = await ReadFromCacheAsync<List<string>>(typeof(TController).Name);
 
             if (cacheKeys == null)
             {
@@ -109,7 +109,7 @@ namespace Snacks.Entity.Core
             if (cacheKeys.Contains(cacheKey))
             {
                 cacheKeys.Add(cacheKey);
-                await WriteToCacheAsync(typeof(TController).Name, cacheKeys).ConfigureAwait(false);
+                await WriteToCacheAsync(typeof(TController).Name, cacheKeys);
             }
         }
 

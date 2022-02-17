@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Snacks.Entity.Core.Tests.Server.Models
 {
-    public class CartItemModel
+    public class CartItem
     {
         public int Id { get; set; }
 
@@ -12,7 +13,7 @@ namespace Snacks.Entity.Core.Tests.Server.Models
 
         public int CartId { get; set; }
         [JsonIgnore]
-        public CartModel Cart { get; set; }
+        public Cart Cart { get; set; }
 
         public int ItemId { get; set; }
         public ItemModel Item { get; set; }

@@ -5,8 +5,10 @@ using Xunit;
 
 namespace Snacks.Entity.Core.Tests
 {
-    public class TestBase : IClassFixture<CustomWebApplicationFactory>
+    public abstract class TestBase : IClassFixture<CustomWebApplicationFactory>
     {
+        public const string BASE_URI = "http://localhost:5000/api/";
+
         protected readonly static CustomWebApplicationFactory _appFactory;
 
         static TestBase()
@@ -14,11 +16,11 @@ namespace Snacks.Entity.Core.Tests
             _appFactory = new CustomWebApplicationFactory();
         }
 
-        protected HttpClient GetClient()
+        protected virtual HttpClient GetClient()
         {
             return _appFactory.CreateClient(new WebApplicationFactoryClientOptions
             {
-                BaseAddress = new Uri("http://localhost:5000/api/")
+                BaseAddress = new Uri(BASE_URI)
             });
         }
     }

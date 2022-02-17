@@ -6,7 +6,7 @@ using Snacks.Entity.Core.Tests.Server.Database;
 
 namespace Snacks.Entity.Core.Tests
 {
-    public class TestStartup
+    public class TestStartupBase
     {
         public void Configure(IApplicationBuilder app)
         {
@@ -25,9 +25,9 @@ namespace Snacks.Entity.Core.Tests
                 options.UseInMemoryDatabase("SnacksDb");
             });
 
+            services.AddEntityProvider<GlobalDbContext>();
+
             services
-                .AddDistributedMemoryCache()
-                .AddEntityServices()
                 .AddControllers();
             
             services.AddRouting(options =>

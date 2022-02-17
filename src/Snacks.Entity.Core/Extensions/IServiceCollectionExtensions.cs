@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Snacks.Entity.Core.Providers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Snacks.Entity.Core.Extensions
 {
@@ -10,33 +12,16 @@ namespace Snacks.Entity.Core.Extensions
     public static class IServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds all implementations of <see cref="IEntityService{TEntity}"/> to the service collection.
+        /// Registers a new application model provider for creating <see cref="ControllerBase"/>
+        /// instances for a <see cref="DbContext" />
         /// </summary>
-        /// <remarks>
-        /// Intended to be called within the <c>ConfigureServices</c> method in <c>Startup.cs</c>
-        /// </remarks>
-        /// <example>
-        /// <code>
-        /// services.AddEntityServices();
-        /// </code>
-        /// </example>
-        /// <param name="services">The collection of services</param>
-        /// <returns>The service collection so calls can be chained</returns>
-        public static IServiceCollection AddEntityServices(this IServiceCollection services)
+        /// <typeparam name="TDbContext"></typeparam>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddEntityProvider<TDbContext>(this IServiceCollection services)
+            where TDbContext : DbContext
         {
-            Type[] serviceTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => !x.IsInterface && !x.IsAbstract)
-                .Where(x => x.GetInterface("IEntityService`1") != null)
-                .ToArray();
-
-            foreach (Type serviceType in serviceTypes)
-            {
-                Type modelType = serviceType.GetInterface("IEntityService`1").GetGenericArguments().SingleOrDefault();
-                services.AddSingleton(typeof(IEntityService<>).MakeGenericType(modelType), serviceType);
-            }
-
-            return services;
+            return services.AddTransient<IApplicationModelProvider, EntityApplicationModelProvider<TDbContext>>();
         }
     }
 }
