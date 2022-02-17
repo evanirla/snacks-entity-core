@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Snacks.Entity.Core
 {
@@ -112,6 +113,51 @@ namespace Snacks.Entity.Core
             await DbContext.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpGet("{id}/{endpoint}")]
+        public virtual IActionResult ToRelated([FromRoute] TKey id, [FromRoute] string endpoint)
+        {
+            PropertyInfo relatedProperty = typeof(TEntity).GetProperties()
+                .FirstOrDefault(x => x.Name.Equals(endpoint, StringComparison.InvariantCultureIgnoreCase));
+
+            if (relatedProperty == default || typeof(ICollection<>).IsAssignableFrom(relatedProperty.PropertyType)) 
+            {
+                return NotFound();
+            }
+
+            Type relatedEntity = relatedProperty.PropertyType.GenericTypeArguments.First();
+
+            PropertyInfo dbContextProperty = typeof(TDbContext).GetProperties()
+                .FirstOrDefault(x =>
+                    x.PropertyType.GenericTypeArguments.Any() &&
+                    x.PropertyType.GetGenericArguments().First() == relatedEntity);
+
+            if (dbContextProperty == default)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("FromRelated", dbContextProperty.Name, new {
+                fromEntity = DbContext.Model.FindEntityType(typeof(TEntity)).ShortName(),
+                fromId = id,
+                query = Request.QueryString.Value
+            });
+        }
+
+        [HttpGet("from/{fromEntity}/{fromId}/{query}")]
+        public virtual IActionResult FromRelated([FromRoute] string fromEntity, [FromRoute] string fromId, [FromRoute] string query)
+        {
+            var fromEntityType = DbContext.Model.GetEntityTypes()
+                .First(x => x.ShortName().Equals(fromEntity, StringComparison.InvariantCultureIgnoreCase));
+            var fromEntityPrimaryKey = fromEntityType.FindPrimaryKey();
+            var entityType = DbContext.Model.FindEntityType(typeof(TEntity));
+            var foreignKey = entityType.GetForeignKeys().First(x => x.PrincipalEntityType == fromEntityType);
+
+            Request.QueryString = Request.QueryString.Add(foreignKey.Properties.First().Name, fromId);
+            Request.QueryString = Request.QueryString.Add(QueryString.Create(QueryHelpers.ParseQuery(query)));
+
+            return Redirect($"{Url.Action("Get")}{Request.QueryString}");
         }
 
         /// <summary>
