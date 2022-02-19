@@ -11,7 +11,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace Snacks.Entity.Core
 {
@@ -116,67 +115,7 @@ namespace Snacks.Entity.Core
         }
 
         [HttpGet("{id}/{endpoint}")]
-        public virtual IActionResult ToRelated([FromRoute] TKey id, [FromRoute] string endpoint)
-        {
-            PropertyInfo relatedProperty = typeof(TEntity).GetProperties()
-                .FirstOrDefault(x => x.Name.Equals(endpoint, StringComparison.InvariantCultureIgnoreCase));
-
-            if (relatedProperty == default || typeof(ICollection<>).IsAssignableFrom(relatedProperty.PropertyType)) 
-            {
-                return NotFound();
-            }
-
-            Type relatedEntity = relatedProperty.PropertyType.GenericTypeArguments.First();
-
-            PropertyInfo dbContextProperty = typeof(TDbContext).GetProperties()
-                .FirstOrDefault(x =>
-                    x.PropertyType.GenericTypeArguments.Any() &&
-                    x.PropertyType.GetGenericArguments().First() == relatedEntity);
-
-            if (dbContextProperty == default)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("FromRelated", dbContextProperty.Name, new {
-                fromEntity = DbContext.Model.FindEntityType(typeof(TEntity)).ShortName(),
-                fromId = id,
-                query = Request.QueryString.Value
-            });
-        }
-
-        [HttpGet("from/{fromEntity}/{fromId}/{query}")]
-        public virtual IActionResult FromRelated([FromRoute] string fromEntity, [FromRoute] string fromId, [FromRoute] string query)
-        {
-            var fromEntityType = DbContext.Model.GetEntityTypes()
-                .First(x => x.ShortName().Equals(fromEntity, StringComparison.InvariantCultureIgnoreCase));
-            var fromEntityPrimaryKey = fromEntityType.FindPrimaryKey();
-            var entityType = DbContext.Model.FindEntityType(typeof(TEntity));
-            var foreignKey = entityType.GetForeignKeys().First(x => x.PrincipalEntityType == fromEntityType);
-
-            Request.QueryString = Request.QueryString.Add(foreignKey.Properties.First().Name, fromId);
-            Request.QueryString = Request.QueryString.Add(QueryString.Create(QueryHelpers.ParseQuery(query)));
-
-            return Redirect($"{Url.Action("Get")}{Request.QueryString}");
-        }
-
-        /// <summary>
-        /// Returns filtered related entity data wrapped in an <see cref="ActionResult" />
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// [HttpGet("{id}/carts")]
-        /// public async Task<ActionResult<IEnumerable<CartModel>>> GetCarts([FromRoute]string id) =>
-        ///     await GetRelatedAsync<CartModel>(id, Request.Query, customer => customer.Carts);
-        /// </code>
-        /// </example>
-        /// <param name="id"></param>
-        /// <param name="query"></param>
-        /// <param name="relatedExp"></param>
-        /// <typeparam name="TRelatedEntity"></typeparam>
-        /// <returns></returns>
-        protected async Task<ActionResult<IEnumerable<TRelatedEntity>>> GetRelatedAsync<TRelatedEntity>(TKey id, IQueryCollection query, Expression<Func<TEntity, IEnumerable<TRelatedEntity>>> relatedExp)
-            where TRelatedEntity : class
+        public virtual async Task<IActionResult> GetRelatedAsync([FromRoute] TKey id, [FromRoute] string endpoint)
         {
             var result = await GetAsync(id);
 
@@ -187,6 +126,37 @@ namespace Snacks.Entity.Core
 
             var entity = result.Value;
 
+            var relatedProperty = typeof(TEntity).GetProperties()
+                .FirstOrDefault(x => x.Name.Equals(endpoint, StringComparison.InvariantCultureIgnoreCase));
+
+            if (relatedProperty == default || typeof(ICollection<>).IsAssignableFrom(relatedProperty.PropertyType)) 
+            {
+                return NotFound();
+            }
+
+            var relatedEntityType = relatedProperty.PropertyType.GenericTypeArguments.First();
+
+            if (DbContext.Model.FindEntityType(relatedEntityType) == null)
+            {
+                return NotFound();
+            }
+
+            MethodInfo getRelated = this.GetType()
+                .GetMethod(nameof(GetRelatedEntitiesAsync), BindingFlags.Instance | BindingFlags.NonPublic)
+                .MakeGenericMethod(relatedEntityType);
+
+            ParameterExpression entityParameterExp = Expression.Parameter(typeof(TEntity), "x");
+            MemberExpression relatedPropertyExp = Expression.Property(entityParameterExp, relatedProperty);
+            LambdaExpression relatedEntityExp = Expression.Lambda(relatedPropertyExp, entityParameterExp);
+            
+            dynamic relatedActionTask = getRelated.Invoke(this, new object [] { entity, Request.Query, relatedEntityExp });
+
+            return Ok(await relatedActionTask);
+        }
+
+        protected async Task<IEnumerable<TRelatedEntity>> GetRelatedEntitiesAsync<TRelatedEntity>(TEntity entity, IQueryCollection query, LambdaExpression relatedExp)
+            where TRelatedEntity : class
+        {
             var relatedEntityType = typeof(TRelatedEntity);
             var queryableParameters = QueryableParameters.Build(query);
             var completeExpression = queryableParameters.ApplyLinqExpressions<TRelatedEntity, IEnumerable<TRelatedEntity>>(relatedExp);
@@ -197,58 +167,10 @@ namespace Snacks.Entity.Core
                     .Where(x => x == entity)
                     .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)completeExpression)
                     .ToListAsync();
-                
-                return loadedEntities.SelectMany(relatedExp.Compile()).ToList();
-            }
 
-            return default;
-        }
+                var relatedEntities = loadedEntities.SelectMany(relatedExp.Compile() as Func<TEntity, IEnumerable<TRelatedEntity>>).ToList();
 
-        /// <summary>
-        /// Returns filtered related entity data wrapped in an <see cref="ActionResult" /> and includes <see cref="TRelatedEntity2" />
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// [HttpGet("{id}/items")]
-        /// public async Task<ActionResult<IEnumerable<CartItemModel>>> GetItems([FromRoute]string id) =>
-        ///     await GetRelatedAsync<CartItemModel>(id, Request.Query, cart => customer.Items, item => item.Item);
-        /// </code>
-        /// </example>
-        /// <param name="id"></param>
-        /// <param name="query"></param>
-        /// <param name="relatedExp"></param>
-        /// <param name="relatedExp2"></param>
-        /// <typeparam name="TRelatedEntity"></typeparam>
-        /// <typeparam name="TRelatedEntity2"></typeparam>
-        /// <returns></returns>
-        protected async Task<ActionResult<IEnumerable<TRelatedEntity>>> GetRelatedAsync<TRelatedEntity, TRelatedEntity2>(
-            TKey id, 
-            IQueryCollection query, 
-            Expression<Func<TEntity, IEnumerable<TRelatedEntity>>> relatedExp,
-            Expression<Func<TRelatedEntity, TRelatedEntity2>> relatedExp2
-        )
-            where TRelatedEntity : class
-        {
-            var result = await GetAsync(id);
-
-            if (result.Value == null)
-            {
-                return result.Result ?? BadRequest();
-            }
-
-            var entity = result.Value;
-
-            var queryableParameters = QueryableParameters.Build(query);
-            var completeExpression = queryableParameters.ApplyLinqExpressions<TRelatedEntity, IEnumerable<TRelatedEntity>>(relatedExp);
-
-            if (entity != null)
-            {
-                var loadedEntities = await DbContext.Set<TEntity>()
-                    .Where(x => x == entity)
-                    .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)completeExpression)
-                    .ThenInclude(relatedExp2)
-                    .ToListAsync();
-                return loadedEntities.SelectMany(relatedExp.Compile()).ToList();
+                return relatedEntities;
             }
 
             return default;

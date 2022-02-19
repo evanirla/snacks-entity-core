@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Snacks.Entity.Core.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -86,7 +87,7 @@ namespace Snacks.Entity.Core.Helpers
 
                         Expression containsExpression = Expression.Call(
                             Expression.Constant(valueList),
-                            valueList.GetType().GetMethod("Contains"),
+                            valueList.GetType().GetMethod(nameof(IList.Contains)),
                             member);
 
                         return Expression.Lambda<Func<TEntity, bool>>(containsExpression, parameter);
@@ -118,7 +119,7 @@ namespace Snacks.Entity.Core.Helpers
         const string ORDERBY = "orderby";
         const string LIMIT = "limit";
         const string OFFSET = "offset";
-        static readonly Regex _paramRegex = new Regex(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
+        static readonly Regex _paramRegex = new(@"(.*?)\[(.*?)\]", RegexOptions.IgnoreCase);
 
         public int? Limit { get; set; }
         public int? Offset { get; set; }
@@ -135,14 +136,11 @@ namespace Snacks.Entity.Core.Helpers
             where TEntity : class
             where TEnumerable : IEnumerable<TEntity>
         {
-            PropertyInfo[] properties = typeof(TEntity).GetProperties();
-            ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "x");
-
             foreach (var filter in Filters)
             {
                 var lambda = filter.GetExpression<TEntity>();
                 expression = Expression.Lambda(
-                    LinqHelper.GetMethod<TEntity, TEnumerable>("Where")
+                    LinqHelper.GetMethod<TEntity, TEnumerable>(nameof(Enumerable.Where))
                         .GetLinqExpression(expression.Body, lambda),
                     expression.Parameters.FirstOrDefault()
                 );
@@ -151,11 +149,12 @@ namespace Snacks.Entity.Core.Helpers
             foreach (var order in Orders)
             {
                 var lambda = order.GetExpression<TEntity>();
-
+                
+                // Need to use "ThenBy" to support multiple orders
                 if (order.SortOrder == SortOrder.Descending)
                 {
                     expression = Expression.Lambda(
-                        LinqHelper.GetMethod<TEntity, TEnumerable>("OrderByDescending")
+                        LinqHelper.GetMethod<TEntity, TEnumerable>(nameof(Enumerable.OrderByDescending))
                             .GetLinqExpression(expression.Body, lambda),
                         expression.Parameters.FirstOrDefault()
                     );
@@ -163,7 +162,7 @@ namespace Snacks.Entity.Core.Helpers
                 else
                 {
                     expression = Expression.Lambda(
-                        LinqHelper.GetMethod<TEntity, TEnumerable>("OrderBy")
+                        LinqHelper.GetMethod<TEntity, TEnumerable>(nameof(Enumerable.OrderBy))
                             .GetLinqExpression(expression.Body, lambda),
                         expression.Parameters.FirstOrDefault()
                     );
@@ -173,7 +172,7 @@ namespace Snacks.Entity.Core.Helpers
             if (Offset.HasValue)
             {
                 expression = Expression.Lambda(
-                    LinqHelper.GetMethod<TEntity, TEnumerable>("Skip")
+                    LinqHelper.GetMethod<TEntity, TEnumerable>(nameof(Enumerable.Skip))
                         .GetLinqExpression(expression.Body, Expression.Constant(Offset.Value)),
                     expression.Parameters.FirstOrDefault()
                 );
@@ -182,7 +181,7 @@ namespace Snacks.Entity.Core.Helpers
             if (Limit.HasValue)
             {
                 expression = Expression.Lambda(
-                    LinqHelper.GetMethod<TEntity, TEnumerable>("Take")
+                    LinqHelper.GetMethod<TEntity, TEnumerable>(nameof(Enumerable.Take))
                         .GetLinqExpression(expression.Body, Expression.Constant(Limit.Value)),
                     expression.Parameters.FirstOrDefault()
                 );
@@ -195,9 +194,6 @@ namespace Snacks.Entity.Core.Helpers
             where TEntity : class
             where TQueryable : class, IQueryable<TEntity>
         {
-            PropertyInfo[] properties = typeof(TEntity).GetProperties();
-            ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "x");
-
             foreach (var filter in Filters)
             {
                 var lambda = filter.GetExpression<TEntity>();
@@ -210,11 +206,27 @@ namespace Snacks.Entity.Core.Helpers
 
                 if (order.SortOrder == SortOrder.Descending)
                 {
-                    queryable = (TQueryable)queryable.OrderByDescending(lambda);
+                    if (queryable is IOrderedQueryable<TEntity>)
+                    {
+                        queryable = (queryable as IOrderedQueryable<TEntity>)
+                            .ThenByDescending(lambda) as TQueryable;
+                    }
+                    else
+                    {
+                        queryable = queryable.OrderByDescending(lambda) as TQueryable;
+                    }
                 }
                 else
                 {
-                    queryable = (TQueryable)queryable.OrderBy(lambda);
+                    if (queryable is IOrderedQueryable<TEntity>)
+                    {
+                        queryable = (queryable as IOrderedQueryable<TEntity>)
+                            .ThenBy(lambda) as TQueryable;
+                    }
+                    else
+                    {
+                        queryable = queryable.OrderBy(lambda) as TQueryable;
+                    }
                 }
             }
 
@@ -233,7 +245,7 @@ namespace Snacks.Entity.Core.Helpers
 
         public static QueryableParameters Build(IQueryCollection queryParameters)
         {
-            QueryableParameters queryableParameters = new QueryableParameters();
+            QueryableParameters queryableParameters = new();
 
             foreach (KeyValuePair<string, StringValues> param in queryParameters)
             {

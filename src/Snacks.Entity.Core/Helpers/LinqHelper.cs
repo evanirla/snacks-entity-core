@@ -9,7 +9,7 @@ namespace Snacks.Entity.Core.Helpers
 {
     internal static class LinqHelper
     {
-        private static Dictionary<Type, MethodInfo> _methodCache = new Dictionary<Type, MethodInfo>();
+        private static readonly Dictionary<Type, MethodInfo> _methodCache = new();
         static LinqHelper()
         {
 

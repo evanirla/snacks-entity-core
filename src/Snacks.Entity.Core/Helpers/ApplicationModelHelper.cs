@@ -20,8 +20,8 @@ namespace Snacks.Entity.Core.Helpers
 {
     internal static class ApplicationModelHelper
     {
-        private static Func<ActionContext, bool> _supportsAllRequests;
-        private static Func<ActionContext, bool> _supportsNonGetRequests;
+        private static readonly Func<ActionContext, bool> _supportsAllRequests;
+        private static readonly Func<ActionContext, bool> _supportsNonGetRequests;
 
         static ApplicationModelHelper()
         {
@@ -521,7 +521,7 @@ namespace Snacks.Entity.Core.Helpers
                 // public void Foo() { }
                 //
                 // Is one selector.
-                if (!(routeProvider is IActionHttpMethodProvider))
+                if (routeProvider is not IActionHttpMethodProvider)
                 {
                     createSelectorForSilentRouteProviders = false;
                     break;

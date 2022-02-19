@@ -10,8 +10,7 @@ namespace Snacks.Entity.Core.Extensions
         {
             if (methodInfo.IsStatic)
             {
-                var combinedParams = new List<Expression>();
-                combinedParams.Add(instance);
+                var combinedParams = new List<Expression>() { instance };
                 combinedParams.AddRange(parameters);
                 return Expression.Call(null, methodInfo, combinedParams);
             }
