@@ -9,41 +9,29 @@ Install-Package Snacks.Entity.Core
 ```
 
 ## Usage
-### Create an entity service
+### Create a DbContext
 ```csharp
-using System;
-using Snacks.Entity.Core;
-
-public class StudentService : EntityServiceBase<StudentModel, MyDbContext>
+public class GlobalDbContext : DbContext
 {
-    public StudentService(
-        IServiceScopeFactory scopeFactory) : base(scopeFactory) { }
+    public DbSet<Student> Students { get; set; }
+
+    public GlobalDbContext(DbContextOptions<GlobalDbContext> options)
+        : base(options)
+    {
+        
+    }
 }
 ```
 
-### Create an entity controller
+### Register provider
+In your `Program.cs` file, add DbContext factory and entity provider.
 ```csharp
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using Snacks.Entity.Core;
-
-public class StudentController : EntityControllerBase<StudentModel>
+builder.Services.AddDbContextFactory<GlobalDbContext>(options => 
 {
-    public StudentController(
-        IServiceProvider serviceProvider) : base(serviceProvider) { }
-}
-```
-
-### Register entity services
-In your `Startup.cs` file, add the entity services in the ConfigureServices method.
-```csharp
-using Snacks.Entity.Core;
-
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddDbContext<MyDbContext>();
-    services.AddEntityServices();
-}
+    options.UseInMemoryDatabase("Global");
+});
+builder.Services.AddEntityProvider<GlobalDbContext>();
+builder.Services.AddControllers();
 ```
 
 ### Test

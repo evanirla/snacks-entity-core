@@ -20,7 +20,7 @@ namespace Snacks.Entity.Core.Tests
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GlobalDbContext>(options => 
+            services.AddDbContextFactory<GlobalDbContext>(options => 
             {
                 options.UseInMemoryDatabase("SnacksDb");
             });

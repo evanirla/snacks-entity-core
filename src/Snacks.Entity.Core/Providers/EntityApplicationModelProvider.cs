@@ -1,24 +1,25 @@
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System.Reflection;
+using System;
 using System.Linq;
+using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 using Snacks.Entity.Core.Helpers;
-
 
 namespace Snacks.Entity.Core.Providers
 {
     internal class EntityApplicationModelProvider<TDbContext> : IApplicationModelProvider
         where TDbContext : DbContext
     {
-        private readonly TDbContext _dbContext; 
+        private readonly IDbContextFactory<TDbContext> _dbContextFactory;
         private readonly IModelMetadataProvider _modelMetadataProvider;
         public EntityApplicationModelProvider(
-            TDbContext dbContext,
+            IDbContextFactory<TDbContext> dbContextFactory,
             IModelMetadataProvider modelMetadataProvider)
         {
-            _dbContext = dbContext;
+            _dbContextFactory = dbContextFactory;
             _modelMetadataProvider = modelMetadataProvider;
         }
 
@@ -27,7 +28,9 @@ namespace Snacks.Entity.Core.Providers
 
         public void OnProvidersExecuting(ApplicationModelProviderContext context)
         {
-            foreach (var entityType in _dbContext.Model.GetEntityTypes())
+            using var dbContext = _dbContextFactory.CreateDbContext();
+
+            foreach (var entityType in dbContext.Model.GetEntityTypes())
             {
                 var controller = CreateController(context, entityType);
 
@@ -46,9 +49,28 @@ namespace Snacks.Entity.Core.Providers
         internal ControllerModel CreateController(ApplicationModelProviderContext context, IEntityType entityType)
         {
             var primaryKey = entityType.FindPrimaryKey();
-            var primaryKeyType = primaryKey?.Properties.Single().ClrType ?? typeof(string);
+            var primaryKeyProperty = primaryKey?.Properties.SingleOrDefault();
+
+            Type primaryKeyType = null;
+
+            if (primaryKeyProperty == default || primaryKeyProperty.ClrType == null)
+            {
+                primaryKeyType = typeof(string);
+            }
+            else
+            {
+                primaryKeyType = primaryKeyProperty.ClrType;
+            }
+
             var modelType = entityType.ClrType;
-            var propertyName = typeof(TDbContext).GetProperties().First(x => x.PropertyType == typeof(DbSet<>).MakeGenericType(modelType)).Name;
+            var property = typeof(TDbContext).GetProperties()
+                .SingleOrDefault(x => x.PropertyType == typeof(DbSet<>).MakeGenericType(modelType));
+
+            if (property == default)
+            {
+                return null;
+            }
+
             var controllerType = typeof(EntityController<,,>).MakeGenericType(modelType, primaryKeyType, typeof(TDbContext));
 
             if (context.ControllerTypes.Any(t => t.IsSubclassOf(controllerType)))
@@ -58,7 +80,8 @@ namespace Snacks.Entity.Core.Providers
 
             var controllerModel = ApplicationModelHelper.CreateControllerModel(
                 context.Result, controllerType.GetTypeInfo(), _modelMetadataProvider);
-            controllerModel.ControllerName = propertyName;
+            
+            controllerModel.ControllerName = property.Name;
 
             return controllerModel;
         }

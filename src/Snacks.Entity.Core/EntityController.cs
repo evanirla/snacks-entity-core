@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Logging;
-using Snacks.Entity.Core.Extensions;
-using Snacks.Entity.Core.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Snacks.Entity.Core.Extensions;
+using Snacks.Entity.Core.Helpers;
 
 namespace Snacks.Entity.Core
 {
@@ -23,15 +24,14 @@ namespace Snacks.Entity.Core
     {
         private static readonly PropertyInfo[] _entityProperties = typeof(TEntity).GetProperties();
 
-        protected TDbContext DbContext { get; private set; }
-
-        protected ILogger Logger { get; private set; }
+        protected IDbContextFactory<TDbContext> DbContextFactory { get; }
+        protected ILogger Logger { get; }
 
         public EntityController(
-            TDbContext dbContext,
+            IDbContextFactory<TDbContext> dbContextFactory,
             ILogger<EntityController<TEntity, TKey, TDbContext>> logger)
         {
-            DbContext = dbContext;
+            DbContextFactory = dbContextFactory;
             Logger = logger;
         }
 
@@ -39,7 +39,8 @@ namespace Snacks.Entity.Core
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TEntity>> GetAsync([FromRoute] TKey id)
         {
-            TEntity model = await DbContext.FindAsync<TEntity>(id);
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+            TEntity model = await dbContext.FindAsync<TEntity>(id);
 
             if (model == null)
             {
@@ -53,7 +54,8 @@ namespace Snacks.Entity.Core
         [HttpGet]
         public virtual async Task<ActionResult<IList<TEntity>>> GetAsync()
         {
-            var entities = DbContext.Set<TEntity>();
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+            var entities = dbContext.Set<TEntity>();
             if (Request.Query.Count == 0)
             {
                 return await entities.ToListAsync();
@@ -68,10 +70,11 @@ namespace Snacks.Entity.Core
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> DeleteAsync([FromRoute] TKey id)
         {
-            TEntity model = await DbContext.FindAsync<TEntity>(id);
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+            TEntity model = await dbContext.FindAsync<TEntity>(id);
 
-            DbContext.Remove(model);
-            await DbContext.SaveChangesAsync();
+            dbContext.Remove(model);
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }
@@ -80,8 +83,9 @@ namespace Snacks.Entity.Core
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity model)
         {
-            EntityEntry<TEntity> entry = DbContext.Add(model);
-            await DbContext.SaveChangesAsync();
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+            EntityEntry<TEntity> entry = dbContext.Add(model);
+            await dbContext.SaveChangesAsync();
             return entry.Entity;
         }
 
@@ -89,7 +93,8 @@ namespace Snacks.Entity.Core
         [HttpPatch("{id}")]
         public virtual async Task<IActionResult> PatchAsync([FromRoute] TKey id, [FromBody] object data)
         {
-            TEntity existingModel = await DbContext.FindAsync<TEntity>(id);
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+            TEntity existingModel = await dbContext.FindAsync<TEntity>(id);
 
             if (existingModel == null)
             {
@@ -107,9 +112,9 @@ namespace Snacks.Entity.Core
                 }
             }
 
-            DbContext.Update(existingModel);
+            dbContext.Update(existingModel);
 
-            await DbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }
@@ -136,7 +141,9 @@ namespace Snacks.Entity.Core
 
             var relatedEntityType = relatedProperty.PropertyType.GenericTypeArguments.First();
 
-            if (DbContext.Model.FindEntityType(relatedEntityType) == null)
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+
+            if (dbContext.Model.FindEntityType(relatedEntityType) == null)
             {
                 return NotFound();
             }
@@ -161,9 +168,11 @@ namespace Snacks.Entity.Core
             var queryableParameters = QueryableParameters.Build(query);
             var completeExpression = queryableParameters.ApplyLinqExpressions<TRelatedEntity, IEnumerable<TRelatedEntity>>(relatedExp);
 
+            using var dbContext = await DbContextFactory.CreateDbContextAsync();
+
             if (entity != null)
             {
-                var loadedEntities = await DbContext.Set<TEntity>()
+                var loadedEntities = await dbContext.Set<TEntity>()
                     .Where(x => x == entity)
                     .Include((Expression<Func<TEntity, IEnumerable<TRelatedEntity>>>)completeExpression)
                     .ToListAsync();

@@ -15,10 +15,5 @@ namespace Snacks.Entity.Core.Tests.Server.Database
         {
             
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }
